@@ -2,10 +2,11 @@
 #' Calculate last dose amount and time after last dose
 #'
 #' @param data data set as data frame
+#' @param fill time after dose value for records prior to the first dose
 #'
 #' @useDynLib lastdose, .registration=TRUE
 #' @export
-lastdose <- function(data) {
+lastdose <- function(data, fill = -1) {
   x <- as.data.frame(data)
   na <- tolower(names(data))
   wid <- match("id", na)
@@ -42,7 +43,8 @@ lastdose <- function(data) {
     data[[wamt]],
     data[[wevid]],
     addl,
-    ii
+    ii,
+    as.numeric(fill)
   )
   data.frame(
     tad = ans$tad, ldos = ans$ldos,

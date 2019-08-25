@@ -17,4 +17,4 @@ write.csv(
   row.names=FALSE
 )
 
-saveRDS(object=df, file = "inst/csv/data_big.RDS")
+saveRDS(object=df, file = "inst/csv/data_big.RDS",version=2)

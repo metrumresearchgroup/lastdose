@@ -4,10 +4,12 @@
 \alias{lastdose}
 \title{Calculate last dose amount and time after last dose}
 \usage{
-lastdose(data)
+lastdose(data, fill = -1)
 }
 \arguments{
 \item{data}{data set as data frame}
+
+\item{fill}{time after dose value for records prior to the first dose}
 }
 \description{
 Calculate last dose amount and time after last dose

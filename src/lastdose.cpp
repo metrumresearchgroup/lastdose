@@ -15,7 +15,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector amt,
                          Rcpp::NumericVector evid,
                          Rcpp::NumericVector addl,
-                         Rcpp::NumericVector ii) {
+                         Rcpp::NumericVector ii,
+                         Rcpp::NumericVector fill) {
 
   bool has_addl = false;
   if(addl.size() > 0) has_addl = true;
@@ -81,7 +82,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
           tad[crow] = this_id[m][1] - last_time;
         } else {
           ldos[crow] = 0;
-          tad[crow] = -1;
+          tad[crow] = fill[0];
         }
         crow++;
       }

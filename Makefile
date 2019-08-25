@@ -36,5 +36,6 @@ check:
 	make build
 	R CMD CHECK ${TARBALL} -o ${CHKDIR}
 
-
+site:
+	Rscript -e 'pkgdown::build_site()'
 
