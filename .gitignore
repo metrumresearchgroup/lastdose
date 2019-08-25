@@ -1,0 +1,6 @@
+test*.R
+test*.cpp
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
