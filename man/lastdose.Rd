@@ -13,12 +13,37 @@ lastdose_list(data, fill = -1)
 lastdose_df(data, ...)
 }
 \arguments{
-\item{data}{data set as data frame}
+\item{data}{data set as data frame; see \code{details}}
 
 \item{...}{arguments passed to \link{lastdose_list}}
 
 \item{fill}{time after dose value for records prior to the first dose}
 }
 \description{
-Calculate last dose amount and time after last dose
+Use \link{lastdose} to columns to the input data frame; \link{lastdose_list}
+and \link{lastdose_df} returns calculated information as either
+\code{list} or \code{data.frame} format without modifying the input data.
+}
+\details{
+\itemize{
+\item All functions require an input data set as a data frame
+\item The data set should be formatted according to \code{NMTRAN} type
+conventions
+\item Required columns
+\itemize{
+\item \code{ID} or \code{id}: subject identifier
+\item \code{TIME} or \code{time}: data set time
+\item \code{AMT} or \code{amt}: dose amount for dosing records
+\item \code{EVID} or \code{evid}: event ID; records with \code{EVID} or 1 or 4
+are considered dosing records
+}
+\item Optional columns
+\itemize{
+\item \code{ADDL} or \code{addl}: additional doses to administer
+\item \code{II} or \code{ii}: dosing interval
+}
+\item An error is generated if required columns are not found; no error
+or warning if optional columns are not found
+\item All required and optional columns will be coerced with \link{as.double}
+}
 }

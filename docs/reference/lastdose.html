@@ -32,7 +32,9 @@
 
 <meta property="og:title" content="Calculate last dose amount and time after last dose — lastdose" />
 
-<meta property="og:description" content="Calculate last dose amount and time after last dose" />
+<meta property="og:description" content="Use lastdose to columns to the input data frame; lastdose_list
+and lastdose_df returns calculated information as either
+list or data.frame format without modifying the input data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,7 +103,9 @@
 
     <div class="ref-description">
     
-    <p>Calculate last dose amount and time after last dose</p>
+    <p>Use lastdose to columns to the input data frame; lastdose_list
+and lastdose_df returns calculated information as either
+<code>list</code> or <code>data.frame</code> format without modifying the input data.</p>
     
     </div>
 
@@ -116,7 +120,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data set as data frame</p></td>
+      <td><p>data set as data frame; see <code>details</code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -128,13 +132,37 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p>All functions require an input data set as a data frame</p></li>
+<li><p>The data set should be formatted according to <code>NMTRAN</code> type
+conventions</p></li>
+<li><p>Required columns</p><ul>
+<li><p><code>ID</code> or <code>id</code>: subject identifier</p></li>
+<li><p><code>TIME</code> or <code>time</code>: data set time</p></li>
+<li><p><code>AMT</code> or <code>amt</code>: dose amount for dosing records</p></li>
+<li><p><code>EVID</code> or <code>evid</code>: event ID; records with <code>EVID</code> or 1 or 4
+are considered dosing records</p></li>
+</ul></li>
+<li><p>Optional columns</p><ul>
+<li><p><code>ADDL</code> or <code>addl</code>: additional doses to administer</p></li>
+<li><p><code>II</code> or <code>ii</code>: dosing interval</p></li>
+</ul></li>
+<li><p>An error is generated if required columns are not found; no error
+or warning if optional columns are not found</p></li>
+<li><p>All required and optional columns will be coerced with <a href='https://www.rdocumentation.org/packages/base/topics/double'>as.double</a></p></li>
+</ul>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
