@@ -40,7 +40,7 @@ df %>% filter(evid==1) %>% count(time,amt,addl)
 ggplot(df, aes(time,DV)) + geom_line() + theme_bw()
 ```
 
-![](inst/img/readme-unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-3-1.png)<!-- -->
 
 # Plot last dose versus time
 
@@ -52,7 +52,7 @@ df <- mutate(df, tad = x$tad, ldos = x$ldos)
 ggplot(df, aes(time,ldos)) + geom_line()
 ```
 
-![](inst/img/readme-unnamed-chunk-4-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-4-1.png)<!-- -->
 
 # Plot time after dose versus time
 
@@ -60,7 +60,7 @@ ggplot(df, aes(time,ldos)) + geom_line()
 ggplot(df, aes(time,tad)) + geom_line()
 ```
 
-![](inst/img/readme-unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 ggplot(df, aes(time,tad)) + geom_line() + 
@@ -68,7 +68,7 @@ ggplot(df, aes(time,tad)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 ```
 
-![](inst/img/readme-unnamed-chunk-5-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-5-2.png)<!-- -->
 
 # All doses explicit in the data set
 
@@ -82,7 +82,7 @@ df2 <- mutate(df2, tad = x$tad, ldos = x$ldos)
 ggplot(df2, aes(time,tad)) + geom_line()
 ```
 
-![](inst/img/readme-unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 ggplot(df2, aes(time,tad)) + geom_line() + 
@@ -90,7 +90,7 @@ ggplot(df2, aes(time,tad)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4))
 ```
 
-![](inst/img/readme-unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-6-2.png)<!-- -->
 
 # How does it perform on bigger data?
 
@@ -117,7 +117,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.159   0.002   0.161
+    .   0.176   0.005   0.182
 
 ## Compare against the single profile
 

@@ -9,7 +9,7 @@ Calculate the time since and amount of the last dose.
 
 ```{r,include=FALSE}
 knitr::opts_chunk$set(comment = '.', message=FALSE, warning = FALSE, 
-                      fig.path="inst/img/readme-")
+                      fig.path="man/figures/readme-")
 ```
 
 
