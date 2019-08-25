@@ -1,4 +1,4 @@
-ID,time,evid,amt,cmt,ii,addl,DV
+ID,TIME,EVID,AMT,CMT,II,ADDL,DV
 1,0,0,0,0,0,0,0
 1,0,1,1000,1,24,27,0
 1,4,0,0,0,0,0,42.1

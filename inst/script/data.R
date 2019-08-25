@@ -10,6 +10,8 @@ out <- mrgsim(mod,dose,carry_out="amt,ii,evid,addl,cmt",Req="DV=CP",digits=3)
 
 df <- as_tibble(out)
 
+names(df) <- toupper(names(df))
+
 write.csv(
   filter(df, ID==1),
   file = "inst/csv/data1.csv",

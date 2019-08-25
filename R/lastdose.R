@@ -3,10 +3,20 @@
 #'
 #' @param data data set as data frame
 #' @param fill time after dose value for records prior to the first dose
+#' @param ... arguments passed to [lastdose_list]
 #'
 #' @useDynLib lastdose, .registration=TRUE
 #' @export
-lastdose <- function(data, fill = -1) {
+lastdose <- function(data,...) {
+  ans <- lastdose_list(data,...)
+  data[["TAD"]] <- ans[["tad"]]
+  data[["LDOS"]] <- ans[["ldos"]]
+  data
+}
+
+#' @rdname lastdose
+#' @export
+lastdose_list <- function(data, fill = -1) {
   x <- as.data.frame(data)
   na <- tolower(names(data))
   wid <- match("id", na)
@@ -46,9 +56,17 @@ lastdose <- function(data, fill = -1) {
     ii,
     as.numeric(fill)
   )
+  ans
+}
+
+#' @rdname lastdose
+#' @export
+lastdose_df <- function(data,...) {
+  ans <- lastdose_list(data,...)
   data.frame(
-    tad = ans$tad, ldos = ans$ldos,
+    tad = ans[["tad"]], ldos = ans[["ldos"]],
     stringsAsFactors=FALSE,check.names=FALSE,
     fix.empty.names=FALSE, row.names=NULL
   )
 }
+

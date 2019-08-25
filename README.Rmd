@@ -31,27 +31,25 @@ head(df)
 
 ## A PK profile
 ```{r}
-df %>% filter(evid==1) %>% count(time,amt,addl)
+df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
 
-ggplot(df, aes(time,DV)) + geom_line() + theme_bw()
+ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
 
 # Plot last dose versus time
 ```{r}
-x <- lastdose(df)
+df <- lastdose(df)
 
-df <- mutate(df, tad = x$tad, ldos = x$ldos)
-
-ggplot(df, aes(time,ldos)) + geom_line()
+ggplot(df, aes(TIME,LDOS)) + geom_line()
 ```
 
 # Plot time after dose versus time
 
 ```{r}
-ggplot(df, aes(time,tad)) + geom_line()
+ggplot(df, aes(TIME,TAD)) + geom_line()
 
-ggplot(df, aes(time,tad)) + geom_line() + 
+ggplot(df, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits=c(0,72)) + 
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 
@@ -61,13 +59,11 @@ ggplot(df, aes(time,tad)) + geom_line() +
 ```{r}
 df2 <- mrgsolve::realize_addl(df) 
 
-x <- lastdose(df2)
+df2 <- lastdose(df2)
 
-df2 <- mutate(df2, tad = x$tad, ldos = x$ldos)
+ggplot(df2, aes(TIME,TAD)) + geom_line()
 
-ggplot(df2, aes(time,tad)) + geom_line()
-
-ggplot(df2, aes(time,tad)) + geom_line() + 
+ggplot(df2, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits = c(0,72)) + 
   scale_y_continuous(breaks = seq(0,24,4))
 ```
@@ -93,9 +89,9 @@ system.time(x2 <- lastdose(big))
 ```{R}
 system.time(x1 <- lastdose(df))
 
-x3 <- filter(x2, big[["ID"]]==1)
+x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
 
-identical(x1,x3)
+all.equal(x1,x3)
 
 ```
 

@@ -2,12 +2,20 @@
 % Please edit documentation in R/lastdose.R
 \name{lastdose}
 \alias{lastdose}
+\alias{lastdose_list}
+\alias{lastdose_df}
 \title{Calculate last dose amount and time after last dose}
 \usage{
-lastdose(data, fill = -1)
+lastdose(data, ...)
+
+lastdose_list(data, fill = -1)
+
+lastdose_df(data, ...)
 }
 \arguments{
 \item{data}{data set as data frame}
+
+\item{...}{arguments passed to \link{lastdose_list}}
 
 \item{fill}{time after dose value for records prior to the first dose}
 }
