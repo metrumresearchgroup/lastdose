@@ -24,7 +24,6 @@ doc:
 build:
 	R CMD build --md5 $(PKGDIR)
 
-
 install:
 	R CMD INSTALL --install-tests ${TARBALL}
 
@@ -35,6 +34,9 @@ check:
 	make doc
 	make build
 	R CMD CHECK ${TARBALL} -o ${CHKDIR}
+
+readme:
+	Rscript -e 'rmarkdown::render("README.Rmd")'
 
 site:
 	Rscript -e 'pkgdown::build_site()'

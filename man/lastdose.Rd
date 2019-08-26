@@ -8,7 +8,8 @@
 \usage{
 lastdose(data, ...)
 
-lastdose_list(data, fill = -99, back_calc = TRUE)
+lastdose_list(data, fill = -99, back_calc = TRUE,
+  addl_ties = c("obs_first", "dose_first"))
 
 lastdose_df(data, ...)
 }
@@ -24,6 +25,13 @@ doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
 is calculated for records prior to the first dosing record when
 at least one dosing record is found in the data set.  Records before
 the first dosing record will have negative values.}
+
+\item{addl_ties}{what to do when doses scheduled through \code{ADDL} happen at
+the same time as observation records; if \code{obs_first} then the observation
+is assumed to happen before the dose and the observation is a trough
+concentration; if \code{dose_first} then the dose is assumed to be administered
+and the observation made immediately after (with no advance in time). See
+details.}
 }
 \description{
 Use \link{lastdose} to columns to the input data frame; \link{lastdose_list}
@@ -52,4 +60,9 @@ are considered dosing records
 or warning if optional columns are not found
 \item All required and optional columns will be coerced with \link{as.double}
 }
+
+An example illustrating the \code{addl_ties} argument: when there is \code{Q24h}
+dosing and both an an additional dose and an observation happen at 24 hours,
+\code{obs_first} will set the observation\code{TAD} to 24 and \code{dose_first} will set
+the observation \code{TAD} to 0.
 }
