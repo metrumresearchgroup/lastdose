@@ -12,6 +12,13 @@
 #' the first dosing record will have negative values.
 #' @param fill the value for `TAD` that is used for records when no
 #' doses are found for an individual or when `back_calc` is `FALSE`.
+#' @param addl_ties what to do when doses scheduled through `ADDL` happen at
+#' the same time as observation records; if `obs_first` then the observation
+#' is assumed to happen before the dose and the observation is a trough
+#' concentration; if `dose_first` then the dose is assumed to be administered
+#' and the observation made immediately after (with no advance in time). See
+#' details.
+#' @param recsort
 #' @param ... arguments passed to [lastdose_list]
 #'
 #' @details
@@ -32,6 +39,11 @@
 #'   or warning if optional columns are not found
 #' - All required and optional columns will be coerced with [as.double]
 #'
+#' An example illustrating the `addl_ties` argument: when there is `Q24h`
+#' dosing and both an an additional dose and an observation happen at 24 hours,
+#' `obs_first` will set the observation`TAD` to 24 and `dose_first` will set
+#' the observation `TAD` to 0.
+#'
 #' @useDynLib lastdose, .registration=TRUE
 #' @export
 lastdose <- function(data,...) {
@@ -43,7 +55,10 @@ lastdose <- function(data,...) {
 
 #' @rdname lastdose
 #' @export
-lastdose_list <- function(data, fill = -99, back_calc = TRUE) {
+lastdose_list <- function(data, fill = -99, back_calc = TRUE,
+                          addl_ties = c("obs_first", "dose_first")) {
+  addl_ties <- match.arg(addl_ties)
+  sort1 <- addl_ties == "obs_first"
   x <- as.data.frame(data)
   na <- tolower(names(data))
   wid <- match("id", na)
@@ -84,7 +99,8 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE) {
     as.double(addl),
     as.double(ii),
     fill,
-    back_calc
+    back_calc,
+    sort1
   )
   ans
 }

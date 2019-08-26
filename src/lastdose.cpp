@@ -3,9 +3,15 @@
 typedef std::vector<double> rec;
 typedef std::vector<rec> recs;
 
-bool Comp(const rec& a, const rec& b) {
+bool Comp1(const rec& a, const rec& b) {
   bool res = a[1] < b[1];
   if(a[1]==b[1]) res = (a[3]) < (b[3]);
+  return res;
+}
+
+bool Comp2(const rec& a, const rec& b) {
+  bool res = a[1] < b[1];
+  if(a[1]==b[1]) res = (b[3]) < (a[3]);
   return res;
 }
 
@@ -17,8 +23,10 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector addl,
                          Rcpp::NumericVector ii,
                          Rcpp::NumericVector fill,
-                         Rcpp::LogicalVector back_calc) {
+                         Rcpp::LogicalVector back_calc,
+                         Rcpp::LogicalVector sort1) {
 
+  bool use_comp1 = sort1[0];
   bool use_fill = !back_calc[0];
   bool has_addl = false;
   if(addl.size() > 0) has_addl = true;
@@ -75,7 +83,11 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         }
       }
     } // END THIS ID
-    std::sort(this_id.begin(), this_id.end(), Comp);
+    if(use_comp1) {
+      std::sort(this_id.begin(), this_id.end(), Comp1);
+    } else {
+      std::sort(this_id.begin(), this_id.end(), Comp2);
+    }
     double last_dose = 0;
     bool had_dose = false;
     bool no_dose = told[i] == -1;

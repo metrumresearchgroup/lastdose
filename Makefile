@@ -39,3 +39,5 @@ check:
 site:
 	Rscript -e 'pkgdown::build_site()'
 
+spelling:
+	Rscript inst/script/_spelling.R

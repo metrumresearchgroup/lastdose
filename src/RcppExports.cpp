@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // lastdose_impl
-Rcpp::List lastdose_impl(Rcpp::NumericVector id, Rcpp::NumericVector time, Rcpp::NumericVector amt, Rcpp::NumericVector evid, Rcpp::NumericVector addl, Rcpp::NumericVector ii, Rcpp::NumericVector fill, Rcpp::LogicalVector back_calc);
-RcppExport SEXP _lastdose_lastdose_impl(SEXP idSEXP, SEXP timeSEXP, SEXP amtSEXP, SEXP evidSEXP, SEXP addlSEXP, SEXP iiSEXP, SEXP fillSEXP, SEXP back_calcSEXP) {
+Rcpp::List lastdose_impl(Rcpp::NumericVector id, Rcpp::NumericVector time, Rcpp::NumericVector amt, Rcpp::NumericVector evid, Rcpp::NumericVector addl, Rcpp::NumericVector ii, Rcpp::NumericVector fill, Rcpp::LogicalVector back_calc, Rcpp::LogicalVector sort1);
+RcppExport SEXP _lastdose_lastdose_impl(SEXP idSEXP, SEXP timeSEXP, SEXP amtSEXP, SEXP evidSEXP, SEXP addlSEXP, SEXP iiSEXP, SEXP fillSEXP, SEXP back_calcSEXP, SEXP sort1SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,13 +19,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type ii(iiSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type fill(fillSEXP);
     Rcpp::traits::input_parameter< Rcpp::LogicalVector >::type back_calc(back_calcSEXP);
-    rcpp_result_gen = Rcpp::wrap(lastdose_impl(id, time, amt, evid, addl, ii, fill, back_calc));
+    Rcpp::traits::input_parameter< Rcpp::LogicalVector >::type sort1(sort1SEXP);
+    rcpp_result_gen = Rcpp::wrap(lastdose_impl(id, time, amt, evid, addl, ii, fill, back_calc, sort1));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_lastdose_lastdose_impl", (DL_FUNC) &_lastdose_lastdose_impl, 8},
+    {"_lastdose_lastdose_impl", (DL_FUNC) &_lastdose_lastdose_impl, 9},
     {NULL, NULL, 0}
 };
 
