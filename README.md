@@ -74,7 +74,11 @@ Now we have `TAD` and `LDOS` in our data set.
 
 # Plot last dose versus time
 
-    ggplot(df, aes(TIME,LDOS)) + geom_line()
+``` r
+ggplot(df, aes(TIME,LDOS)) + geom_line()
+```
+
+![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
 
 # Plot time after dose versus time
 
@@ -82,7 +86,7 @@ Now we have `TAD` and `LDOS` in our data set.
 ggplot(df, aes(TIME,TAD)) + geom_line()
 ```
 
-![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 ggplot(df, aes(TIME,TAD)) + geom_line() + 
@@ -90,7 +94,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 ```
 
-![](man/figures/readme-unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-7-2.png)<!-- -->
 
 # All doses explicit in the data set
 
@@ -99,18 +103,12 @@ df2 <- mrgsolve::realize_addl(df)
 
 df2 <- lastdose(df2)
 
-ggplot(df2, aes(TIME,TAD)) + geom_line()
-```
-
-![](man/figures/readme-unnamed-chunk-7-1.png)<!-- -->
-
-``` r
 ggplot(df2, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits = c(0,72)) + 
   scale_y_continuous(breaks = seq(0,24,4))
 ```
 
-![](man/figures/readme-unnamed-chunk-7-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-8-1.png)<!-- -->
 
 # How does it perform on bigger data?
 
@@ -141,7 +139,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.166   0.002   0.168
+    .   0.173   0.003   0.176
 
 ## Compare against the single profile
 
@@ -150,7 +148,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .       0       0       0
+    .   0.001   0.000   0.000
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()

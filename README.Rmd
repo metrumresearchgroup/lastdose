@@ -56,7 +56,7 @@ head(df)
 Now we have `TAD` and `LDOS` in our data set.
 
 # Plot last dose versus time
-```
+```{r}
 ggplot(df, aes(TIME,LDOS)) + geom_line()
 ```
 
@@ -76,8 +76,6 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
 df2 <- mrgsolve::realize_addl(df) 
 
 df2 <- lastdose(df2)
-
-ggplot(df2, aes(TIME,TAD)) + geom_line()
 
 ggplot(df2, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits = c(0,72)) + 
