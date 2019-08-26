@@ -25,7 +25,7 @@
 1. The analysis data frame will have the following optional columns
     - `ADDL` or `addl` - additional doses to administer
     - `II` or `ii` - the dosing interval
-1. All required and optional columns will be coreced using `as.double`.
+1. All required and optional columns will be coerced using `as.double`.
 1. By default, doses prior to the first dosing record will be calculated as 
    time before the first dose and be expressed as negative numbers.
 1. The user may choose to fill in `TAD` for records prior to the first dose
