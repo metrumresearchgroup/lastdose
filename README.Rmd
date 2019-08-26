@@ -8,6 +8,8 @@ output: github_document
 Calculate the time since and amount of the last dose. Additional (`ADDL`) 
 dosing records are expanded and included in the calculation.
 
+See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more details.
+
 
 <hr>
 
