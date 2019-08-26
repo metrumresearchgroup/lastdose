@@ -95,6 +95,8 @@ ggplot(df2, aes(TIME,TAD)) + geom_line() +
 
 Same setup as the previous profile, but more individuals.
 
+We have 500K rows and 1000 individuals
+
 ``` r
 file <- system.file("csv/data_big.RDS", package = "lastdose")
 
@@ -111,12 +113,14 @@ length(unique(big$ID))
 
     . [1] 1000
 
+Timing result
+
 ``` r
 system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.168   0.002   0.170
+    .   0.174   0.002   0.176
 
 ## Compare against the single profile
 
@@ -125,7 +129,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .   0.001   0.000   0.000
+    .   0.001   0.000   0.001
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()

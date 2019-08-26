@@ -111,7 +111,7 @@ and lastdose_df returns calculated information as either
 
     <pre class="usage"><span class='fu'>lastdose</span>(<span class='no'>data</span>, <span class='no'>...</span>)
 
-<span class='fu'>lastdose_list</span>(<span class='no'>data</span>, <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>1</span>)
+<span class='fu'>lastdose_list</span>(<span class='no'>data</span>, <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>99</span>, <span class='kw'>back_calc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>lastdose_df</span>(<span class='no'>data</span>, <span class='no'>...</span>)</pre>
     
@@ -128,7 +128,15 @@ and lastdose_df returns calculated information as either
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>time after dose value for records prior to the first dose</p></td>
+      <td><p>the value for <code>TAD</code> that is used for records when no
+doses are found for an individual or when <code>back_calc</code> is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>back_calc</th>
+      <td><p>if <code>TRUE</code>, then the time before the first dose
+is calculated for records prior to the first dosing record when
+at least one dosing record is found in the data set.  Records before
+the first dosing record will have negative values.</p></td>
     </tr>
     </table>
     
