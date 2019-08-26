@@ -111,7 +111,8 @@ and lastdose_df returns calculated information as either
 
     <pre class="usage"><span class='fu'>lastdose</span>(<span class='no'>data</span>, <span class='no'>...</span>)
 
-<span class='fu'>lastdose_list</span>(<span class='no'>data</span>, <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>99</span>, <span class='kw'>back_calc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>lastdose_list</span>(<span class='no'>data</span>, <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>99</span>, <span class='kw'>back_calc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>addl_ties</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"obs_first"</span>, <span class='st'>"dose_first"</span>))
 
 <span class='fu'>lastdose_df</span>(<span class='no'>data</span>, <span class='no'>...</span>)</pre>
     
@@ -138,6 +139,15 @@ is calculated for records prior to the first dosing record when
 at least one dosing record is found in the data set.  Records before
 the first dosing record will have negative values.</p></td>
     </tr>
+    <tr>
+      <th>addl_ties</th>
+      <td><p>what to do when doses scheduled through <code>ADDL</code> happen at
+the same time as observation records; if <code>obs_first</code> then the observation
+is assumed to happen before the dose and the observation is a trough
+concentration; if <code>dose_first</code> then the dose is assumed to be administered
+and the observation made immediately after (with no advance in time). See
+details.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -161,6 +171,10 @@ are considered dosing records</p></li>
 or warning if optional columns are not found</p></li>
 <li><p>All required and optional columns will be coerced with <a href='https://www.rdocumentation.org/packages/base/topics/double'>as.double</a></p></li>
 </ul>
+    <p>An example illustrating the <code>addl_ties</code> argument: when there is <code>Q24h</code>
+dosing and both an an additional dose and an observation happen at 24 hours,
+<code>obs_first</code> will set the observation<code>TAD</code> to 24 and <code>dose_first</code> will set
+the observation <code>TAD</code> to 0.</p>
     
 
   </div>

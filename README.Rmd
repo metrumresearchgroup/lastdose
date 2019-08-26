@@ -8,9 +8,6 @@ output: github_document
 Calculate the time since and amount of the last dose. Additional (`ADDL`) 
 dosing records are expanded and included in the calculation.
 
-See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more details.
-
-
 <hr>
 
 ```{r,include=FALSE}
@@ -121,3 +118,8 @@ The user can alternatively control what happens for these records
 lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 ```
 
+<hr>
+
+# More info
+
+See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more details.

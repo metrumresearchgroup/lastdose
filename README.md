@@ -4,9 +4,6 @@
 Calculate the time since and amount of the last dose. Additional
 (`ADDL`) dosing records are expanded and included in the calculation.
 
-See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more
-details.
-
 <hr>
 
 ``` r
@@ -123,7 +120,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.175   0.002   0.176
+    .   0.172   0.002   0.174
 
 ## Compare against the single profile
 
@@ -132,7 +129,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .       0       0       0
+    .   0.000   0.000   0.001
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
@@ -181,3 +178,10 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
     . 4     1    12     0     0     0     0     0  28.9    NA     0
     . 5     1    12     1  1000     1    24    27   0       0  1000
     . 6     1    16     0     0     0     0     0  23.6     4  1000
+
+<hr>
+
+# More info
+
+See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more
+details.
