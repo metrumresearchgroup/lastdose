@@ -10,7 +10,13 @@ Calculate the time since and amount of the last dose. Additional
 library(lastdose)
 library(tidyverse)
 theme_set(theme_bw())
+```
 
+## A PK profile
+
+We’ll use this PK profile as an example
+
+``` r
 file <- system.file("csv/data1.csv", package = "lastdose")
 
 df <- read.csv(file) 
@@ -26,7 +32,8 @@ head(df)
     . 5  1   12    0    0   0  0    0 28.9
     . 6  1   16    0    0   0  0    0 23.6
 
-## A PK profile
+The dosing runs over 12 weeks and there are 3 epochs, with 3 different
+doses, most of which are scheduled into the future via `ADDL`.
 
 ``` r
 df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
@@ -43,17 +50,31 @@ df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
 ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
-![](man/figures/readme-unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-4-1.png)<!-- -->
 
-# Plot last dose versus time
+# Calculate TAD and LDOS
+
+Use the `lastdose()` function
 
 ``` r
 df <- lastdose(df)
 
-ggplot(df, aes(TIME,LDOS)) + geom_line()
+head(df)
 ```
 
-![](man/figures/readme-unnamed-chunk-4-1.png)<!-- -->
+    .   ID TIME EVID  AMT CMT II ADDL   DV TAD LDOS
+    . 1  1    0    0    0   0  0    0  0.0   0    0
+    . 2  1    0    1 1000   1 24   27  0.0   0 1000
+    . 3  1    4    0    0   0  0    0 42.1   4 1000
+    . 4  1    8    0    0   0  0    0 35.3   8 1000
+    . 5  1   12    0    0   0  0    0 28.9  12 1000
+    . 6  1   16    0    0   0  0    0 23.6  16 1000
+
+Now we have `TAD` and `LDOS` in our data set.
+
+# Plot last dose versus time
+
+    ggplot(df, aes(TIME,LDOS)) + geom_line()
 
 # Plot time after dose versus time
 
@@ -61,7 +82,7 @@ ggplot(df, aes(TIME,LDOS)) + geom_line()
 ggplot(df, aes(TIME,TAD)) + geom_line()
 ```
 
-![](man/figures/readme-unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 ggplot(df, aes(TIME,TAD)) + geom_line() + 
@@ -69,7 +90,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 ```
 
-![](man/figures/readme-unnamed-chunk-5-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-6-2.png)<!-- -->
 
 # All doses explicit in the data set
 
@@ -81,7 +102,7 @@ df2 <- lastdose(df2)
 ggplot(df2, aes(TIME,TAD)) + geom_line()
 ```
 
-![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 ggplot(df2, aes(TIME,TAD)) + geom_line() + 
@@ -89,7 +110,7 @@ ggplot(df2, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4))
 ```
 
-![](man/figures/readme-unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-7-2.png)<!-- -->
 
 # How does it perform on bigger data?
 
@@ -120,7 +141,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.172   0.002   0.174
+    .   0.166   0.002   0.168
 
 ## Compare against the single profile
 
@@ -129,7 +150,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .   0.000   0.000   0.001
+    .       0       0       0
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()

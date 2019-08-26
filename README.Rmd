@@ -20,7 +20,13 @@ knitr::opts_chunk$set(comment = '.', message=FALSE, warning = FALSE,
 library(lastdose)
 library(tidyverse)
 theme_set(theme_bw())
+```
 
+## A PK profile
+
+We'll use this PK profile as an example
+
+```{r}
 file <- system.file("csv/data1.csv", package = "lastdose")
 
 df <- read.csv(file) 
@@ -28,7 +34,9 @@ df <- read.csv(file)
 head(df)
 ```
 
-## A PK profile
+The dosing runs over 12 weeks and there are 3 epochs, with 3 different doses, 
+most of which are scheduled into the future via `ADDL`.
+
 ```{r}
 df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
 
@@ -36,10 +44,19 @@ ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
 
-# Plot last dose versus time
+# Calculate TAD and LDOS
+
+Use the `lastdose()` function
 ```{r}
 df <- lastdose(df)
 
+head(df)
+```
+
+Now we have `TAD` and `LDOS` in our data set.
+
+# Plot last dose versus time
+```
 ggplot(df, aes(TIME,LDOS)) + geom_line()
 ```
 
