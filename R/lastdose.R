@@ -18,7 +18,6 @@
 #' concentration; if `dose_first` then the dose is assumed to be administered
 #' and the observation made immediately after (with no advance in time). See
 #' details.
-#' @param recsort
 #' @param ... arguments passed to [lastdose_list]
 #'
 #' @details

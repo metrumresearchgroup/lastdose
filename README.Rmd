@@ -73,9 +73,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
 
 # All doses explicit in the data set
 ```{r}
-df2 <- mrgsolve::realize_addl(df) 
-
-df2 <- lastdose(df2)
+df2 <- mrgsolve::realize_addl(df) %>% lastdose()
 
 ggplot(df2, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits = c(0,72)) + 

@@ -99,9 +99,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
 # All doses explicit in the data set
 
 ``` r
-df2 <- mrgsolve::realize_addl(df) 
-
-df2 <- lastdose(df2)
+df2 <- mrgsolve::realize_addl(df) %>% lastdose()
 
 ggplot(df2, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits = c(0,72)) + 
@@ -139,7 +137,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.173   0.003   0.176
+    .   0.170   0.002   0.172
 
 ## Compare against the single profile
 
