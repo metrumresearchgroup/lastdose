@@ -12,11 +12,23 @@ df <- as_tibble(out)
 
 names(df) <- toupper(names(df))
 
+
+df1 <- filter(df, ID==1)
+df2 <- filter(df1, TIME <= 28)
+df2 <- mutate(df2, TIME = ifelse(AMT > 0, 12, TIME)) %>% arrange(ID,TIME,EVID)
+
 write.csv(
-  filter(df, ID==1),
+  df1,
   file = "inst/csv/data1.csv",
   quote=FALSE,
   row.names=FALSE
 )
+write.csv(
+  df2,
+  file = "inst/csv/data2.csv",
+  quote=FALSE,
+  row.names=FALSE
+)
+
 
 saveRDS(object=df, file = "inst/csv/data_big.RDS",version=2)

@@ -8,7 +8,7 @@
 \usage{
 lastdose(data, ...)
 
-lastdose_list(data, fill = -1)
+lastdose_list(data, fill = -99, back_calc = TRUE)
 
 lastdose_df(data, ...)
 }
@@ -17,7 +17,13 @@ lastdose_df(data, ...)
 
 \item{...}{arguments passed to \link{lastdose_list}}
 
-\item{fill}{time after dose value for records prior to the first dose}
+\item{fill}{the value for \code{TAD} that is used for records when no
+doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
+
+\item{back_calc}{if \code{TRUE}, then the time before the first dose
+is calculated for records prior to the first dosing record when
+at least one dosing record is found in the data set.  Records before
+the first dosing record will have negative values.}
 }
 \description{
 Use \link{lastdose} to columns to the input data frame; \link{lastdose_list}

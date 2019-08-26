@@ -95,3 +95,22 @@ all.equal(x1,x3)
 
 ```
 
+# Observations prior to the first dose
+
+When non-dose records happen prior to the first dose, lastdose calculates
+the time before the first dose (a negative value) for these records.
+
+```{r}
+file <- system.file("csv/data2.csv", package = "lastdose")
+
+df <- read_csv(file)
+
+lastdose(df) %>% head()
+```
+
+The user can alternatively control what happens for these records
+
+```{r}
+lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
+```
+

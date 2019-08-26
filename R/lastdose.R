@@ -6,7 +6,12 @@
 #' `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
-#' @param fill time after dose value for records prior to the first dose
+#' @param back_calc if `TRUE`, then the time before the first dose
+#' is calculated for records prior to the first dosing record when
+#' at least one dosing record is found in the data set.  Records before
+#' the first dosing record will have negative values.
+#' @param fill the value for `TAD` that is used for records when no
+#' doses are found for an individual or when `back_calc` is `FALSE`.
 #' @param ... arguments passed to [lastdose_list]
 #'
 #' @details
@@ -38,7 +43,7 @@ lastdose <- function(data,...) {
 
 #' @rdname lastdose
 #' @export
-lastdose_list <- function(data, fill = -1) {
+lastdose_list <- function(data, fill = -99, back_calc = TRUE) {
   x <- as.data.frame(data)
   na <- tolower(names(data))
   wid <- match("id", na)
@@ -69,6 +74,8 @@ lastdose_list <- function(data, fill = -1) {
   } else {
     ii <- data[[wii]]
   }
+  fill <- as.double(fill)
+  if(length(fill)==0) fill <- 0
   ans <- lastdose_impl(
     as.double(data[[wid]]),
     as.double(data[[wtime]]),
@@ -76,7 +83,8 @@ lastdose_list <- function(data, fill = -1) {
     as.double(data[[wevid]]),
     as.double(addl),
     as.double(ii),
-    as.numeric(fill)
+    fill,
+    back_calc
   )
   ans
 }
