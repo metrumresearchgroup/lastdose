@@ -38,6 +38,15 @@
    however a list with elements `tad` and `ldos` will be returned.
 1. The `lastdose_df()` function will return a data frame with columns `tad`
    and `ldos` with the same definitions as `lastdose_list()`.
+1. The user can choose how to handle `TAD` when additional doses (via `ADDL`
+   happen at the same time as another record in the data set.  By default, 
+   records at the same time are sorted ascending by dose amount so that 
+   observation records happen prior to doses.  This makes the observation a 
+   trough concentration. Alternatively, records can be sorted descending 
+   by dose amount so that doses happen first.  This makes the observation 
+   a peak. The sorting that is done has no bearing on records explicitly listed
+   in the input data. 
+
 
 
 
