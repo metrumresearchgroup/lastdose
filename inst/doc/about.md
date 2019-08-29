@@ -47,7 +47,8 @@
    a peak. The sorting that is done has no bearing on records explicitly listed
    in the input data. 
 
-
+# Coverage
+See [../covr/coverage.md](../covr/coverage/md)
 
 
 
