@@ -1,6 +1,6 @@
 Package: lastdose
 Type: Package
-Title: Calculate Last Dose Time and Amount
+Title: Calculate Time and Amount of Last Dose
 Version: 0.1.0
 Author: Kyle Baron
 Maintainer: Kyle Baron <kylebtwin@imap.cc>
