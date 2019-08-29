@@ -1,8 +1,9 @@
 
 
 Sys.setenv("R_TESTS" = "")
-library(lastdose)
 library(testthat)
+library(Rcpp)
+library(lastdose)
 test_check("lastdose", reporter="summary")
 
 

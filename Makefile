@@ -9,6 +9,9 @@ CHKDIR=.
 ## Set libPaths:
 export R_LIBS=${LIBDIR}
 
+covr:
+	Rscript inst/covr/covr.R
+
 ec:
 	echo ${VERSION}
 

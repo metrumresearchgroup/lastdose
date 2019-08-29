@@ -46,3 +46,25 @@ test_that("doses don't start at time zero", {
   expect_identical(x[["TAD"]],as.double(a))
 })
 
+test_that("lastdose_df", {
+  x <- lastdose_df(set1)
+  y <- lastdose_list(set1)
+  expect_identical(x[["tad"]], y[["tad"]])
+})
+
+test_that("required columns", {
+  x <- set1
+  x[["amt"]] <- NULL
+  expect_error(lastdose(x))
+  x <- set1
+  x[["time"]] <- NULL
+  expect_error(lastdose(x))
+  x <- set1
+  x[["ID"]] <- NULL
+  expect_error(lastdose(x))
+  x <- set1
+  x[["evid"]] <- NULL
+  expect_error(lastdose(x))
+})
+
+
