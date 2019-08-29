@@ -4,8 +4,8 @@ Title: Calculate Last Dose Time and Amount
 Version: 0.1.0
 Author: Kyle Baron
 Maintainer: Kyle Baron <kylebtwin@imap.cc>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Efficient calculation of time of last dose and last dose amount
+    for analysis data sets.
 License: GPL (>=2)
 LinkingTo: Rcpp
 Encoding: UTF-8
