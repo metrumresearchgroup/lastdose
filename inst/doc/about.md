@@ -48,7 +48,7 @@
    in the input data. 
 
 # Coverage
-See [../covr/coverage.md](../covr/coverage/md)
+See [inst/covr/coverage.md](../covr/coverage.md)
 
 
 
