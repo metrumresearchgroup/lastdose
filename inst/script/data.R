@@ -1,5 +1,6 @@
 library(dplyr)
 library(mrgsolve)
+library(lastdose)
 mod <- modlib("pk1", end = 12*168, delta = 4)
 dose <- ev(amt=1000,ii= 24, addl = 12*7-1)
 d1 <- ev(amt = 1000, ii = 24, addl = 4*7-1)
@@ -32,3 +33,22 @@ write.csv(
 
 
 saveRDS(object=df, file = "inst/csv/data_big.RDS",version=2)
+
+
+set1 <- ev(amt = 100, ii = 12, addl = 1) %>% ev_rep(1:2)
+set1 <- expand_observations(set1, c(4,seq(0,24,4))) %>% mutate(set = 1)
+set2 <- ev(amt = 100, ii = 12, addl = 1, time = 6) %>% ev_rep(1:2)
+set2 <- expand_observations(set2, c(4,seq(0,44))) %>% mutate(set = 2)
+set3 <- mrgsolve::realize_addl(set1) %>% mutate(set = 3)
+set4 <- mrgsolve::realize_addl(set2) %>% mutate(set = 4)
+
+set <- bind_rows(set1,set2,set3,set4)
+
+write.csv(
+  set,
+  file = "inst/csv/setn.csv",
+  quote=FALSE,
+  row.names=FALSE
+)
+
+
