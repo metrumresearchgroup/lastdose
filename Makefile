@@ -9,6 +9,11 @@ CHKDIR=.
 ## Set libPaths:
 export R_LIBS=${LIBDIR}
 
+cran:
+	make doc
+	make build
+	R CMD CHECK ${TARBALL} --as-cran
+
 covr:
 	Rscript inst/covr/covr.R
 
