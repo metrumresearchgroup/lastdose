@@ -1,17 +1,31 @@
 #include <Rcpp.h>
 
-typedef std::vector<double> rec;
-typedef std::vector<rec> recs;
+class  record {
+public:
+  record(double id_, double time_, double amt_, int evid_);
+  double id;
+  double time;
+  double amt;
+  int evid;
+  bool from_data;
+};
 
-bool Comp1(const rec& a, const rec& b) {
-  bool res = a[1] < b[1];
-  if(a[1]==b[1]) res = (a[3]) < (b[3]);
+record::record(double id_, double time_, double amt_, int evid_) {
+  id = id_;
+  time = time_;
+  amt = amt_;
+  evid = evid_;
+}
+
+typedef std::vector<record> recs;
+
+bool Comp1(const record& a, const record& b) {
+  bool res = a.time == b.time ? a.amt < b.amt : a.time < b.time;
   return res;
 }
 
-bool Comp2(const rec& a, const rec& b) {
-  bool res = a[1] < b[1];
-  if(a[1]==b[1]) res = (b[3]) < (a[3]);
+bool Comp2(const record& a, const record& b) {
+  bool res = a.time == b.time ? b.amt < a.amt : a.time < b.time;
   return res;
 }
 
@@ -58,13 +72,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     this_id.reserve((idend[i] - idstart[i])*3);
     bool found_dose = false;
     for(int j = idstart[i]; j <= idend[i]; j++) {
-      std::vector<double> this_rec;
-      this_rec.resize(5);
-      this_rec[0] = this_idn;
-      this_rec[1] = time[j];
-      this_rec[2] = 0;
-      this_rec[3] = amt[j];
-      this_rec[4] = evid[j];
+      record this_rec(this_idn,time[j],amt[j],evid[j]);
+      this_rec.from_data = true;
       if(!found_dose && (evid[j]==1 || evid[j]==4)) {
         found_dose = true;
         told[i] = time[j];
@@ -72,13 +81,10 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       this_id.push_back(this_rec);
       if(has_addl && (addl[j] > 0) && (evid[j]==1 || evid[j]==4)) {
         for(int k = 0; k < addl[j]; k++) {
-          rec addl_rec(5);
-          addl_rec[0] = this_idn;
-          addl_rec[1] = time[j] + ii[j]*double(k+1);
-          addl_rec[2] = 1;
-          addl_rec[3] = amt[j];
-          addl_rec[4] = evid[j];
-          if(addl_rec[1] >= (max_time)) break;
+          record addl_rec(this_idn,0.0,amt[j],evid[j]);
+          addl_rec.from_data = false;
+          addl_rec.time = time[j] + ii[j]*double(k+1);
+          if(addl_rec.time >= (max_time)) break;
           this_id.push_back(addl_rec);
         }
       }
@@ -93,16 +99,16 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     bool no_dose = told[i] == -1;
     double last_time = 0;
     for(int m = 0; m < this_id.size(); m++) {
-      if(this_id[m][4] ==1 | this_id[m][4]==4) {
+      if(this_id[m].evid ==1 | this_id[m].evid==4) {
         had_dose = true;
-        last_dose = this_id[m][3];
-        last_time = this_id[m][1];
+        last_dose = this_id[m].amt;
+        last_time = this_id[m].time;
       }
-      if((this_id[m])[2]==0) {
+      if(this_id[m].from_data) {
         if(had_dose) {
-          tad[crow] = this_id[m][1] - last_time;
+          tad[crow] = this_id[m].time - last_time;
         } else {
-          tad[crow] = (use_fill || no_dose) ? fill[0] : (this_id[m][1] - told[i]);
+          tad[crow] = (use_fill || no_dose) ? fill[0] : (this_id[m].time - told[i]);
         }
         ldos[crow] = last_dose;
         crow++;
@@ -114,8 +120,3 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   ans["ldos"] = ldos;
   return ans;
 }
-
-
-
-
-
