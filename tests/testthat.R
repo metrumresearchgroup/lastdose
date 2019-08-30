@@ -1,5 +1,4 @@
 
-
 Sys.setenv("R_TESTS" = "")
 
 if(require("testthat") & require("Rcpp")) {

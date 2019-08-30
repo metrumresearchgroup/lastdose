@@ -66,3 +66,18 @@ dosing and both an an additional dose and an observation happen at 24 hours,
 \code{obs_first} will set the observation\code{TAD} to 24 and \code{dose_first} will set
 the observation \code{TAD} to 0.
 }
+\examples{
+file <- system.file("csv/data1.csv", package="lastdose")
+
+require("Rcpp")
+
+data <- read.csv(file)
+
+a <- lastdose(data)
+
+b <- lastdose_df(data)
+
+c <- lastdose_list(data)
+
+
+}

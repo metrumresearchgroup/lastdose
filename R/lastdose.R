@@ -1,4 +1,7 @@
 
+#' @useDynLib lastdose, .registration=TRUE
+NULL
+
 #' Calculate last dose amount and time after last dose
 #'
 #' Use [lastdose] to columns to the input data frame; [lastdose_list]
@@ -43,7 +46,20 @@
 #' `obs_first` will set the observation`TAD` to 24 and `dose_first` will set
 #' the observation `TAD` to 0.
 #'
-#' @useDynLib lastdose, .registration=TRUE
+#' @examples
+#' file <- system.file("csv/data1.csv", package="lastdose")
+#'
+#' require("Rcpp")
+#'
+#' data <- read.csv(file)
+#'
+#' a <- lastdose(data)
+#'
+#' b <- lastdose_df(data)
+#'
+#' c <- lastdose_list(data)
+#'
+#'
 #' @export
 lastdose <- function(data,...) {
   ans <- lastdose_list(data,...)
@@ -114,4 +130,3 @@ lastdose_df <- function(data,...) {
     fix.empty.names=FALSE, row.names=NULL
   )
 }
-

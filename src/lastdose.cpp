@@ -51,7 +51,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   idstart.reserve(1000);
   idend.reserve(1000);
   double lastid = -1E9;
-  for(int i = 0; i < id.size(); i++) {
+  int nrows = id.size();
+  for(int i = 0; i < nrows; ++i) {
     if(id[i] != lastid) {
       idn.push_back(id[i]);
       lastid = id[i];
@@ -65,13 +66,14 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   Rcpp::NumericVector ldos(id.size());
   std::vector<double> told;
   told.assign(idn.size(),-1.0);
-  for(int i = 0; i < idn.size(); i++) {
+  int nid = idn.size();
+  for(int i = 0; i < nid; ++i) {
     double this_idn = idn[i];
     double max_time = time[idend[i]];
     recs this_id;
     this_id.reserve((idend[i] - idstart[i])*3);
     bool found_dose = false;
-    for(int j = idstart[i]; j <= idend[i]; j++) {
+    for(int j = idstart[i]; j <= idend[i]; ++j) {
       record this_rec(this_idn,time[j],amt[j],evid[j]);
       this_rec.from_data = true;
       if(!found_dose && (evid[j]==1 || evid[j]==4)) {
@@ -80,7 +82,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
       this_id.push_back(this_rec);
       if(has_addl && (addl[j] > 0) && (evid[j]==1 || evid[j]==4)) {
-        for(int k = 0; k < addl[j]; k++) {
+        for(int k = 0; k < addl[j]; ++k) {
           record addl_rec(this_idn,0.0,amt[j],evid[j]);
           addl_rec.from_data = false;
           addl_rec.time = time[j] + ii[j]*double(k+1);
@@ -88,7 +90,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
           this_id.push_back(addl_rec);
         }
       }
-    } // END THIS ID
+    }
     if(use_comp1) {
       std::sort(this_id.begin(), this_id.end(), Comp1);
     } else {
@@ -98,20 +100,20 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     bool had_dose = false;
     bool no_dose = told[i] == -1;
     double last_time = 0;
-    for(int m = 0; m < this_id.size(); m++) {
-      if(this_id[m].evid ==1 | this_id[m].evid==4) {
+    for(recs::const_iterator it = this_id.begin(); it !=this_id.end(); ++it) {
+      if(it->evid ==1 | it->evid==4) {
         had_dose = true;
-        last_dose = this_id[m].amt;
-        last_time = this_id[m].time;
+        last_dose = it->amt;
+        last_time = it->time;
       }
-      if(this_id[m].from_data) {
+      if(it->from_data) {
         if(had_dose) {
-          tad[crow] = this_id[m].time - last_time;
+          tad[crow] = it->time - last_time;
         } else {
-          tad[crow] = (use_fill || no_dose) ? fill[0] : (this_id[m].time - told[i]);
+          tad[crow] = (use_fill || no_dose) ? fill[0] : (it->time - told[i]);
         }
         ldos[crow] = last_dose;
-        crow++;
+        ++crow;
       }
     }
   }

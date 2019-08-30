@@ -9,6 +9,12 @@ CHKDIR=.
 ## Set libPaths:
 export R_LIBS=${LIBDIR}
 
+test:
+	Rscript -e 'library(testthat)' -e 'test_file("tests/testthat.R")'
+
+rhub:
+	Rscript -e 'rhub::check_for_cran()'
+
 cran:
 	make doc
 	make build
