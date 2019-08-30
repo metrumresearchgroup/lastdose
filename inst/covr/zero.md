@@ -1,4 +1,4 @@
 "","filename","functions","line","value"
-"71","R/lastdose.R","lastdose_list",81,0
-"81","R/lastdose.R","lastdose_list",87,0
-"89","R/lastdose.R","lastdose_list",92,0
+"87","R/lastdose.R","lastdose_list",97,0
+"96","R/lastdose.R","lastdose_list",103,0
+"104","R/lastdose.R","lastdose_list",108,0
