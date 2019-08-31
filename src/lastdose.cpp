@@ -76,12 +76,12 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     for(int j = idstart[i]; j <= idend[i]; ++j) {
       record this_rec(this_idn,time[j],amt[j],evid[j]);
       this_rec.from_data = true;
-      if(!found_dose && (evid[j]==1 || evid[j]==4)) {
+      if(!found_dose && ((evid[j]==1) || (evid[j]==4))) {
         found_dose = true;
         told[i] = time[j];
       }
       this_id.push_back(this_rec);
-      if(has_addl && (addl[j] > 0) && (evid[j]==1 || evid[j]==4)) {
+      if(has_addl && (addl[j] > 0) && ((evid[j]==1) || (evid[j]==4))) {
         for(int k = 0; k < addl[j]; ++k) {
           record addl_rec(this_idn,0.0,amt[j],evid[j]);
           addl_rec.from_data = false;
@@ -101,7 +101,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     bool no_dose = told[i] == -1;
     double last_time = 0;
     for(recs::const_iterator it = this_id.begin(); it !=this_id.end(); ++it) {
-      if(it->evid ==1 | it->evid==4) {
+      if((it->evid ==1) || (it->evid==4)) {
         had_dose = true;
         last_dose = it->amt;
         last_time = it->time;

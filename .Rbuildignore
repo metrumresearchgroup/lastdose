@@ -6,7 +6,7 @@ README.html
 README.Rmd
 README.md
 cran-comments.md
-Rchecks
+lastdose\.Rchecks
 .github
 inst/doc
 Doxyfile
@@ -27,3 +27,5 @@ _config.yml
 Makefile
 docs
 ^DOCS$
+man/figures
+^lastdose$
