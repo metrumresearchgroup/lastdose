@@ -75,13 +75,10 @@ list or data.frame format without modifying the input data." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="https://github.com/kylebaron/lastdose">GitHub</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -176,12 +173,24 @@ dosing and both an an additional dose and an observation happen at 24 hours,
 <code>obs_first</code> will set the observation<code>TAD</code> to 24 and <code>dose_first</code> will set
 the observation <code>TAD</code> to 0.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"csv/data1.csv"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"lastdose"</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='st'>"Rcpp"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='input'>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>(<span class='no'>file</span>)
+
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose</span>(<span class='no'>data</span>)
+
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_df</span>(<span class='no'>data</span>)
+
+<span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_list</span>(<span class='no'>data</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
