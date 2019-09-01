@@ -1,0 +1,14 @@
+url: https://github.com/kylebaron/lastdose
+navbar:
+  type: default
+  left:
+  - text: Reference
+    href: reference/index.html
+  - text: GitHub
+    href: https://github.com/kylebaron/lastdose
+home:
+  links:
+  - text: Source code
+    href: https://github.com/kylebaron/lastdose
+  - text: Issues
+    href: https://github.com/kylebaron/lastdose/issues
