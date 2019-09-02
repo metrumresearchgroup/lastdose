@@ -2,19 +2,18 @@
 
 class  record {
 public:
-  record(double id_, double time_, double amt_, int evid_);
-  double id;
+  record(double time_, double amt_, int evid_,bool from_data_);
   double time;
   double amt;
   int evid;
   bool from_data;
 };
 
-record::record(double id_, double time_, double amt_, int evid_) {
-  id = id_;
+record::record(double time_, double amt_, int evid_,bool from_data_) {
   time = time_;
   amt = amt_;
   evid = evid_;
+  from_data = from_data_;
 }
 
 typedef std::vector<record> recs;
@@ -68,13 +67,12 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   told.assign(idn.size(),-1.0);
   int nid = idn.size();
   for(int i = 0; i < nid; ++i) {
-    double this_idn = idn[i];
     double max_time = time[idend[i]];
     recs this_id;
     this_id.reserve((idend[i] - idstart[i])*3);
     bool found_dose = false;
     for(int j = idstart[i]; j <= idend[i]; ++j) {
-      record this_rec(this_idn,time[j],amt[j],evid[j]);
+      record this_rec(time[j],amt[j],evid[j],true);
       this_rec.from_data = true;
       if(!found_dose && ((evid[j]==1) || (evid[j]==4))) {
         found_dose = true;
@@ -83,8 +81,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       this_id.push_back(this_rec);
       if(has_addl && (addl[j] > 0) && ((evid[j]==1) || (evid[j]==4))) {
         for(int k = 0; k < addl[j]; ++k) {
-          record addl_rec(this_idn,0.0,amt[j],evid[j]);
-          addl_rec.from_data = false;
+          record addl_rec(0.0,amt[j],evid[j],false);
           addl_rec.time = time[j] + ii[j]*double(k+1);
           if(addl_rec.time >= (max_time)) break;
           this_id.push_back(addl_rec);
