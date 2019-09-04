@@ -9,6 +9,10 @@ CHKDIR=.
 ## Set libPaths:
 export R_LIBS=${LIBDIR}
 
+travis:
+	make build
+	R CMD CHECK ${TARBALL} -o ${CHKDIR}
+
 test:
 	Rscript -e 'library(testthat)' -e 'test_file("tests/testthat.R")'
 
