@@ -11,7 +11,7 @@ export R_LIBS=${LIBDIR}
 
 travis:
 	make build
-	R CMD CHECK ${TARBALL} -o ${CHKDIR}
+	R CMD check ${TARBALL} -o ${CHKDIR}
 
 test:
 	Rscript -e 'library(testthat)' -e 'test_file("tests/testthat.R")'
@@ -22,7 +22,7 @@ rhub:
 cran:
 	make doc
 	make build
-	R CMD CHECK ${TARBALL} --as-cran
+	R CMD check ${TARBALL} --as-cran
 
 covr:
 	Rscript inst/covr/covr.R
@@ -43,15 +43,15 @@ build:
 	R CMD build --md5 $(PKGDIR)
 
 install:
-	R CMD INSTALL --install-tests ${TARBALL}
+	R CMD install --install-tests ${TARBALL}
 
 install-build:
-	R CMD INSTALL --build --install-tests ${TARBALL}
+	R CMD install --build --install-tests ${TARBALL}
 
 check:
 	make doc
 	make build
-	R CMD CHECK ${TARBALL} -o ${CHKDIR}
+	R CMD check ${TARBALL} -o ${CHKDIR}
 
 readme:
 	Rscript -e 'rmarkdown::render("README.Rmd")'
