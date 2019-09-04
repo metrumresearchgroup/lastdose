@@ -3,7 +3,11 @@ title: ""
 output: github_document
 ---
 
-# lastdose 
+# lastdose
+
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
+<!-- badges: end -->
 
 Calculate the time since and amount of the last dose. Additional (`ADDL`) 
 dosing records are expanded and included in the calculation.
