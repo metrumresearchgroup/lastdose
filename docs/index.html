@@ -74,11 +74,14 @@
 <a href="#lastdose" class="anchor"></a>lastdose</h1></div>
 <!-- badges: start -->
 
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
 <p>Calculate the time since and amount of the last dose. Additional (<code>ADDL</code>) dosing records are expanded and included in the calculation.</p>
-<hr>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lastdose)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a></code></pre></div>
+</div>
 <div id="a-pk-profile" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-pk-profile" class="anchor"></a>A PK profile</h2>
@@ -106,10 +109,9 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,DV)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="reference/figures/readme-unnamed-chunk-4-1.png" width="700"></p>
 </div>
-</div>
-<div id="calculate-tad-and-ldos" class="section level1">
-<h1 class="hasAnchor">
-<a href="#calculate-tad-and-ldos" class="anchor"></a>Calculate TAD and LDOS</h1>
+<div id="calculate-tad-and-ldos" class="section level2">
+<h2 class="hasAnchor">
+<a href="#calculate-tad-and-ldos" class="anchor"></a>Calculate TAD and LDOS</h2>
 <p>Use the <code><a href="reference/lastdose.html">lastdose()</a></code> function</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df)</a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
@@ -123,15 +125,15 @@
 . 6  1   16    0    0   0  0    0 23.6  16 1000</code></pre>
 <p>Now we have <code>TAD</code> and <code>LDOS</code> in our data set.</p>
 </div>
-<div id="plot-last-dose-versus-time" class="section level1">
-<h1 class="hasAnchor">
-<a href="#plot-last-dose-versus-time" class="anchor"></a>Plot last dose versus time</h1>
+<div id="plot-last-dose-versus-time" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-last-dose-versus-time" class="anchor"></a>Plot last dose versus time</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,LDOS)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="reference/figures/readme-unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="plot-time-after-dose-versus-time" class="section level1">
-<h1 class="hasAnchor">
-<a href="#plot-time-after-dose-versus-time" class="anchor"></a>Plot time after dose versus time</h1>
+<div id="plot-time-after-dose-versus-time" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-time-after-dose-versus-time" class="anchor"></a>Plot time after dose versus time</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="reference/figures/readme-unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
@@ -139,9 +141,9 @@
 <a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">24</span>)) </a></code></pre></div>
 <p><img src="reference/figures/readme-unnamed-chunk-7-2.png" width="700"></p>
 </div>
-<div id="all-doses-explicit-in-the-data-set" class="section level1">
-<h1 class="hasAnchor">
-<a href="#all-doses-explicit-in-the-data-set" class="anchor"></a>All doses explicit in the data set</h1>
+<div id="all-doses-explicit-in-the-data-set" class="section level2">
+<h2 class="hasAnchor">
+<a href="#all-doses-explicit-in-the-data-set" class="anchor"></a>All doses explicit in the data set</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">df2 &lt;-<span class="st"> </span>mrgsolve<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mrgsolve/topics/realize_addl">realize_addl</a></span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>()</a>
 <a class="sourceLine" id="cb12-2" title="2"></a>
 <a class="sourceLine" id="cb12-3" title="3"><span class="kw">ggplot</span>(df2, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
@@ -149,9 +151,9 @@
 <a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>))</a></code></pre></div>
 <p><img src="reference/figures/readme-unnamed-chunk-8-1.png" width="700"></p>
 </div>
-<div id="how-does-it-perform-on-bigger-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-does-it-perform-on-bigger-data" class="anchor"></a>How does it perform on bigger data?</h1>
+<div id="how-does-it-perform-on-bigger-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-does-it-perform-on-bigger-data" class="anchor"></a>How does it perform on bigger data?</h2>
 <p>Same setup as the previous profile, but more individuals.</p>
 <p>We have 500K rows and 1000 individuals</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"csv/data_big.RDS"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
@@ -165,7 +167,8 @@
 <p>Timing result</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
 <pre><code>.    user  system elapsed 
-.   0.035   0.001   0.036</code></pre>
+.   0.033   0.001   0.035</code></pre>
+</div>
 <div id="compare-against-the-single-profile" class="section level2">
 <h2 class="hasAnchor">
 <a href="#compare-against-the-single-profile" class="anchor"></a>Compare against the single profile</h2>
@@ -177,10 +180,9 @@
 <a class="sourceLine" id="cb21-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all.equal">all.equal</a></span>(x1,x3)</a></code></pre></div>
 <pre><code>. [1] TRUE</code></pre>
 </div>
-</div>
-<div id="observations-prior-to-the-first-dose" class="section level1">
-<h1 class="hasAnchor">
-<a href="#observations-prior-to-the-first-dose" class="anchor"></a>Observations prior to the first dose</h1>
+<div id="observations-prior-to-the-first-dose" class="section level2">
+<h2 class="hasAnchor">
+<a href="#observations-prior-to-the-first-dose" class="anchor"></a>Observations prior to the first dose</h2>
 <p>When non-dose records happen prior to the first dose, lastdose calculates the time before the first dose (a negative value) for these records.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"csv/data2.csv"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
 <a class="sourceLine" id="cb23-2" title="2"></a>
@@ -209,10 +211,11 @@
 . 6     1    16     0     0     0     0     0  23.6     4  1000</code></pre>
 <hr>
 </div>
-<div id="more-info" class="section level1">
-<h1 class="hasAnchor">
-<a href="#more-info" class="anchor"></a>More info</h1>
+<div id="more-info" class="section level2">
+<h2 class="hasAnchor">
+<a href="#more-info" class="anchor"></a>More info</h2>
 <p>See <a href="inst/doc/about.html">inst/doc/about.md (on GitHub only)</a> for more details.</p>
+</div>
 </div>
   </div>
 

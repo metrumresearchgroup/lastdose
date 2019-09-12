@@ -7,10 +7,10 @@
 status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
 <!-- badges: end -->
 
+## Overview
+
 Calculate the time since and amount of the last dose. Additional
 (`ADDL`) dosing records are expanded and included in the calculation.
-
-<hr>
 
 ``` r
 library(lastdose)
@@ -58,7 +58,7 @@ ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 
 ![](man/figures/readme-unnamed-chunk-4-1.png)<!-- -->
 
-# Calculate TAD and LDOS
+## Calculate TAD and LDOS
 
 Use the `lastdose()` function
 
@@ -78,7 +78,7 @@ head(df)
 
 Now we have `TAD` and `LDOS` in our data set.
 
-# Plot last dose versus time
+## Plot last dose versus time
 
 ``` r
 ggplot(df, aes(TIME,LDOS)) + geom_line()
@@ -86,7 +86,7 @@ ggplot(df, aes(TIME,LDOS)) + geom_line()
 
 ![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
 
-# Plot time after dose versus time
+## Plot time after dose versus time
 
 ``` r
 ggplot(df, aes(TIME,TAD)) + geom_line()
@@ -102,7 +102,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
 
 ![](man/figures/readme-unnamed-chunk-7-2.png)<!-- -->
 
-# All doses explicit in the data set
+## All doses explicit in the data set
 
 ``` r
 df2 <- mrgsolve::realize_addl(df) %>% lastdose()
@@ -114,7 +114,7 @@ ggplot(df2, aes(TIME,TAD)) + geom_line() +
 
 ![](man/figures/readme-unnamed-chunk-8-1.png)<!-- -->
 
-# How does it perform on bigger data?
+## How does it perform on bigger data?
 
 Same setup as the previous profile, but more individuals.
 
@@ -143,7 +143,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.033   0.002   0.034
+    .   0.034   0.002   0.036
 
 ## Compare against the single profile
 
@@ -162,7 +162,7 @@ all.equal(x1,x3)
 
     . [1] TRUE
 
-# Observations prior to the first dose
+## Observations prior to the first dose
 
 When non-dose records happen prior to the first dose, lastdose
 calculates the time before the first dose (a negative value) for these
@@ -204,7 +204,7 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 
 <hr>
 
-# More info
+## More info
 
 See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more
 details.
