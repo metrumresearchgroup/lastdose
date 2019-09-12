@@ -50,9 +50,6 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   std::vector<double> idn;
   std::vector<int> idstart;
   std::vector<int> idend;
-  idn.reserve(1000);
-  idstart.reserve(1000);
-  idend.reserve(1000);
   double lastid = -1E9;
   int nrows = id.size();
   for(int i = 0; i < nrows; ++i) {
@@ -86,7 +83,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   for(int i = 0; i < nid; ++i) {
     double max_time = time[idend[i]];
     recs this_id;
-    this_id.reserve((idend[i] - idstart[i])*3);
+    this_id.reserve((idend[i] - idstart[i]));
     bool found_dose = false;
     double last_time = -1E9;
     for(int j = idstart[i]; j <= idend[i]; ++j) {
