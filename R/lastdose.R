@@ -135,20 +135,6 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
   if(!is.numeric(col_ii)) {
     stop("column II/ii is required to be numeric", call.=FALSE)
   }
-  if(anyNA(data[,c(wid,wevid,wii,waddl)])) {
-    na <- names(data)
-    miss_id <- any(is.na(data[[wid]]))
-    miss_evid <- any(is.na(data[[wevid]]))
-    miss_ii <- any(is.na(data[[wii]]))
-    miss_addl <- any(is.na(data[[waddl]]))
-    miss <- c()
-    if(miss_id) miss[length(miss)+1] <- na[wid]
-    if(miss_evid) miss[length(miss)+1] <- na[wevid]
-    if(miss_ii) miss[length(miss)+1] <- na[wii]
-    if(miss_addl) miss[length(miss)+1] <- na[waddl]
-    miss <- paste0(miss,collapse=',')
-    stop("missing values found in col(s): ",miss,call.=FALSE)
-  }
   fill <- as.double(fill)
   if(length(fill)==0) fill <- 0
   ans <- lastdose_impl(

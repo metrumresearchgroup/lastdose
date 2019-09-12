@@ -1,5 +1,7 @@
 #include <Rcpp.h>
 
+#define isna(a) Rcpp::NumericVector::is_na(a)
+
 class  record {
 public:
   record(double time_, double amt_, int evid_,bool from_data_);
@@ -54,6 +56,19 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   double lastid = -1E9;
   int nrows = id.size();
   for(int i = 0; i < nrows; ++i) {
+    if(isna(id[i]) || isna(evid[i]) || isna(addl[i]) || isna(ii[i])) {
+      std::string col;
+      if(isna(id[i]))   col = "ID/id";
+      if(isna(evid[i])) col = "EVID/evid";
+      if(isna(addl[i])) col = "ADDL/addl";
+      if(isna(ii[i]))   col = "II/ii";
+      throw Rcpp::exception(
+          tfm::format(
+            "missing values not allowed in col %s at row %i", col, (i+1)
+          ).c_str(),
+          false
+      );
+    }
     if(id[i] != lastid) {
       idn.push_back(id[i]);
       lastid = id[i];
