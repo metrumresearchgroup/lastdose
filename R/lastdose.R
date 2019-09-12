@@ -22,6 +22,8 @@ NULL
 #' and the observation made immediately after (with no advance in time). See
 #' details.
 #' @param ... arguments passed to [lastdose_list]
+#' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
+#' appended to the data set.  Only used for the [lastdose] function.
 #'
 #' @details
 #'
@@ -66,10 +68,10 @@ NULL
 #'
 #'
 #' @export
-lastdose <- function(data,...) {
+lastdose <- function(data,..., include_ldos = TRUE) {
   ans <- lastdose_list(data,...)
   data[["TAD"]] <- ans[["tad"]]
-  data[["LDOS"]] <- ans[["ldos"]]
+  if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
   data
 }
 

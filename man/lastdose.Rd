@@ -6,7 +6,7 @@
 \alias{lastdose_df}
 \title{Calculate last dose amount (LDOS) and time after last dose (TAD)}
 \usage{
-lastdose(data, ...)
+lastdose(data, ..., include_ldos = TRUE)
 
 lastdose_list(data, fill = -99, back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"))
@@ -17,6 +17,9 @@ lastdose_df(data, ...)
 \item{data}{data set as data frame; see \code{details}}
 
 \item{...}{arguments passed to \link{lastdose_list}}
+
+\item{include_ldos}{\code{logical}; if \code{FALSE} then the \code{LDOS} data is not
+appended to the data set.  Only used for the \link{lastdose} function.}
 
 \item{fill}{the value for \code{TAD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
