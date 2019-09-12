@@ -100,13 +100,27 @@ ggplot(df, aes(TIME,TAD)) + geom_line()
 
 ![](man/figures/readme-unnamed-chunk-8-1.png)<!-- -->
 
+Observations before doses at the same time by default
+
 ``` r
 ggplot(df, aes(TIME,TAD)) + geom_line() + 
   scale_x_continuous(breaks = seq(0,72,4), limits=c(0,72)) + 
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 ```
 
-![](man/figures/readme-unnamed-chunk-8-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-9-1.png)<!-- -->
+
+You can also make doses “happen” first
+
+``` r
+dd <- lastdose(df, addl_ties = "dose_first")
+
+ggplot(dd, aes(TIME,TAD)) + geom_line() + 
+  scale_x_continuous(breaks = seq(0,72,4), limits=c(0,72)) + 
+  scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
+```
+
+![](man/figures/readme-unnamed-chunk-10-1.png)<!-- -->
 
 ## All doses explicit in the data set
 
@@ -118,7 +132,7 @@ ggplot(df2, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4))
 ```
 
-![](man/figures/readme-unnamed-chunk-9-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-11-1.png)<!-- -->
 
 ## How does it perform on bigger data?
 
@@ -149,7 +163,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.044   0.001   0.045
+    .   0.046   0.001   0.047
 
 ## Compare against the single profile
 
