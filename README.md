@@ -7,16 +7,16 @@
 status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
 <!-- badges: end -->
 
+## Overview
+
+Calculate the time since and amount of the last dose. Additional
+(`ADDL`) dosing records are expanded and included in the calculation.
+
 ## Installation
 
 ``` r
 remotes::install_github("kylebaron/lastdose")
 ```
-
-## Overview
-
-Calculate the time since and amount of the last dose. Additional
-(`ADDL`) dosing records are expanded and included in the calculation.
 
 ``` r
 library(lastdose)
@@ -163,7 +163,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.046   0.001   0.047
+    .   0.039   0.002   0.041
 
 ## Compare against the single profile
 
@@ -172,7 +172,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .       0       0       0
+    .   0.000   0.000   0.001
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()

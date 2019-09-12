@@ -74,15 +74,15 @@
 <a href="#lastdose" class="anchor"></a>lastdose</h1></div>
 <!-- badges: start -->
 
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"kylebaron/lastdose"</span>)</a></code></pre></div>
-</div>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>Calculate the time since and amount of the last dose. Additional (<code>ADDL</code>) dosing records are expanded and included in the calculation.</p>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"kylebaron/lastdose"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lastdose)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a></code></pre></div>
@@ -180,7 +180,7 @@
 <p>Timing result</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
 <pre><code>.    user  system elapsed 
-.   0.045   0.002   0.046</code></pre>
+.   0.037   0.002   0.038</code></pre>
 </div>
 <div id="compare-against-the-single-profile" class="section level2">
 <h2 class="hasAnchor">
