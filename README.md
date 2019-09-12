@@ -7,6 +7,12 @@
 status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
 <!-- badges: end -->
 
+## Installation
+
+``` r
+remotes::install_github("kylebaron/lastdose")
+```
+
 ## Overview
 
 Calculate the time since and amount of the last dose. Additional
@@ -56,7 +62,7 @@ df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
 ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
-![](man/figures/readme-unnamed-chunk-4-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-5-1.png)<!-- -->
 
 ## Calculate TAD and LDOS
 
@@ -84,7 +90,7 @@ Now we have `TAD` and `LDOS` in our data set.
 ggplot(df, aes(TIME,LDOS)) + geom_line()
 ```
 
-![](man/figures/readme-unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-7-1.png)<!-- -->
 
 ## Plot time after dose versus time
 
@@ -92,7 +98,7 @@ ggplot(df, aes(TIME,LDOS)) + geom_line()
 ggplot(df, aes(TIME,TAD)) + geom_line()
 ```
 
-![](man/figures/readme-unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 ggplot(df, aes(TIME,TAD)) + geom_line() + 
@@ -100,7 +106,7 @@ ggplot(df, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4), limits=c(0,24)) 
 ```
 
-![](man/figures/readme-unnamed-chunk-7-2.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-8-2.png)<!-- -->
 
 ## All doses explicit in the data set
 
@@ -112,7 +118,7 @@ ggplot(df2, aes(TIME,TAD)) + geom_line() +
   scale_y_continuous(breaks = seq(0,24,4))
 ```
 
-![](man/figures/readme-unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/readme-unnamed-chunk-9-1.png)<!-- -->
 
 ## How does it perform on bigger data?
 
@@ -143,7 +149,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.047   0.006   0.054
+    .   0.048   0.007   0.056
 
 ## Compare against the single profile
 

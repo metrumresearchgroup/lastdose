@@ -9,6 +9,12 @@ output: github_document
 [![Travis build status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
 <!-- badges: end -->
 
+## Installation
+
+```{r, eval=FALSE}
+remotes::install_github("kylebaron/lastdose")
+```
+
 ## Overview
 Calculate the time since and amount of the last dose. Additional (`ADDL`) 
 dosing records are expanded and included in the calculation.
