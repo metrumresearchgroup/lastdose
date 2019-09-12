@@ -17,6 +17,7 @@ names(df) <- toupper(names(df))
 df1 <- filter(df, ID==1)
 df2 <- filter(df1, TIME <= 28)
 df2 <- mutate(df2, TIME = ifelse(AMT > 0, 12, TIME)) %>% arrange(ID,TIME,EVID)
+df2 <- mutate(df2, CP = ifelse(TIME <= 12, 0, CP))
 
 write.csv(
   df1,

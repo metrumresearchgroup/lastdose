@@ -163,7 +163,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.039   0.002   0.041
+    .   0.046   0.001   0.046
 
 ## Compare against the single profile
 
@@ -172,7 +172,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .   0.000   0.000   0.001
+    .       0       0       0
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
@@ -200,9 +200,9 @@ lastdose(df) %>% head()
     .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
     .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
     . 1     1     0     0     0     0     0     0   0     -12     0
-    . 2     1     4     0     0     0     0     0  42.1    -8     0
-    . 3     1     8     0     0     0     0     0  35.3    -4     0
-    . 4     1    12     0     0     0     0     0  28.9     0     0
+    . 2     1     4     0     0     0     0     0   0      -8     0
+    . 3     1     8     0     0     0     0     0   0      -4     0
+    . 4     1    12     0     0     0     0     0   0       0     0
     . 5     1    12     1  1000     1    24    27   0       0  1000
     . 6     1    16     0     0     0     0     0  23.6     4  1000
 
@@ -216,9 +216,9 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
     .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
     .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
     . 1     1     0     0     0     0     0     0   0      NA     0
-    . 2     1     4     0     0     0     0     0  42.1    NA     0
-    . 3     1     8     0     0     0     0     0  35.3    NA     0
-    . 4     1    12     0     0     0     0     0  28.9    NA     0
+    . 2     1     4     0     0     0     0     0   0      NA     0
+    . 3     1     8     0     0     0     0     0   0      NA     0
+    . 4     1    12     0     0     0     0     0   0      NA     0
     . 5     1    12     1  1000     1    24    27   0       0  1000
     . 6     1    16     0     0     0     0     0  23.6     4  1000
 

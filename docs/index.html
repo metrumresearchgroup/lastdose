@@ -180,7 +180,7 @@
 <p>Timing result</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
 <pre><code>.    user  system elapsed 
-.   0.037   0.002   0.038</code></pre>
+.   0.046   0.001   0.048</code></pre>
 </div>
 <div id="compare-against-the-single-profile" class="section level2">
 <h2 class="hasAnchor">
@@ -206,9 +206,9 @@
 .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
 .   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 . 1     1     0     0     0     0     0     0   0     -12     0
-. 2     1     4     0     0     0     0     0  42.1    -8     0
-. 3     1     8     0     0     0     0     0  35.3    -4     0
-. 4     1    12     0     0     0     0     0  28.9     0     0
+. 2     1     4     0     0     0     0     0   0      -8     0
+. 3     1     8     0     0     0     0     0   0      -4     0
+. 4     1    12     0     0     0     0     0   0       0     0
 . 5     1    12     1  1000     1    24    27   0       0  1000
 . 6     1    16     0     0     0     0     0  23.6     4  1000</code></pre>
 <p>The user can alternatively control what happens for these records</p>
@@ -217,9 +217,9 @@
 .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
 .   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 . 1     1     0     0     0     0     0     0   0      NA     0
-. 2     1     4     0     0     0     0     0  42.1    NA     0
-. 3     1     8     0     0     0     0     0  35.3    NA     0
-. 4     1    12     0     0     0     0     0  28.9    NA     0
+. 2     1     4     0     0     0     0     0   0      NA     0
+. 3     1     8     0     0     0     0     0   0      NA     0
+. 4     1    12     0     0     0     0     0   0      NA     0
 . 5     1    12     1  1000     1    24    27   0       0  1000
 . 6     1    16     0     0     0     0     0  23.6     4  1000</code></pre>
 <hr>
