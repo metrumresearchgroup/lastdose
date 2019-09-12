@@ -143,7 +143,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.034   0.002   0.036
+    .   0.051   0.006   0.056
 
 ## Compare against the single profile
 
@@ -152,7 +152,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .       0       0       0
+    .   0.000   0.000   0.001
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()

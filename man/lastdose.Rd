@@ -4,7 +4,7 @@
 \alias{lastdose}
 \alias{lastdose_list}
 \alias{lastdose_df}
-\title{Calculate last dose amount and time after last dose}
+\title{Calculate last dose amount (LDOS) and time after last dose (TAD)}
 \usage{
 lastdose(data, ...)
 
@@ -58,7 +58,12 @@ are considered dosing records
 }
 \item An error is generated if required columns are not found; no error
 or warning if optional columns are not found
-\item All required and optional columns will be coerced with \link{as.double}
+\item All required and optional columns are required to be numeric
+\item Missing values are not allowed in: \code{ID},\code{EVID},\code{ADDL},\code{II}
+\item When missing values are found in \code{TIME}, both \code{TAD} and \code{LDOS} are set to
+missing
+\item An error is generated for missing \code{AMT} in dosing records (evid 1 or 4)
+\item No error is generated for missing \code{AMT} in non-dosing records
 }
 
 An example illustrating the \code{addl_ties} argument: when there is \code{Q24h}

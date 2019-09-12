@@ -25,7 +25,17 @@
 1. The analysis data frame will have the following optional columns
     - `ADDL` or `addl` - additional doses to administer
     - `II` or `ii` - the dosing interval
-1. All required and optional columns will be coerced using `as.double`.
+1. All required and optional columns must be numeric; an error is generated
+   otherwise.
+1. The following columns must not contain missing values: ID, `evid`, `ii`, 
+   `addl`; an error is generated if missing values are found.
+1. When `time` contains missing values, both `TAD` and `LDOS` will be set 
+   to missing also.
+1. An error is generated when missing values are found in dosing records 
+   (evid 1 or 4) but no error is generated when missing values found in 
+   non-dosing records.
+1. The input data set must be sorted by time within individual; an error is 
+   generated otherwise.
 1. By default, doses prior to the first dosing record will be calculated as 
    time before the first dose and be expressed as negative numbers.
 1. The user may choose to fill in `TAD` for records prior to the first dose
@@ -46,6 +56,7 @@
    by dose amount so that doses happen first.  This makes the observation 
    a peak. The sorting that is done has no bearing on records explicitly listed
    in the input data. 
+
 
 # Coverage
 See [inst/covr/coverage.md](../covr/coverage.md)

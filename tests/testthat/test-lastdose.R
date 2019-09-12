@@ -67,4 +67,40 @@ test_that("required columns", {
   expect_error(lastdose(x))
 })
 
+test_that("non-numeic data throws error", {
+  for(col in c("ID","time", "addl", "ii", "evid", "ID", "amt")) {
+    dd <- set1[seq(10),]
+    dd[[col]] <- "A"
+    expect_error(lastdose(dd))
+  }
+})
 
+test_that("records out of order throws error", {
+  set1$time[12] <- 1E6
+  expect_error(lastdose(set1))
+})
+
+test_that("tad and ldos are NA when time is NA", {
+  set1$time[12] <- NA_real_
+  ans <- lastdose(set1)[12,]
+  expect_true(is.na(ans[["TAD"]]))
+  expect_true(is.na(ans[["LDOS"]]))
+  expect_true(is.na(ans[["time"]]))
+})
+
+test_that("error for missing values in ID,evid,ii,addl", {
+  for(col in c("ID", "evid", "ii", "addl")) {
+    dd <- set1[seq(10),]
+    dd[[col]] <- NA_real_
+    expect_error(lastdose(dd))
+  }
+})
+
+test_that("NA amt is error for dosing rec, ok otherwise", {
+  dd <- set1
+  dd$amt[5] <- NA_real_
+  expect_is(lastdose(dd), "data.frame")
+  dd <- set1
+  dd$amt[10] <- NA_real_
+  expect_error(lastdose(dd))
+})

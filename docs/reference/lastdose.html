@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate last dose amount and time after last dose — lastdose • lastdose</title>
+<title>Calculate last dose amount (LDOS) and time after last dose (TAD) — lastdose • lastdose</title>
 
 
 <!-- jquery -->
@@ -33,7 +33,7 @@
 
 
 
-<meta property="og:title" content="Calculate last dose amount and time after last dose — lastdose" />
+<meta property="og:title" content="Calculate last dose amount (LDOS) and time after last dose (TAD) — lastdose" />
 <meta property="og:description" content="Use lastdose to columns to the input data frame; lastdose_list
 and lastdose_df returns calculated information as either
 list or data.frame format without modifying the input data." />
@@ -103,7 +103,7 @@ list or data.frame format without modifying the input data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate last dose amount and time after last dose</h1>
+    <h1>Calculate last dose amount (LDOS) and time after last dose (TAD)</h1>
     <small class="dont-index">Source: <a href='https://github.com/kylebaron/lastdose/blob/master/R/lastdose.R'><code>R/lastdose.R</code></a></small>
     <div class="hidden name"><code>lastdose.Rd</code></div>
     </div>
@@ -174,7 +174,12 @@ are considered dosing records</p></li>
 </ul></li>
 <li><p>An error is generated if required columns are not found; no error
 or warning if optional columns are not found</p></li>
-<li><p>All required and optional columns will be coerced with <a href='https://www.rdocumentation.org/packages/base/topics/double'>as.double</a></p></li>
+<li><p>All required and optional columns are required to be numeric</p></li>
+<li><p>Missing values are not allowed in: <code>ID</code>,<code>EVID</code>,<code>ADDL</code>,<code>II</code></p></li>
+<li><p>When missing values are found in <code>TIME</code>, both <code>TAD</code> and <code>LDOS</code> are set to
+missing</p></li>
+<li><p>An error is generated for missing <code>AMT</code> in dosing records (evid 1 or 4)</p></li>
+<li><p>No error is generated for missing <code>AMT</code> in non-dosing records</p></li>
 </ul>
     <p>An example illustrating the <code>addl_ties</code> argument: when there is <code>Q24h</code>
 dosing and both an an additional dose and an observation happen at 24 hours,

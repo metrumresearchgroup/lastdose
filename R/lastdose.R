@@ -2,7 +2,7 @@
 #' @useDynLib lastdose, .registration=TRUE
 NULL
 
-#' Calculate last dose amount and time after last dose
+#' Calculate last dose amount (LDOS) and time after last dose (TAD)
 #'
 #' Use [lastdose] to columns to the input data frame; [lastdose_list]
 #' and [lastdose_df] returns calculated information as either
@@ -39,7 +39,12 @@ NULL
 #'   - `II` or `ii`: dosing interval
 #' - An error is generated if required columns are not found; no error
 #'   or warning if optional columns are not found
-#' - All required and optional columns will be coerced with [as.double]
+#' - All required and optional columns are required to be numeric
+#' - Missing values are not allowed in: `ID`,`EVID`,`ADDL`,`II`
+#' - When missing values are found in `TIME`, both `TAD` and `LDOS` are set to
+#'   missing
+#' - An error is generated for missing `AMT` in dosing records (evid 1 or 4)
+#' - No error is generated for missing `AMT` in non-dosing records
 #'
 #' An example illustrating the `addl_ties` argument: when there is `Q24h`
 #' dosing and both an an additional dose and an observation happen at 24 hours,
@@ -80,39 +85,77 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
   if(is.na(wid)) {
     stop("column ID is required in the data set.", call.=FALSE)
   }
+  col_id <- data[[wid]]
+  if(!is.numeric(col_id)) {
+    stop("column ID/id is required to be numeric", call.=FALSE)
+  }
   wtime <- match("time", na)
   if(is.na(wtime)) {
     stop("column TIME or time is required in the data set.", call.=FALSE)
+  }
+  col_time <- data[[wtime]]
+  if(!is.numeric(col_time)) {
+    stop("column TIME/time is required to be numeric", call.=FALSE)
   }
   wamt <- match("amt", na)
   if(is.na(wamt)) {
     stop("column AMT or amt is required in the data set.", call.=FALSE)
   }
+  col_amt <- data[[wamt]]
+  if(!is.numeric(col_amt)) {
+    stop("column AMT/amt is required to be numeric", call.=FALSE)
+  }
   wevid <- match("evid",na)
   if(is.na(wevid)) {
     stop("column EVID or evid is required in the data set.", call.=FALSE)
   }
+  col_evid <- data[[wevid]]
+  if(!is.numeric(col_evid)) {
+    stop("column EVID/evid is required to be numeric", call.=FALSE)
+  }
   waddl <- match("addl", na)
   if(is.na(waddl)) {
-    addl <- numeric(0)
+    col_addl <- numeric(0)
+    wii <- NULL
   } else {
-    addl <- data[[waddl]]
+    col_addl <- data[[waddl]]
+  }
+  if(!is.numeric(col_addl)) {
+    stop("column ADDL/addl is required to be numeric", call.=FALSE)
   }
   wii <- match("ii", na)
   if(is.na(wii)) {
-    ii <- numeric(0)
+    col_ii <- numeric(0)
+    wii <- NULL
   } else {
-    ii <- data[[wii]]
+    col_ii <- data[[wii]]
+  }
+  if(!is.numeric(col_ii)) {
+    stop("column II/ii is required to be numeric", call.=FALSE)
+  }
+  if(anyNA(data[,c(wid,wevid,wii,waddl)])) {
+    na <- names(data)
+    miss_id <- any(is.na(data[[wid]]))
+    miss_evid <- any(is.na(data[[wevid]]))
+    miss_ii <- any(is.na(data[[wii]]))
+    miss_addl <- any(is.na(data[[waddl]]))
+    miss <- c()
+    if(miss_id) miss[length(miss)+1] <- na[wid]
+    if(miss_evid) miss[length(miss)+1] <- na[wevid]
+    if(miss_ii) miss[length(miss)+1] <- na[wii]
+    if(miss_addl) miss[length(miss)+1] <- na[waddl]
+    miss <- paste0(miss,collapse=',')
+    stop("missing values found in col(s): ",miss,call.=FALSE)
   }
   fill <- as.double(fill)
   if(length(fill)==0) fill <- 0
   ans <- lastdose_impl(
-    as.double(data[[wid]]),
-    as.double(data[[wtime]]),
-    as.double(data[[wamt]]),
-    as.double(data[[wevid]]),
-    as.double(addl),
-    as.double(ii),
+    col_id,
+    col_time,
+    col_amt,
+    col_evid,
+    col_addl,
+    col_ii,
     fill,
     back_calc,
     sort1
