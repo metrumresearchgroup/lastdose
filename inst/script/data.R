@@ -1,6 +1,8 @@
 library(dplyr)
 library(mrgsolve)
-library(lastdose)
+
+set.seed(123489)
+
 mod <- modlib("pk1", end = 12*168, delta = 4)
 dose <- ev(amt=1000,ii= 24, addl = 12*7-1)
 d1 <- ev(amt = 1000, ii = 24, addl = 4*7-1)
@@ -17,7 +19,7 @@ names(df) <- toupper(names(df))
 df1 <- filter(df, ID==1)
 df2 <- filter(df1, TIME <= 28)
 df2 <- mutate(df2, TIME = ifelse(AMT > 0, 12, TIME)) %>% arrange(ID,TIME,EVID)
-df2 <- mutate(df2, CP = ifelse(TIME <= 12, 0, CP))
+df2 <- mutate(df2, DV = ifelse(TIME <= 12, 0, DV))
 
 write.csv(
   df1,

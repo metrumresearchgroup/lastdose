@@ -30,6 +30,10 @@ covr:
 ec:
 	echo ${VERSION}
 
+.PHONY: data
+data:
+	Rscript inst/script/data.R
+
 all:
 	make doc
 	make build
