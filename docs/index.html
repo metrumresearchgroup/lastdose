@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculate Time and Amount of Last Dose • lastdose</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Calculate Time and Amount of Last Dose">
 <meta property="og:description" content="Efficient calculation of time after last dose and last dose amount
     for analysis data sets.">
@@ -19,7 +20,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -39,18 +40,21 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/kylebaron/lastdose">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -63,12 +67,9 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
+      </header><div class="row">
+  <div class="contents col-md-9">
 <div id="lastdose" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#lastdose" class="anchor"></a>lastdose</h1></div>
@@ -82,37 +83,37 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"kylebaron/lastdose"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lastdose)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"metrumresearchgroup/lastdose"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lastdose)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a></code></pre></div>
 </div>
 <div id="a-pk-profile" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-pk-profile" class="anchor"></a>A PK profile</h2>
 <p>We’ll use this PK profile as an example</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"csv/data1.csv"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"csv/data1.csv"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(file) </a>
+<a class="sourceLine" id="cb3-3" title="3">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(file) </a>
 <a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df)</a></code></pre></div>
-<pre><code>.   ID TIME EVID  AMT CMT II ADDL   DV
-. 1  1    0    0    0   0  0    0  0.0
-. 2  1    0    1 1000   1 24   27  0.0
-. 3  1    4    0    0   0  0    0 42.1
-. 4  1    8    0    0   0  0    0 35.3
-. 5  1   12    0    0   0  0    0 28.9
-. 6  1   16    0    0   0  0    0 23.6</code></pre>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">.   ID TIME EVID  AMT CMT II ADDL   DV</a>
+<a class="sourceLine" id="cb4-2" title="2">. <span class="dv">1</span>  <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span>  <span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb4-3" title="3">. <span class="dv">2</span>  <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">1</span> <span class="dv">1000</span>   <span class="dv">1</span> <span class="dv">24</span>   <span class="dv">27</span>  <span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb4-4" title="4">. <span class="dv">3</span>  <span class="dv">1</span>    <span class="dv">4</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">42.1</span></a>
+<a class="sourceLine" id="cb4-5" title="5">. <span class="dv">4</span>  <span class="dv">1</span>    <span class="dv">8</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">35.3</span></a>
+<a class="sourceLine" id="cb4-6" title="6">. <span class="dv">5</span>  <span class="dv">1</span>   <span class="dv">12</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">28.9</span></a>
+<a class="sourceLine" id="cb4-7" title="7">. <span class="dv">6</span>  <span class="dv">1</span>   <span class="dv">16</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">23.6</span></a></code></pre></div>
 <p>The dosing runs over 12 weeks and there are 3 epochs, with 3 different doses, most of which are scheduled into the future via <code>ADDL</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(EVID<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(TIME,AMT,ADDL)</a></code></pre></div>
-<pre><code>. # A tibble: 3 x 4
-.    TIME   AMT  ADDL     n
-.   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-. 1     0  1000    27     1
-. 2   672   500    27     1
-. 3  1344   300    27     1</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(EVID<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(TIME,AMT,ADDL)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">. <span class="co"># A tibble: 3 x 4</span></a>
+<a class="sourceLine" id="cb6-2" title="2">.    TIME   AMT  ADDL     n</a>
+<a class="sourceLine" id="cb6-3" title="3">.   <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">. <span class="dv">1</span>     <span class="dv">0</span>  <span class="dv">1000</span>    <span class="dv">27</span>     <span class="dv">1</span></a>
+<a class="sourceLine" id="cb6-5" title="5">. <span class="dv">2</span>   <span class="dv">672</span>   <span class="dv">500</span>    <span class="dv">27</span>     <span class="dv">1</span></a>
+<a class="sourceLine" id="cb6-6" title="6">. <span class="dv">3</span>  <span class="dv">1344</span>   <span class="dv">300</span>    <span class="dv">27</span>     <span class="dv">1</span></a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,DV)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="reference/figures/readme-unnamed-chunk-5-1.png"><!-- --></p>
 </div>
 <div id="calculate-tad-and-ldos" class="section level2">
 <h2 class="hasAnchor">
@@ -120,108 +121,108 @@
 <p>Use the <code><a href="reference/lastdose.html">lastdose()</a></code> function</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df)</a>
 <a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df)</a></code></pre></div>
-<pre><code>.   ID TIME EVID  AMT CMT II ADDL   DV TAD LDOS
-. 1  1    0    0    0   0  0    0  0.0   0    0
-. 2  1    0    1 1000   1 24   27  0.0   0 1000
-. 3  1    4    0    0   0  0    0 42.1   4 1000
-. 4  1    8    0    0   0  0    0 35.3   8 1000
-. 5  1   12    0    0   0  0    0 28.9  12 1000
-. 6  1   16    0    0   0  0    0 23.6  16 1000</code></pre>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">.   ID TIME EVID  AMT CMT II ADDL   DV TAD LDOS</a>
+<a class="sourceLine" id="cb9-2" title="2">. <span class="dv">1</span>  <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span>  <span class="fl">0.0</span>   <span class="dv">0</span>    <span class="dv">0</span></a>
+<a class="sourceLine" id="cb9-3" title="3">. <span class="dv">2</span>  <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">1</span> <span class="dv">1000</span>   <span class="dv">1</span> <span class="dv">24</span>   <span class="dv">27</span>  <span class="fl">0.0</span>   <span class="dv">0</span> <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb9-4" title="4">. <span class="dv">3</span>  <span class="dv">1</span>    <span class="dv">4</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">42.1</span>   <span class="dv">4</span> <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb9-5" title="5">. <span class="dv">4</span>  <span class="dv">1</span>    <span class="dv">8</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">35.3</span>   <span class="dv">8</span> <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb9-6" title="6">. <span class="dv">5</span>  <span class="dv">1</span>   <span class="dv">12</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">28.9</span>  <span class="dv">12</span> <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb9-7" title="7">. <span class="dv">6</span>  <span class="dv">1</span>   <span class="dv">16</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">0</span> <span class="fl">23.6</span>  <span class="dv">16</span> <span class="dv">1000</span></a></code></pre></div>
 <p>Now we have <code>TAD</code> and <code>LDOS</code> in our data set.</p>
 </div>
 <div id="plot-last-dose-versus-time" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-last-dose-versus-time" class="anchor"></a>Plot last dose versus time</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,LDOS)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="reference/figures/readme-unnamed-chunk-7-1.png"><!-- --></p>
 </div>
 <div id="plot-time-after-dose-versus-time" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-time-after-dose-versus-time" class="anchor"></a>Plot time after dose versus time</h2>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="reference/figures/readme-unnamed-chunk-8-1.png"><!-- --></p>
 <p>Observations before doses at the same time by default</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">24</span>)) </a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-9-1.png" width="700"></p>
+<a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">24</span>)) </a></code></pre></div>
+<p><img src="reference/figures/readme-unnamed-chunk-9-1.png"><!-- --></p>
 <p>You can also make doses “happen” first</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">dd &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df, <span class="dt">addl_ties =</span> <span class="st">"dose_first"</span>)</a>
 <a class="sourceLine" id="cb13-2" title="2"></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="kw">ggplot</span>(dd, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">24</span>)) </a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-10-1.png" width="700"></p>
+<a class="sourceLine" id="cb13-4" title="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>), <span class="dt">limits=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">24</span>)) </a></code></pre></div>
+<p><img src="reference/figures/readme-unnamed-chunk-10-1.png"><!-- --></p>
 </div>
 <div id="all-doses-explicit-in-the-data-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#all-doses-explicit-in-the-data-set" class="anchor"></a>All doses explicit in the data set</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">df2 &lt;-<span class="st"> </span>mrgsolve<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/mrgsolve/topics/realize_addl">realize_addl</a></span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>()</a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">df2 &lt;-<span class="st"> </span>mrgsolve<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/mrgsolve/man/realize_addl.html">realize_addl</a></span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>()</a>
 <a class="sourceLine" id="cb14-2" title="2"></a>
 <a class="sourceLine" id="cb14-3" title="3"><span class="kw">ggplot</span>(df2, <span class="kw">aes</span>(TIME,TAD)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>))</a></code></pre></div>
-<p><img src="reference/figures/readme-unnamed-chunk-11-1.png" width="700"></p>
+<a class="sourceLine" id="cb14-4" title="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">72</span>,<span class="dv">4</span>), <span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">72</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">0</span>,<span class="dv">24</span>,<span class="dv">4</span>))</a></code></pre></div>
+<p><img src="reference/figures/readme-unnamed-chunk-11-1.png"><!-- --></p>
 </div>
 <div id="how-does-it-perform-on-bigger-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-does-it-perform-on-bigger-data" class="anchor"></a>How does it perform on bigger data?</h2>
 <p>Same setup as the previous profile, but more individuals.</p>
 <p>We have 500K rows and 1000 individuals</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"csv/data_big.RDS"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"csv/data_big.RDS"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
 <a class="sourceLine" id="cb15-2" title="2"></a>
-<a class="sourceLine" id="cb15-3" title="3">big &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(file)</a>
+<a class="sourceLine" id="cb15-3" title="3">big &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(file)</a>
 <a class="sourceLine" id="cb15-4" title="4"></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(big)</a></code></pre></div>
-<pre><code>. [1] 508000      8</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(big<span class="op">$</span>ID))</a></code></pre></div>
-<pre><code>. [1] 1000</code></pre>
+<a class="sourceLine" id="cb15-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(big)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">. [<span class="dv">1</span>] <span class="dv">508000</span>      <span class="dv">8</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(big<span class="op">$</span>ID))</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">. [<span class="dv">1</span>] <span class="dv">1000</span></a></code></pre></div>
 <p>Timing result</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
-<pre><code>.    user  system elapsed 
-.   0.046   0.001   0.048</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">.    user  system elapsed </a>
+<a class="sourceLine" id="cb20-2" title="2">.   <span class="fl">0.047</span>   <span class="fl">0.002</span>   <span class="fl">0.049</span></a></code></pre></div>
 </div>
 <div id="compare-against-the-single-profile" class="section level2">
 <h2 class="hasAnchor">
 <a href="#compare-against-the-single-profile" class="anchor"></a>Compare against the single profile</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df))</a></code></pre></div>
-<pre><code>.    user  system elapsed 
-.   0.001   0.000   0.000</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">x3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(x2, big[[<span class="st">"ID"</span>]]<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>()</a>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df))</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">.    user  system elapsed </a>
+<a class="sourceLine" id="cb22-2" title="2">.   <span class="fl">0.000</span>   <span class="fl">0.000</span>   <span class="fl">0.001</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">x3 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(x2, big[[<span class="st">"ID"</span>]]<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()</a>
 <a class="sourceLine" id="cb23-2" title="2"></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all.equal">all.equal</a></span>(x1,x3)</a></code></pre></div>
-<pre><code>. [1] TRUE</code></pre>
+<a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(x1,x3)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">. [<span class="dv">1</span>] <span class="ot">TRUE</span></a></code></pre></div>
 </div>
 <div id="observations-prior-to-the-first-dose" class="section level2">
 <h2 class="hasAnchor">
 <a href="#observations-prior-to-the-first-dose" class="anchor"></a>Observations prior to the first dose</h2>
 <p>When non-dose records happen prior to the first dose, lastdose calculates the time before the first dose (a negative value) for these records.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"csv/data2.csv"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"csv/data2.csv"</span>, <span class="dt">package =</span> <span class="st">"lastdose"</span>)</a>
 <a class="sourceLine" id="cb25-2" title="2"></a>
 <a class="sourceLine" id="cb25-3" title="3">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(file)</a>
 <a class="sourceLine" id="cb25-4" title="4"></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a></code></pre></div>
-<pre><code>. # A tibble: 6 x 10
-.      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
-.   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-. 1     1     0     0     0     0     0     0   0     -12     0
-. 2     1     4     0     0     0     0     0   0      -8     0
-. 3     1     8     0     0     0     0     0   0      -4     0
-. 4     1    12     0     0     0     0     0   0       0     0
-. 5     1    12     1  1000     1    24    27   0       0  1000
-. 6     1    16     0     0     0     0     0  23.6     4  1000</code></pre>
+<a class="sourceLine" id="cb25-5" title="5"><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">. <span class="co"># A tibble: 6 x 10</span></a>
+<a class="sourceLine" id="cb26-2" title="2">.      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS</a>
+<a class="sourceLine" id="cb26-3" title="3">.   <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb26-4" title="4">. <span class="dv">1</span>     <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>     <span class="dv">-12</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb26-5" title="5">. <span class="dv">2</span>     <span class="dv">1</span>     <span class="dv">4</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="dv">-8</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb26-6" title="6">. <span class="dv">3</span>     <span class="dv">1</span>     <span class="dv">8</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="dv">-4</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb26-7" title="7">. <span class="dv">4</span>     <span class="dv">1</span>    <span class="dv">12</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>       <span class="dv">0</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb26-8" title="8">. <span class="dv">5</span>     <span class="dv">1</span>    <span class="dv">12</span>     <span class="dv">1</span>  <span class="dv">1000</span>     <span class="dv">1</span>    <span class="dv">24</span>    <span class="dv">27</span>   <span class="dv">0</span>       <span class="dv">0</span>  <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb26-9" title="9">. <span class="dv">6</span>     <span class="dv">1</span>    <span class="dv">16</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>  <span class="fl">23.6</span>     <span class="dv">4</span>  <span class="dv">1000</span></a></code></pre></div>
 <p>The user can alternatively control what happens for these records</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df, <span class="dt">fill =</span> <span class="ot">NA_real_</span>, <span class="dt">back_calc=</span><span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a></code></pre></div>
-<pre><code>. # A tibble: 6 x 10
-.      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
-.   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-. 1     1     0     0     0     0     0     0   0      NA     0
-. 2     1     4     0     0     0     0     0   0      NA     0
-. 3     1     8     0     0     0     0     0   0      NA     0
-. 4     1    12     0     0     0     0     0   0      NA     0
-. 5     1    12     1  1000     1    24    27   0       0  1000
-. 6     1    16     0     0     0     0     0  23.6     4  1000</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df, <span class="dt">fill =</span> <span class="ot">NA_real_</span>, <span class="dt">back_calc=</span><span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">. <span class="co"># A tibble: 6 x 10</span></a>
+<a class="sourceLine" id="cb28-2" title="2">.      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS</a>
+<a class="sourceLine" id="cb28-3" title="3">.   <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb28-4" title="4">. <span class="dv">1</span>     <span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="ot">NA</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-5" title="5">. <span class="dv">2</span>     <span class="dv">1</span>     <span class="dv">4</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="ot">NA</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-6" title="6">. <span class="dv">3</span>     <span class="dv">1</span>     <span class="dv">8</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="ot">NA</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-7" title="7">. <span class="dv">4</span>     <span class="dv">1</span>    <span class="dv">12</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>   <span class="dv">0</span>      <span class="ot">NA</span>     <span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-8" title="8">. <span class="dv">5</span>     <span class="dv">1</span>    <span class="dv">12</span>     <span class="dv">1</span>  <span class="dv">1000</span>     <span class="dv">1</span>    <span class="dv">24</span>    <span class="dv">27</span>   <span class="dv">0</span>       <span class="dv">0</span>  <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb28-9" title="9">. <span class="dv">6</span>     <span class="dv">1</span>    <span class="dv">16</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>     <span class="dv">0</span>  <span class="fl">23.6</span>     <span class="dv">4</span>  <span class="dv">1000</span></a></code></pre></div>
 <hr>
 </div>
 <div id="more-info" class="section level2">
@@ -255,15 +256,13 @@
 </ul>
 </div>
 
-
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/kylebaron/lastdose"><img src="https://travis-ci.org/kylebaron/lastdose.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://travis-ci.org/metrumresearchgroup/lastdose"><img src="https://travis-ci.org/metrumresearchgroup/lastdose.svg?branch=master" alt="Travis build status"></a></li>
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -272,12 +271,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

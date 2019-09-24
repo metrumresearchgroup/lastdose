@@ -52,6 +52,12 @@ test_that("lastdose_df", {
   expect_identical(x[["tad"]], y[["tad"]])
 })
 
+test_that("lastdose_list", {
+   y <- lastdose_list(set1)
+  expect_is(y,"list")
+  expect_identical(names(y), c("tad", "ldos"))
+})
+
 test_that("required columns", {
   x <- set1
   x[["amt"]] <- NULL

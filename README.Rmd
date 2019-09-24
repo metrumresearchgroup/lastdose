@@ -6,7 +6,7 @@ output: github_document
 # lastdose
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/kylebaron/lastdose.svg?branch=master)](https://travis-ci.org/kylebaron/lastdose)
+[![Travis build status](https://travis-ci.org/metrumresearchgroup/lastdose.svg?branch=master)](https://travis-ci.org/metrumresearchgroup/lastdose)
 <!-- badges: end -->
 
 ## Overview
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(comment = '.', message=FALSE, warning = FALSE,
 ## Installation
 
 ```{r, eval=FALSE}
-remotes::install_github("kylebaron/lastdose")
+remotes::install_github("metrumresearchgroup/lastdose")
 ```
 
 
