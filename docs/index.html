@@ -181,14 +181,14 @@
 <p>Timing result</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(big))</a></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">.    user  system elapsed </a>
-<a class="sourceLine" id="cb20-2" title="2">.   <span class="fl">0.045</span>   <span class="fl">0.001</span>   <span class="fl">0.047</span></a></code></pre></div>
+<a class="sourceLine" id="cb20-2" title="2">.   <span class="fl">0.048</span>   <span class="fl">0.001</span>   <span class="fl">0.050</span></a></code></pre></div>
 </div>
 <div id="compare-against-the-single-profile" class="section level2">
 <h2 class="hasAnchor">
 <a href="#compare-against-the-single-profile" class="anchor"></a>Compare against the single profile</h2>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lastdose.html">lastdose</a></span>(df))</a></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">.    user  system elapsed </a>
-<a class="sourceLine" id="cb22-2" title="2">.       <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">0</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-2" title="2">.   <span class="fl">0.001</span>   <span class="fl">0.001</span>   <span class="fl">0.000</span></a></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">x3 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(x2, big[[<span class="st">"ID"</span>]]<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()</a>
 <a class="sourceLine" id="cb23-2" title="2"></a>
 <a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(x1,x3)</a></code></pre></div>
@@ -228,7 +228,7 @@
 <div id="more-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#more-info" class="anchor"></a>More info</h2>
-<p>See <a href="inst/doc/about.html">https://github.com/metrumresearchgroup/lastdose/blob/master/inst/doc/about.md</a> for more details.</p>
+<p>See <a href="https://github.com/metrumresearchgroup/lastdose/blob/master/inst/doc/about.md">inst/doc/about.md</a> for more details.</p>
 </div>
 </div>
   </div>
