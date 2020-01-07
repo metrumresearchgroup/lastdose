@@ -206,11 +206,11 @@ the observation <code>TAD</code> to 0.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"Rcpp"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='input'>
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='no'>file</span>)
 
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose</span>(<span class='no'>data</span>)
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose</span>(<span class='no'>data</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lastdose(data): could not find function "lastdose"</span></div><div class='input'>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_df</span>(<span class='no'>data</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lastdose_df(data): could not find function "lastdose_df"</span></div><div class='input'>
+<span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_list</span>(<span class='no'>data</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lastdose_list(data): could not find function "lastdose_list"</span></div><div class='input'>
 
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_df</span>(<span class='no'>data</span>)
-
-<span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>lastdose_list</span>(<span class='no'>data</span>)</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -230,7 +230,7 @@ the observation <code>TAD</code> to 0.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

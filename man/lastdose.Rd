@@ -8,8 +8,12 @@
 \usage{
 lastdose(data, ..., include_ldos = TRUE)
 
-lastdose_list(data, fill = -99, back_calc = TRUE,
-  addl_ties = c("obs_first", "dose_first"))
+lastdose_list(
+  data,
+  fill = -99,
+  back_calc = TRUE,
+  addl_ties = c("obs_first", "dose_first")
+)
 
 lastdose_df(data, ...)
 }
