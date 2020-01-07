@@ -163,7 +163,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.047   0.002   0.049
+    .   0.045   0.001   0.047
 
 ## Compare against the single profile
 
@@ -172,7 +172,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .   0.000   0.000   0.001
+    .       0       0       0
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
@@ -226,5 +226,6 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 
 ## More info
 
-See [inst/doc/about.md (on GitHub only)](inst/doc/about.md) for more
-details.
+See
+[https://github.com/metrumresearchgroup/lastdose/blob/master/inst/doc/about.md](inst/doc/about.md)
+for more details.
