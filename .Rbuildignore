@@ -30,3 +30,4 @@ docs
 man/figures
 ^lastdose$
 ^\.travis\.yml$
+^_pkgdown\.yml$
