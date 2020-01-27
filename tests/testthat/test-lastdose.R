@@ -73,7 +73,7 @@ test_that("required columns", {
   expect_error(lastdose(x))
 })
 
-test_that("non-numeic data throws error", {
+test_that("non-numeric data throws error", {
   for(col in c("ID","time", "addl", "ii", "evid", "ID", "amt")) {
     dd <- set1[seq(10),]
     dd[[col]] <- "A"
@@ -102,7 +102,7 @@ test_that("error for missing values in ID,evid,ii,addl", {
   }
 })
 
-test_that("NA amt is error for dosing rec, ok otherwise", {
+test_that("NA amt is error for dosing record, ok otherwise", {
   dd <- set1
   dd$amt[5] <- NA_real_
   expect_is(lastdose(dd), "data.frame")
