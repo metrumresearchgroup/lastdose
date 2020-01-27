@@ -1,15 +1,15 @@
 Package: lastdose
 Type: Package
 Title: Calculate Time and Amount of Last Dose
-Version: 0.1.0.9000
+Version: 0.2.0
 Author: Kyle Baron
-Maintainer: Kyle Baron <kylebtwin@imap.cc>
+Maintainer: Kyle Baron <kyleb@metrumrg.com>
 Description: Efficient calculation of time after last dose and last dose amount
     for analysis data sets.
 License: GPL (>=2)
 LinkingTo: Rcpp
-URL: https://github.com/kylebaron/lastdose
-BugReports: https://github.com/kylebaron/lastdose/issues
+URL: https://github.com/metrumresearchgroup/lastdose
+BugReports: https://github.com/metrumresearchgroup/lastdose/issues
 Suggests: testthat, Rcpp
 Encoding: UTF-8
 LazyData: true
