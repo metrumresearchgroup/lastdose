@@ -41,11 +41,21 @@ and the observation made immediately after (with no advance in time). See
 details.}
 }
 \description{
-Use \link{lastdose} to columns to the input data frame; \link{lastdose_list}
-and \link{lastdose_df} returns calculated information as either
-\code{list} or \code{data.frame} format without modifying the input data.
+Use \link{lastdose} to add (or potentially replace) columns to the input
+data frame; \link{lastdose_list} and \link{lastdose_df} returns calculated information
+as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
+When calling \link{lastdose} to modify the data frame, two columns will be
+added (by default): \code{TAD} indicating the time after the most-recent dose
+and \code{LDOS} indicating the amount of the most recent dose.  This default
+behavior can be modified with the \code{include_ldos} argument.
+
+When calling \link{lastdose_list} or \link{lastdose_df}, the respective items are
+accessible with \code{tad} and \code{ldos} (note the lower case form here to
+distinguish from the columns that might be added to the data frame).
+
+Additional notes regarding behavior:
 \itemize{
 \item All functions require an input data set as a data frame
 \item The data set should be formatted according to \code{NMTRAN} type

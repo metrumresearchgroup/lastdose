@@ -4,9 +4,9 @@ NULL
 
 #' Calculate last dose amount (LDOS) and time after last dose (TAD)
 #'
-#' Use [lastdose] to columns to the input data frame; [lastdose_list]
-#' and [lastdose_df] returns calculated information as either
-#' `list` or `data.frame` format without modifying the input data.
+#' Use [lastdose] to add (or potentially replace) columns to the input
+#' data frame; [lastdose_list] and [lastdose_df] returns calculated information
+#' as either `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
 #' @param back_calc if `TRUE`, then the time before the first dose
@@ -26,6 +26,17 @@ NULL
 #' appended to the data set.  Only used for the [lastdose] function.
 #'
 #' @details
+#'
+#' When calling [lastdose] to modify the data frame, two columns will be
+#' added (by default): `TAD` indicating the time after the most-recent dose
+#' and `LDOS` indicating the amount of the most recent dose.  This default
+#' behavior can be modified with the `include_ldos` argument.
+#'
+#' When calling [lastdose_list] or [lastdose_df], the respective items are
+#' accessible with `tad` and `ldos` (note the lower case form here to
+#' distinguish from the columns that might be added to the data frame).
+#'
+#'  Additional notes regarding behavior:
 #'
 #' - All functions require an input data set as a data frame
 #' - The data set should be formatted according to `NMTRAN` type
