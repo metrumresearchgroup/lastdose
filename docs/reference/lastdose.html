@@ -36,9 +36,9 @@
 
 
 <meta property="og:title" content="Calculate last dose amount (LDOS) and time after last dose (TAD) — lastdose" />
-<meta property="og:description" content="Use lastdose to columns to the input data frame; lastdose_list
-and lastdose_df returns calculated information as either
-list or data.frame format without modifying the input data." />
+<meta property="og:description" content="Use lastdose to add (or potentially replace) columns to the input
+data frame; lastdose_list and lastdose_df returns calculated information
+as either list or data.frame format without modifying the input data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,9 +116,9 @@ list or data.frame format without modifying the input data." />
     </div>
 
     <div class="ref-description">
-    <p>Use lastdose to columns to the input data frame; lastdose_list
-and lastdose_df returns calculated information as either
-<code>list</code> or <code>data.frame</code> format without modifying the input data.</p>
+    <p>Use lastdose to add (or potentially replace) columns to the input
+data frame; lastdose_list and lastdose_df returns calculated information
+as either <code>list</code> or <code>data.frame</code> format without modifying the input data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lastdose</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>include_ldos</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -173,8 +173,14 @@ details.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    
-<ul>
+    <p>When calling lastdose to modify the data frame, two columns will be
+added (by default): <code>TAD</code> indicating the time after the most-recent dose
+and <code>LDOS</code> indicating the amount of the most recent dose.  This default
+behavior can be modified with the <code>include_ldos</code> argument.</p>
+<p>When calling lastdose_list or lastdose_df, the respective items are
+accessible with <code>tad</code> and <code>ldos</code> (note the lower case form here to
+distinguish from the columns that might be added to the data frame).</p>
+<p>Additional notes regarding behavior:</p><ul>
 <li><p>All functions require an input data set as a data frame</p></li>
 <li><p>The data set should be formatted according to <code>NMTRAN</code> type
 conventions</p></li>
@@ -230,7 +236,7 @@ the observation <code>TAD</code> to 0.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kyle Baron.</p>
+  <p>Developed by Kyle T Baron.</p>
 </div>
 
 <div class="pkgdown">
