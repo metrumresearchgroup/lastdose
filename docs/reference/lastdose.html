@@ -127,7 +127,8 @@ as either <code>list</code> or <code>data.frame</code> format without modifying 
   <span class='no'>data</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>99</span>,
   <span class='kw'>back_calc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>addl_ties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"obs_first"</span>, <span class='st'>"dose_first"</span>)
+  <span class='kw'>addl_ties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"obs_first"</span>, <span class='st'>"dose_first"</span>),
+  <span class='kw'>comments</span> <span class='kw'>=</span> <span class='fu'><a href='find_comments.html'>find_comments</a></span>(<span class='no'>data</span>)
 )
 
 <span class='fu'>lastdose_df</span>(<span class='no'>data</span>, <span class='no'>...</span>)</pre>
@@ -168,6 +169,12 @@ is assumed to happen before the dose and the observation is a trough
 concentration; if <code>dose_first</code> then the dose is assumed to be administered
 and the observation made immediately after (with no advance in time). See
 details.</p></td>
+    </tr>
+    <tr>
+      <th>comments</th>
+      <td><p>a logcial vector with length equal to the number of rows
+in <code>data</code> indicating which records are to be ignored when looking for <code>TAD</code>
+and <code>LDOS</code>.</p></td>
     </tr>
     </table>
 
