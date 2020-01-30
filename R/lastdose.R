@@ -21,6 +21,9 @@ NULL
 #' concentration; if `dose_first` then the dose is assumed to be administered
 #' and the observation made immediately after (with no advance in time). See
 #' details.
+#' @param comments a logcial vector with length equal to the number of rows
+#' in `data` indicating which records are to be ignored when looking for `TAD`
+#' and `LDOS`.
 #' @param ... arguments passed to [lastdose_list]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose] function.
@@ -89,7 +92,11 @@ lastdose <- function(data,..., include_ldos = TRUE) {
 #' @rdname lastdose
 #' @export
 lastdose_list <- function(data, fill = -99, back_calc = TRUE,
-                          addl_ties = c("obs_first", "dose_first")) {
+                          addl_ties = c("obs_first", "dose_first"),
+                          comments = find_comments(data)) {
+  if(!length(comments)==nrow(data)) {
+    stop("'comments' must be have length equal to the number of rows in 'data'",call.=FALSE)
+  }
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
   x <- as.data.frame(data)
@@ -157,7 +164,8 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
     col_ii,
     fill,
     back_calc,
-    sort1
+    sort1,
+    comments
   )
   ans
 }
@@ -172,3 +180,41 @@ lastdose_df <- function(data,...) {
     fix.empty.names=FALSE, row.names=NULL
   )
 }
+
+#' Find commented records
+#'
+#'
+#' @param x a data frame or character vector
+#' @param ... not used
+#'
+#' @return
+#' A logical vector
+#'
+#' @examples
+#' comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
+#' dv <- rnorm(length(comment))
+#' df <- data.frame(C = comment , DV = dv)
+#'
+#' find_comments(df)
+#'
+#' @export
+find_comments <- function(x,...) UseMethod("find_comments")
+#' @rdname find_comments
+#'
+#' @export
+find_comments.data.frame <- function(x,...) {
+  if(!is.character(x[["C"]])) {
+    if(exists("C", x)) {
+      warning("looking for comment records; found column 'C' but is wasn't character.")
+    }
+    return(vector(mode="logical", nrow(x)))
+  }
+  find_comments.character(x[["C"]])
+}
+
+#' @rdname find_comments
+#' @export
+find_comments.character <- function(x,...) {
+  !(is.na(x)|x=='.')
+}
+

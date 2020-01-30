@@ -110,3 +110,30 @@ test_that("NA amt is error for dosing record, ok otherwise", {
   dd$amt[10] <- NA_real_
   expect_error(lastdose(dd))
 })
+
+test_that("commented records", {
+  com <- c(".", NA ,"C", "A","Comment")
+  ans <- find_comments(com)
+  expect_identical(ans, c(FALSE,FALSE,TRUE,TRUE,TRUE))
+  df <- data.frame(C = com, DV=stats::rnorm(length(com)))
+  ans2 <- find_comments(com)
+  expect_identical(ans,ans2)
+  df2 <- df
+  df2[["C"]] <- sample(c(0,1),nrow(df),replace=TRUE)
+  expect_warning(find_comments(df2))
+  set1[["time"]] <- ifelse(set1[["ID"]]==2, set1[["time"]] + 25, set1[["time"]])
+  set1[["C"]] <- NA_character_
+  set1[["ID"]] <- 1
+  set1[["ii"]] <- 0
+  set1[["addl"]] <- 0
+  set1[["C"]][10] <- "C"
+  ans <- lastdose(set1)
+  expect_true(is.na(ans$TAD[10]))
+  expect_true(is.na(ans$LDOS[10]))
+  diff <- ans[["time"]] - ans[["TAD"]]
+  expect_equal(sum(diff,na.rm=TRUE),0)
+  expect_error(lastdose(set1, comments = c(FALSE, TRUE,FALSE)))
+})
+
+
+

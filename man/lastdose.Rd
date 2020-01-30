@@ -12,7 +12,8 @@ lastdose_list(
   data,
   fill = -99,
   back_calc = TRUE,
-  addl_ties = c("obs_first", "dose_first")
+  addl_ties = c("obs_first", "dose_first"),
+  comments = find_comments(data)
 )
 
 lastdose_df(data, ...)
@@ -39,6 +40,10 @@ is assumed to happen before the dose and the observation is a trough
 concentration; if \code{dose_first} then the dose is assumed to be administered
 and the observation made immediately after (with no advance in time). See
 details.}
+
+\item{comments}{a logcial vector with length equal to the number of rows
+in \code{data} indicating which records are to be ignored when looking for \code{TAD}
+and \code{LDOS}.}
 }
 \description{
 Use \link{lastdose} to add (or potentially replace) columns to the input
