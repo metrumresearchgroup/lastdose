@@ -183,6 +183,9 @@ lastdose_df <- function(data,...) {
 
 #' Find commented records
 #'
+#' This function uses specific criteria for finding comment records that may
+#' not match up with your coding conventions.  See details below as well as
+#' unit tests.
 #'
 #' @param x a data frame or character vector
 #' @param ... not used
@@ -190,12 +193,22 @@ lastdose_df <- function(data,...) {
 #' @return
 #' A logical vector
 #'
+#' @details
+#' For the data frame method, comments are found in a column with name `C`
+#' with type `character`.  If a `C` column is found that is not character,
+#' a warning is generated and no comments are found.
+#'
+#' For the character method or when an appropriate `C` column is found when
+#' using the data frame method, a position or row is considered a comment
+#' when it is either `NA` or when it is equal to `.`.
+#'
 #' @examples
 #' comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
 #' dv <- rnorm(length(comment))
 #' df <- data.frame(C = comment , DV = dv)
 #'
 #' find_comments(df)
+#'
 #'
 #' @export
 find_comments <- function(x,...) UseMethod("find_comments")

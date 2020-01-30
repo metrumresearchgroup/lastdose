@@ -21,7 +21,18 @@ find_comments(x, ...)
 A logical vector
 }
 \description{
-Find commented records
+This function uses specific criteria for finding comment records that may
+not match up with your coding conventions.  See details below as well as
+unit tests.
+}
+\details{
+For the data frame method, comments are found in a column with name \code{C}
+with type \code{character}.  If a \code{C} column is found that is not character,
+a warning is generated and no comments are found.
+
+For the character method or when an appropriate \code{C} column is found when
+using the data frame method, a position or row is considered a comment
+when it is either \code{NA} or when it is equal to \code{.}.
 }
 \examples{
 comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
@@ -29,5 +40,6 @@ dv <- rnorm(length(comment))
 df <- data.frame(C = comment , DV = dv)
 
 find_comments(df)
+
 
 }
