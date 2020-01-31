@@ -94,6 +94,9 @@ lastdose <- function(data,..., include_ldos = TRUE) {
 lastdose_list <- function(data, fill = -99, back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
                           comments = find_comments(data)) {
+  if(length(comments)==1) {
+    comments <- rep(comments,nrow(data))
+  }
   if(!length(comments)==nrow(data)) {
     stop("'comments' must be have length equal to the number of rows in 'data'",call.=FALSE)
   }
