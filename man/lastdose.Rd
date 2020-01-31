@@ -13,8 +13,7 @@ lastdose_list(
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
-  comments = find_comments(data),
-  fill_comments_na = FALSE
+  comments = find_comments(data)
 )
 
 lastdose_df(data, ...)
@@ -45,11 +44,6 @@ details.}
 \item{comments}{a logcial vector with length equal to the number of rows
 in \code{data} indicating which records are to be ignored when looking for \code{TAD}
 and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
-
-\item{fill_comments_na}{if \code{TRUE}, then \code{TAD} and \code{LDOS} will be filled with
-\code{NA} when the comment indicator is \code{TRUE}; otherwise, commented records
-are filled in with the time since and amount of the dose on the last
-non-commented dosing record (the default).}
 }
 \description{
 Use \link{lastdose} to add (or potentially replace) columns to the input
@@ -70,8 +64,7 @@ distinguish from the columns that might be added to the data frame).
 (as indicated with the \code{comments} argument) will never be considered as
 actual doses when determining \code{TAD} and \code{LDOS}.  But commented records (doses
 and non-doses) will be assigned \code{TAD} and \code{LDOS} according to the last
-non-commented dosing record by default.  The behavior can be modified by
-setting through the \code{fill_comments_na} argument.
+non-commented dosing record.
 
 \strong{Additional notes}:
 \itemize{

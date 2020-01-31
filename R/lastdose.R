@@ -27,10 +27,6 @@ NULL
 #' @param ... arguments passed to [lastdose_list]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose] function.
-#' @param fill_comments_na if `TRUE`, then `TAD` and `LDOS` will be filled with
-#' `NA` when the comment indicator is `TRUE`; otherwise, commented records
-#' are filled in with the time since and amount of the dose on the last
-#' non-commented dosing record (the default).
 #'
 #' @details
 #'
@@ -47,8 +43,7 @@ NULL
 #' (as indicated with the `comments` argument) will never be considered as
 #' actual doses when determining `TAD` and `LDOS`.  But commented records (doses
 #' and non-doses) will be assigned `TAD` and `LDOS` according to the last
-#' non-commented dosing record by default.  The behavior can be modified by
-#' setting through the `fill_comments_na` argument.
+#' non-commented dosing record.
 #'
 #' **Additional notes**:
 #'
@@ -104,8 +99,7 @@ lastdose <- function(data,..., include_ldos = TRUE) {
 #' @export
 lastdose_list <- function(data, fill = -99, back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
-                          comments = find_comments(data),
-                          fill_comments_na = FALSE) {
+                          comments = find_comments(data)) {
   if(length(comments)==1) {
     comments <- rep(comments,nrow(data))
   }
@@ -180,8 +174,7 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
     fill,
     back_calc,
     sort1,
-    comments,
-    fill_comments_na
+    comments
   )
   ans
 }

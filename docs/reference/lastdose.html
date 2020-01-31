@@ -174,7 +174,7 @@ details.</p></td>
       <th>comments</th>
       <td><p>a logcial vector with length equal to the number of rows
 in <code>data</code> indicating which records are to be ignored when looking for <code>TAD</code>
-and <code>LDOS</code>.</p></td>
+and <code>LDOS</code>.  See all the <code>fill_comments_na</code> argument.</p></td>
     </tr>
     </table>
 
@@ -187,7 +187,12 @@ behavior can be modified with the <code>include_ldos</code> argument.</p>
 <p>When calling lastdose_list or lastdose_df, the respective items are
 accessible with <code>tad</code> and <code>ldos</code> (note the lower case form here to
 distinguish from the columns that might be added to the data frame).</p>
-<p>Additional notes regarding behavior:</p><ul>
+<p><strong>Handling of commented records</strong>: Dosing records that have been "commented"
+(as indicated with the <code>comments</code> argument) will never be considered as
+actual doses when determining <code>TAD</code> and <code>LDOS</code>.  But commented records (doses
+and non-doses) will be assigned <code>TAD</code> and <code>LDOS</code> according to the last
+non-commented dosing record.</p>
+<p><strong>Additional notes</strong>:</p><ul>
 <li><p>All functions require an input data set as a data frame</p></li>
 <li><p>The data set should be formatted according to <code>NMTRAN</code> type
 conventions</p></li>

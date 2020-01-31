@@ -57,8 +57,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector fill,
                          Rcpp::LogicalVector back_calc,
                          Rcpp::LogicalVector sort1,
-                         Rcpp::LogicalVector comment,
-                         bool fill_comment_na) {
+                         Rcpp::LogicalVector comment) {
 
   bool use_comp1 = sort1[0];
   bool use_fill = !back_calc[0];
@@ -167,13 +166,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         last_dose = it->amt;
         last_time = it->time;
       }
-      if(it->from_data) {
-        if(it->comment && fill_comment_na) {
-          tad[it->pos] = NA_REAL;
-          ldos[it->pos] = NA_REAL;
-          continue;
-        }
-        if(had_dose) {
+      if(it->from_data) {        if(had_dose) {
           tad[it->pos] = it->time - last_time;
         } else {
           tad[it->pos] = (use_fill || no_dose) ? fill[0] : (it->time - tofd[i]);
