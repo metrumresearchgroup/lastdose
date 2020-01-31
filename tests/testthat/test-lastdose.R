@@ -128,6 +128,9 @@ test_that("commented records", {
   set1[["addl"]] <- 0
   set1[["C"]][10] <- "C"
   ans <- lastdose(set1)
+  diff <- ans[["time"]] - ans[["TAD"]]
+  expect_equal(sum(diff),0)
+  ans <- lastdose(set1, fill_comments_na = TRUE)
   expect_true(is.na(ans$TAD[10]))
   expect_true(is.na(ans$LDOS[10]))
   diff <- ans[["time"]] - ans[["TAD"]]

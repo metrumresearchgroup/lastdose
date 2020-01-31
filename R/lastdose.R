@@ -23,10 +23,14 @@ NULL
 #' details.
 #' @param comments a logcial vector with length equal to the number of rows
 #' in `data` indicating which records are to be ignored when looking for `TAD`
-#' and `LDOS`.
+#' and `LDOS`.  See all the `fill_comments_na` argument.
 #' @param ... arguments passed to [lastdose_list]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose] function.
+#' @param fill_comments_na if `TRUE`, then `TAD` and `LDOS` will be filled with
+#' `NA` when the comment indicator is `TRUE`; otherwise, commented records
+#' are filled in with the time since and amount of the dose on the last
+#' non-commented dosing record (the default).
 #'
 #' @details
 #'
@@ -39,7 +43,14 @@ NULL
 #' accessible with `tad` and `ldos` (note the lower case form here to
 #' distinguish from the columns that might be added to the data frame).
 #'
-#'  Additional notes regarding behavior:
+#' **Handling of commented records**: Dosing records that have been "commented"
+#' (as indicated with the `comments` argument) will never be considered as
+#' actual doses when determining `TAD` and `LDOS`.  But commented records (doses
+#' and non-doses) will be assigned `TAD` and `LDOS` according to the last
+#' non-commented dosing record by default.  The behavior can be modified by
+#' setting through the `fill_comments_na` argument.
+#'
+#' **Additional notes**:
 #'
 #' - All functions require an input data set as a data frame
 #' - The data set should be formatted according to `NMTRAN` type
@@ -93,7 +104,8 @@ lastdose <- function(data,..., include_ldos = TRUE) {
 #' @export
 lastdose_list <- function(data, fill = -99, back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
-                          comments = find_comments(data)) {
+                          comments = find_comments(data),
+                          fill_comments_na = FALSE) {
   if(length(comments)==1) {
     comments <- rep(comments,nrow(data))
   }
@@ -168,7 +180,8 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
     fill,
     back_calc,
     sort1,
-    comments
+    comments,
+    fill_comments_na
   )
   ans
 }
