@@ -144,7 +144,7 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
   }
   waddl <- match("addl", na)
   if(is.na(waddl)) {
-    col_addl <- numeric(0)
+    col_addl <- vector(mode = "numeric", length=nrow(data))
     wii <- NULL
   } else {
     col_addl <- data[[waddl]]
@@ -154,7 +154,7 @@ lastdose_list <- function(data, fill = -99, back_calc = TRUE,
   }
   wii <- match("ii", na)
   if(is.na(wii)) {
-    col_ii <- numeric(0)
+    col_ii <- vector(mode = "numeric", length=nrow(data))
     wii <- NULL
   } else {
     col_ii <- data[[wii]]
