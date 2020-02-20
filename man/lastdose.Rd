@@ -12,7 +12,8 @@ lastdose_list(
   data,
   fill = -99,
   back_calc = TRUE,
-  addl_ties = c("obs_first", "dose_first")
+  addl_ties = c("obs_first", "dose_first"),
+  comments = find_comments(data)
 )
 
 lastdose_df(data, ...)
@@ -39,13 +40,33 @@ is assumed to happen before the dose and the observation is a trough
 concentration; if \code{dose_first} then the dose is assumed to be administered
 and the observation made immediately after (with no advance in time). See
 details.}
+
+\item{comments}{a logcial vector with length equal to the number of rows
+in \code{data} indicating which records are to be ignored when looking for \code{TAD}
+and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
 }
 \description{
-Use \link{lastdose} to columns to the input data frame; \link{lastdose_list}
-and \link{lastdose_df} returns calculated information as either
-\code{list} or \code{data.frame} format without modifying the input data.
+Use \link{lastdose} to add (or potentially replace) columns to the input
+data frame; \link{lastdose_list} and \link{lastdose_df} returns calculated information
+as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
+When calling \link{lastdose} to modify the data frame, two columns will be
+added (by default): \code{TAD} indicating the time after the most-recent dose
+and \code{LDOS} indicating the amount of the most recent dose.  This default
+behavior can be modified with the \code{include_ldos} argument.
+
+When calling \link{lastdose_list} or \link{lastdose_df}, the respective items are
+accessible with \code{tad} and \code{ldos} (note the lower case form here to
+distinguish from the columns that might be added to the data frame).
+
+\strong{Handling of commented records}: Dosing records that have been "commented"
+(as indicated with the \code{comments} argument) will never be considered as
+actual doses when determining \code{TAD} and \code{LDOS}.  But commented records (doses
+and non-doses) will be assigned \code{TAD} and \code{LDOS} according to the last
+non-commented dosing record.
+
+\strong{Additional notes}:
 \itemize{
 \item All functions require an input data set as a data frame
 \item The data set should be formatted according to \code{NMTRAN} type

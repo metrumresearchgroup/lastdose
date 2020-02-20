@@ -4,20 +4,35 @@
 
 class  record {
 public:
-  record(double time_, double amt_, int evid_,bool from_data_);
+  record(double time_, double amt_, int evid_,bool from_data_,bool comment_);
+  bool is_dose();
   double time;
   double amt;
   int evid;
   bool from_data;
   int pos;
+  bool comment;
 };
 
-record::record(double time_, double amt_, int evid_,bool from_data_) {
+record::record(double time_, double amt_, int evid_,bool from_data_,bool comment_) {
   time = time_;
   amt = amt_;
   evid = evid_;
   from_data = from_data_;
   pos = -1;
+  comment = comment_;
+}
+
+bool record::is_dose() {
+  return (evid==1 || evid==4) && (!comment);
+}
+
+bool is_dose(const int evid) {
+  return evid==1 || evid==4;
+}
+
+bool is_dose(const int evid, const bool comment) {
+  return (evid==1 || evid==4) && (!comment);
 }
 
 typedef std::vector<record> recs;
@@ -41,7 +56,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector ii,
                          Rcpp::NumericVector fill,
                          Rcpp::LogicalVector back_calc,
-                         Rcpp::LogicalVector sort1) {
+                         Rcpp::LogicalVector sort1,
+                         Rcpp::LogicalVector comment) {
 
   bool use_comp1 = sort1[0];
   bool use_fill = !back_calc[0];
@@ -106,7 +122,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
       // Deal with missing dose
       bool missing_amt = Rcpp::NumericVector::is_na(amt[j]);
-      if(((evid[j]==1) || (evid[j]==4))) {
+      if(is_dose(evid[j],comment[j])) {
         if(!found_dose) {
           found_dose = true;
           tofd[i] = time[j];
@@ -122,13 +138,12 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
       if(missing_amt) amt[j] = 0;
       // done with missing dose
-      record this_rec(time[j],amt[j],evid[j],true);
-      this_rec.from_data = true;
+      record this_rec(time[j],amt[j],evid[j],true,comment[j]);
       this_rec.pos = crow;
       this_id.push_back(this_rec);
-      if(has_addl && (addl[j] > 0) && ((evid[j]==1) || (evid[j]==4))) {
+      if(has_addl && (addl[j] > 0) && this_rec.is_dose()) {
         for(int k = 0; k < addl[j]; ++k) {
-          record addl_rec(0.0,amt[j],evid[j],false);
+          record addl_rec(0.0,amt[j],evid[j],false,false);
           addl_rec.time = time[j] + ii[j]*double(k+1);
           if(addl_rec.time >= (max_time)) break;
           this_id.push_back(addl_rec);
@@ -145,14 +160,13 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     bool had_dose = false;
     bool no_dose = tofd[i] == -1;
     last_time = 0;
-    for(recs::const_iterator it = this_id.begin(); it !=this_id.end(); ++it) {
-      if((it->evid ==1) || (it->evid==4)) {
+    for(recs::iterator it = this_id.begin(); it !=this_id.end(); ++it) {
+      if(it->is_dose()) {
         had_dose = true;
         last_dose = it->amt;
         last_time = it->time;
       }
-      if(it->from_data) {
-        if(had_dose) {
+      if(it->from_data) {        if(had_dose) {
           tad[it->pos] = it->time - last_time;
         } else {
           tad[it->pos] = (use_fill || no_dose) ? fill[0] : (it->time - tofd[i]);

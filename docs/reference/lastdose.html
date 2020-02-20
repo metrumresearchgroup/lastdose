@@ -36,9 +36,9 @@
 
 
 <meta property="og:title" content="Calculate last dose amount (LDOS) and time after last dose (TAD) — lastdose" />
-<meta property="og:description" content="Use lastdose to columns to the input data frame; lastdose_list
-and lastdose_df returns calculated information as either
-list or data.frame format without modifying the input data." />
+<meta property="og:description" content="Use lastdose to add (or potentially replace) columns to the input
+data frame; lastdose_list and lastdose_df returns calculated information
+as either list or data.frame format without modifying the input data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +71,7 @@ list or data.frame format without modifying the input data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lastdose</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@ list or data.frame format without modifying the input data." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/kylebaron/lastdose">
+  <a href="https://github.com/metrumresearchgroup/lastdose">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -111,14 +111,14 @@ list or data.frame format without modifying the input data." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate last dose amount (LDOS) and time after last dose (TAD)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kylebaron/lastdose/blob/master/R/lastdose.R'><code>R/lastdose.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/metrumresearchgroup/lastdose/blob/master/R/lastdose.R'><code>R/lastdose.R</code></a></small>
     <div class="hidden name"><code>lastdose.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use lastdose to columns to the input data frame; lastdose_list
-and lastdose_df returns calculated information as either
-<code>list</code> or <code>data.frame</code> format without modifying the input data.</p>
+    <p>Use lastdose to add (or potentially replace) columns to the input
+data frame; lastdose_list and lastdose_df returns calculated information
+as either <code>list</code> or <code>data.frame</code> format without modifying the input data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lastdose</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>include_ldos</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -127,7 +127,8 @@ and lastdose_df returns calculated information as either
   <span class='no'>data</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> -<span class='fl'>99</span>,
   <span class='kw'>back_calc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>addl_ties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"obs_first"</span>, <span class='st'>"dose_first"</span>)
+  <span class='kw'>addl_ties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"obs_first"</span>, <span class='st'>"dose_first"</span>),
+  <span class='kw'>comments</span> <span class='kw'>=</span> <span class='fu'><a href='find_comments.html'>find_comments</a></span>(<span class='no'>data</span>)
 )
 
 <span class='fu'>lastdose_df</span>(<span class='no'>data</span>, <span class='no'>...</span>)</pre>
@@ -169,12 +170,29 @@ concentration; if <code>dose_first</code> then the dose is assumed to be adminis
 and the observation made immediately after (with no advance in time). See
 details.</p></td>
     </tr>
+    <tr>
+      <th>comments</th>
+      <td><p>a logcial vector with length equal to the number of rows
+in <code>data</code> indicating which records are to be ignored when looking for <code>TAD</code>
+and <code>LDOS</code>.  See all the <code>fill_comments_na</code> argument.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    
-<ul>
+    <p>When calling lastdose to modify the data frame, two columns will be
+added (by default): <code>TAD</code> indicating the time after the most-recent dose
+and <code>LDOS</code> indicating the amount of the most recent dose.  This default
+behavior can be modified with the <code>include_ldos</code> argument.</p>
+<p>When calling lastdose_list or lastdose_df, the respective items are
+accessible with <code>tad</code> and <code>ldos</code> (note the lower case form here to
+distinguish from the columns that might be added to the data frame).</p>
+<p><strong>Handling of commented records</strong>: Dosing records that have been "commented"
+(as indicated with the <code>comments</code> argument) will never be considered as
+actual doses when determining <code>TAD</code> and <code>LDOS</code>.  But commented records (doses
+and non-doses) will be assigned <code>TAD</code> and <code>LDOS</code> according to the last
+non-commented dosing record.</p>
+<p><strong>Additional notes</strong>:</p><ul>
 <li><p>All functions require an input data set as a data frame</p></li>
 <li><p>The data set should be formatted according to <code>NMTRAN</code> type
 conventions</p></li>
@@ -230,7 +248,7 @@ the observation <code>TAD</code> to 0.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kyle Baron.</p>
+  <p>Developed by Kyle T Baron.</p>
 </div>
 
 <div class="pkgdown">
