@@ -133,5 +133,11 @@ test_that("commented records", {
   expect_error(lastdose(set1, comments = c(FALSE, TRUE,FALSE)))
 })
 
-
-
+test_that("Undefined behavior when checking ADDL and II issue-11", {
+  no_addl <- subset(set1, ID==1)
+  no_addl[["addl"]] <- NULL
+  no_addl[["ii"]] <- NULL
+  ans <- lapply(1:10, lastdose,data = no_addl)
+  ans <- sapply(ans,inherits,what="data.frame")
+  expect_true(all(ans))
+})

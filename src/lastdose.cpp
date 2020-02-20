@@ -61,8 +61,6 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
 
   bool use_comp1 = sort1[0];
   bool use_fill = !back_calc[0];
-  bool has_addl = false;
-  if(addl.size() > 0) has_addl = true;
   std::vector<double> idn;
   std::vector<int> idstart;
   std::vector<int> idend;
@@ -141,7 +139,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       record this_rec(time[j],amt[j],evid[j],true,comment[j]);
       this_rec.pos = crow;
       this_id.push_back(this_rec);
-      if(has_addl && (addl[j] > 0) && this_rec.is_dose()) {
+      if((addl[j] > 0) && this_rec.is_dose()) {
         for(int k = 0; k < addl[j]; ++k) {
           record addl_rec(0.0,amt[j],evid[j],false,false);
           addl_rec.time = time[j] + ii[j]*double(k+1);
