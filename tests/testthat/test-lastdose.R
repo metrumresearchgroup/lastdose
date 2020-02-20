@@ -133,7 +133,7 @@ test_that("commented records", {
   expect_error(lastdose(set1, comments = c(FALSE, TRUE,FALSE)))
 })
 
-test_that("Undefined behavior when checking ADDL and II issue-11", {
+test_that("undefined behavior when checking ADDL and II issue-11", {
   no_addl <- subset(set1, ID==1)
   no_addl[["addl"]] <- NULL
   no_addl[["ii"]] <- NULL
