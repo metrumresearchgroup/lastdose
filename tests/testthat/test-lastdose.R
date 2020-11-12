@@ -1,10 +1,13 @@
-
+library(testthat)
+library(lastdose)
 
 context("basic functionality")
 set_file <- system.file("csv", "setn.csv", package = "lastdose")
 df <- read.csv(set_file)
+df$TIME <- df$time
+df$time <- NULL
 set1 <- subset(df, set==1)
-set2 <- subset(df, set==2 & ID==1 & time <= 12)
+set2 <- subset(df, set==2 & ID==1 & TIME <= 12)
 
 
 test_that("doses at time zero", {
@@ -22,8 +25,8 @@ test_that("time ties (q12h dosing)", {
   x <- lastdose(set1)
   z <- lastdose(set1, addl_ties = "dose_first")
   expect_false(identical(x,z))
-  ax <- subset(x, time==12)
-  az <- subset(z, time==12)
+  ax <- subset(x, TIME==12)
+  az <- subset(z, TIME==12)
   expect_true(all(ax[["TAD"]] == 12))
   expect_true(all(az[["TAD"]] == 0))
 })
@@ -64,9 +67,11 @@ test_that("required columns", {
   expect_error(lastdose(x))
   x <- set1
   x[["time"]] <- NULL
+  x[["TIME"]] <- NULL
   expect_error(lastdose(x))
   x <- set1
   x[["ID"]] <- NULL
+  x[["id"]] <- NULL
   expect_error(lastdose(x))
   x <- set1
   x[["evid"]] <- NULL
@@ -74,24 +79,27 @@ test_that("required columns", {
 })
 
 test_that("non-numeric data throws error", {
-  for(col in c("ID","time", "addl", "ii", "evid", "ID", "amt")) {
-    dd <- set1[seq(10),]
+  for(col in c("ID","time", "addl", "ii", "evid", "amt")) {
+    dd <- set1[seq(10), ]
+    dd$ID <- NULL
+    dd$TIME <- NULL
+    dd <- dd[seq(10),]
     dd[[col]] <- "A"
     expect_error(lastdose(dd))
   }
 })
 
 test_that("records out of order throws error", {
-  set1$time[12] <- 1E6
+  set1$TIME[12] <- 1E6
   expect_error(lastdose(set1))
 })
 
 test_that("tad and ldos are NA when time is NA", {
-  set1$time[12] <- NA_real_
+  set1$TIME[12] <- NA_real_
   ans <- lastdose(set1)[12,]
   expect_true(is.na(ans[["TAD"]]))
   expect_true(is.na(ans[["LDOS"]]))
-  expect_true(is.na(ans[["time"]]))
+  expect_true(is.na(ans[["TIME"]]))
 })
 
 test_that("error for missing values in ID,evid,ii,addl", {
@@ -121,14 +129,14 @@ test_that("commented records", {
   df2 <- df
   df2[["C"]] <- sample(c(0,1),nrow(df),replace=TRUE)
   expect_warning(find_comments(df2))
-  set1[["time"]] <- ifelse(set1[["ID"]]==2, set1[["time"]] + 25, set1[["time"]])
+  set1[["TIME"]] <- ifelse(set1[["ID"]]==2, set1[["TIME"]] + 25, set1[["TIME"]])
   set1[["C"]] <- NA_character_
   set1[["ID"]] <- 1
   set1[["ii"]] <- 0
   set1[["addl"]] <- 0
   set1[["C"]][10] <- "C"
   ans <- lastdose(set1)
-  diff <- ans[["time"]] - ans[["TAD"]]
+  diff <- ans[["TIME"]] - ans[["TAD"]]
   expect_equal(sum(diff),0)
   expect_error(lastdose(set1, comments = c(FALSE, TRUE,FALSE)))
 })
@@ -137,7 +145,7 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
   no_addl <- subset(set1, ID==1)
   no_addl[["addl"]] <- NULL
   no_addl[["ii"]] <- NULL
-  ans <- lapply(1:10, lastdose,data = no_addl)
+  ans <- lapply(1:10, function(i) lastdose(data = no_addl))
   ans <- sapply(ans,inherits,what="data.frame")
   expect_true(all(ans))
 })
