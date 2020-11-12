@@ -10,6 +10,8 @@ lastdose(data, ..., include_ldos = TRUE)
 
 lastdose_list(
   data,
+  time_col = "TIME",
+  id_col = "ID",
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
@@ -21,10 +23,14 @@ lastdose_df(data, ...)
 \arguments{
 \item{data}{data set as data frame; see \code{details}}
 
-\item{...}{arguments passed to \link{lastdose_list}}
+\item{...}{arguments passed to \code{\link[=lastdose_list]{lastdose_list()}}}
 
 \item{include_ldos}{\code{logical}; if \code{FALSE} then the \code{LDOS} data is not
-appended to the data set.  Only used for the \link{lastdose} function.}
+appended to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
+
+\item{time_col}{character name for the \code{TIME} column}
+
+\item{id_col}{character name for the subject \code{ID} column}
 
 \item{fill}{the value for \code{TAD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
@@ -46,17 +52,17 @@ in \code{data} indicating which records are to be ignored when looking for \code
 and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
 }
 \description{
-Use \link{lastdose} to add (or potentially replace) columns to the input
-data frame; \link{lastdose_list} and \link{lastdose_df} returns calculated information
+Use \code{\link[=lastdose]{lastdose()}} to add (or potentially replace) columns to the input
+data frame; \code{\link[=lastdose_list]{lastdose_list()}} and \code{\link[=lastdose_df]{lastdose_df()}} returns calculated information
 as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
-When calling \link{lastdose} to modify the data frame, two columns will be
+When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, two columns will be
 added (by default): \code{TAD} indicating the time after the most-recent dose
 and \code{LDOS} indicating the amount of the most recent dose.  This default
 behavior can be modified with the \code{include_ldos} argument.
 
-When calling \link{lastdose_list} or \link{lastdose_df}, the respective items are
+When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
 accessible with \code{tad} and \code{ldos} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
 
@@ -73,8 +79,8 @@ non-commented dosing record.
 conventions
 \item Required columns
 \itemize{
-\item \code{ID} or \code{id}: subject identifier
-\item \code{TIME} or \code{time}: data set time
+\item A subject ID column (either \code{ID} or user-specified)
+\item A record time column (either \code{TIME} or user-specified)
 \item \code{AMT} or \code{amt}: dose amount for dosing records
 \item \code{EVID} or \code{evid}: event ID; records with \code{EVID} or 1 or 4
 are considered dosing records
