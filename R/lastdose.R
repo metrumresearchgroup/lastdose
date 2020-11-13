@@ -28,7 +28,7 @@ NULL
 #' concentration; if `dose_first` then the dose is assumed to be administered
 #' and the observation made immediately after (with no advance in time). See
 #' details.
-#' @param comments a logcial vector with length equal to the number of rows
+#' @param comments a logical vector with length equal to the number of rows
 #' in `data` indicating which records are to be ignored when looking for `TAD`
 #' and `LDOS`.  See all the `fill_comments_na` argument.
 #' @param ... arguments passed to [lastdose_list()]

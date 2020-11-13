@@ -54,7 +54,7 @@ concentration; if \code{dose_first} then the dose is assumed to be administered
 and the observation made immediately after (with no advance in time). See
 details.}
 
-\item{comments}{a logcial vector with length equal to the number of rows
+\item{comments}{a logical vector with length equal to the number of rows
 in \code{data} indicating which records are to be ignored when looking for \code{TAD}
 and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
 }
