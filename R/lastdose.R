@@ -243,3 +243,7 @@ find_comments.character <- function(x,...) {
   !(is.na(x)|x=='.')
 }
 
+#' @rdname find_comments
+#' @export
+find_comments.logical <- function(x, ...) x
+

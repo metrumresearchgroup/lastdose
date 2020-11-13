@@ -4,6 +4,7 @@
 \alias{find_comments}
 \alias{find_comments.data.frame}
 \alias{find_comments.character}
+\alias{find_comments.logical}
 \title{Find commented records}
 \usage{
 find_comments(x, ...)
@@ -11,6 +12,8 @@ find_comments(x, ...)
 \method{find_comments}{data.frame}(x, ...)
 
 \method{find_comments}{character}(x, ...)
+
+\method{find_comments}{logical}(x, ...)
 }
 \arguments{
 \item{x}{a data frame or character vector}
