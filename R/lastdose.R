@@ -245,5 +245,6 @@ find_comments.character <- function(x,...) {
 
 #' @rdname find_comments
 #' @export
-find_comments.logical <- function(x, ...) x
-
+find_comments.logical <- function(x, ...) {
+  x & !is.na(x)
+}
