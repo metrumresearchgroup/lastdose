@@ -150,7 +150,7 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
   expect_true(all(ans))
 })
 
-test_that("user time and id columns", {
+test_that("user-named time and id columns", {
   d1 <- subset(set1, ID==1)
   d2 <- d1
   d2$TAFD <- d2$TIME
