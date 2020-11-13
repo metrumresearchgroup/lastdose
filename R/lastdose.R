@@ -225,9 +225,12 @@ find_comments <- function(x,...) UseMethod("find_comments")
 #'
 #' @export
 find_comments.data.frame <- function(x,...) {
-  if(!is.character(x[["C"]])) {
+  if(!inherits(x[["C"]], c("logical", "character"))) {
     if(exists("C", x)) {
-      warning("looking for comment records; found column 'C' but is wasn't character.")
+      warning(
+        "looking for comment records; found column `C` but is wasn't ",
+        "character or logical"
+      )
     }
     return(vector(mode="logical", nrow(x)))
   }
