@@ -11,6 +11,7 @@ lastdose(data, ..., include_ldos = TRUE)
 lastdose_list(
   data,
   time_col = "TIME",
+  time_units = NULL,
   id_col = "ID",
   fill = -99,
   back_calc = TRUE,
@@ -28,9 +29,15 @@ lastdose_df(data, ...)
 \item{include_ldos}{\code{logical}; if \code{FALSE} then the \code{LDOS} data is not
 appended to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
 
-\item{time_col}{character name for the \code{TIME} column}
+\item{time_col}{character name for the \code{TIME} column; input may be \code{numeric}
+or \code{POSIXct}; if \code{POSIXct}, a numeric value will be calculated based on
+the value of \code{time_units}}
 
-\item{id_col}{character name for the subject \code{ID} column}
+\item{time_units}{for calculating time when the time column inherits
+\code{POSIXct}; you may use any value that is valid for \code{\link[=difftime]{difftime()}}}
+
+\item{id_col}{character name for the subject \code{ID} column; may be numeric
+or character; if character, a numeric value is derived}
 
 \item{fill}{the value for \code{TAD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}

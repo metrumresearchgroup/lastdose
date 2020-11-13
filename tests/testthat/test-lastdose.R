@@ -56,7 +56,7 @@ test_that("lastdose_df", {
 })
 
 test_that("lastdose_list", {
-   y <- lastdose_list(set1)
+  y <- lastdose_list(set1)
   expect_is(y,"list")
   expect_identical(names(y), c("tad", "ldos"))
 })
@@ -149,3 +149,39 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
   ans <- sapply(ans,inherits,what="data.frame")
   expect_true(all(ans))
 })
+
+test_that("user time and id columns", {
+  d1 <- subset(set1, ID==1)
+  d2 <- d1
+  d2$TAFD <- d2$TIME
+  d2$TIME <- NULL
+  expect_identical(
+    lastdose_df(d1),
+    lastdose_df(d2, time_col = "TAFD")
+  )
+  expect_error(lastdose(d2), msg = "did not find time column")
+  d2 <- d1
+  d2$USUBJID <- "A"
+  d2$ID <- NULL
+  expect_identical(
+    lastdose_df(d1),
+    lastdose_df(d2, id_col = "USUBJID")
+  )
+  expect_error(lastdose(d2))
+})
+
+test_that("POSIXct datetime is converted to numeric time", {
+  d1 <- subset(set1, ID <= 2)
+  d2 <- d1
+  base <- as.POSIXct(0, origin = "2020-01-01", tz = "UTC")
+  d1$TIME <- d1$TIME * 60 * 60 + base
+  expect_identical(
+    lastdose_df(d2),
+    lastdose_df(d1, time_units = "hours")
+  )
+  expect_error(lastdose(d1), msg="is required when time column is")
+  expect_error(
+    lastdose(d1, time_units = "seconds")
+  )
+})
+

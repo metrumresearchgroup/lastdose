@@ -1,4 +1,4 @@
-
+VALID_TIME_UNITS <- c("auto", "secs", "mins", "hours", "days", "weeks")
 #' @useDynLib lastdose, .registration=TRUE
 NULL
 
@@ -9,8 +9,13 @@ NULL
 #' as either `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
-#' @param time_col character name for the `TIME` column
-#' @param id_col character name for the subject `ID` column
+#' @param time_col character name for the `TIME` column; input may be `numeric`
+#' or `POSIXct`; if `POSIXct`, a numeric value will be calculated based on
+#' the value of `time_units`
+#' @param time_units for calculating time when the time column inherits
+#' `POSIXct`; you may use any value that is valid for [difftime()]
+#' @param id_col character name for the subject `ID` column; may be numeric
+#' or character; if character, a numeric value is derived
 #' @param back_calc if `TRUE`, then the time before the first dose
 #' is calculated for records prior to the first dosing record when
 #' at least one dosing record is found in the data set.  Records before
@@ -101,6 +106,7 @@ lastdose <- function(data,..., include_ldos = TRUE) {
 #' @export
 lastdose_list <- function(data,
                           time_col = "TIME",
+                          time_units = NULL,
                           id_col = "ID",
                           fill = -99,
                           back_calc = TRUE,
@@ -122,6 +128,9 @@ lastdose_list <- function(data,
     stop("did not find id column `", id_col, "` in `data`", call.=FALSE)
   }
   col_id <- data[[wid]]
+  if(is.character(col_id)) {
+    col_id <- match(col_id, unique(col_id))
+  }
   if(!is.numeric(col_id)) {
     stop("id column is required to be numeric", call.=FALSE)
   }
@@ -130,12 +139,28 @@ lastdose_list <- function(data,
     stop("did not find time column `", time_col, "` in `data`", call.=FALSE)
   }
   col_time <- data[[wtime]]
+  if(inherits(col_time, "POSIXct")) {
+    if(missing(time_units)) {
+      stop(
+        "`time_units` is required when time column inherits `POSIXct`",
+        call.=FALSE
+      )
+    }
+    if(!is.element(time_units, VALID_TIME_UNITS)) {
+      stop(
+        "`time_units` has invalid value; see `lastdose:::VALID_TIME_UNITS`",
+        call. = FALSE
+      )
+    }
+    col_time <- difftime(col_time, min(col_time), units = time_units)
+    col_time <- as.numeric(col_time)
+  }
   if(!is.numeric(col_time)) {
     stop("time column is required to be numeric", call.=FALSE)
   }
   wamt <- match("amt", lcna)
   if(is.na(wamt)) {
-    stop("column AMT or amt is required in the data set.", call.=FALSE)
+    stop("column AMT or amt is required in the data set", call.=FALSE)
   }
   col_amt <- data[[wamt]]
   if(!is.numeric(col_amt)) {

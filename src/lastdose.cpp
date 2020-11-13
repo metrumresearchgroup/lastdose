@@ -164,7 +164,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         last_dose = it->amt;
         last_time = it->time;
       }
-      if(it->from_data) {        if(had_dose) {
+      if(it->from_data) {
+        if(had_dose) {
           tad[it->pos] = it->time - last_time;
         } else {
           tad[it->pos] = (use_fill || no_dose) ? fill[0] : (it->time - tofd[i]);
