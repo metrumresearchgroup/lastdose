@@ -9,9 +9,10 @@ NULL
 #' as either `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
-#' @param time_col character name for the `TIME` column; input may be `numeric`
-#' or `POSIXct`; if `POSIXct`, a numeric value will be calculated based on
-#' the value of `time_units`
+#' @param time_col character name for the `TIME` column; this could be time after
+#' first dose or time after first record or time relative to any origin; input
+#' may be `numeric` or `POSIXct` (e.g. `DATETIME`); if `POSIXct`, a numeric
+#' value will be calculated based on the value of `time_units`
 #' @param time_units for calculating time when the time column inherits
 #' `POSIXct`; you may use any value that is valid for [difftime()]
 #' @param id_col character name for the subject `ID` column; may be numeric
