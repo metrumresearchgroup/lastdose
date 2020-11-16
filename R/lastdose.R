@@ -214,7 +214,7 @@ lastdose_df <- function(data,...) {
 #' @examples
 #' comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
 #' dv <- rnorm(length(comment))
-#' df <- data.frame(C = comment , DV = dv)
+#' df <- data.frame(C = comment , DV = dv, stringsAsFactors = FALSE)
 #'
 #' find_comments(df)
 #'

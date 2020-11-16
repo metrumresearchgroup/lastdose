@@ -40,7 +40,7 @@ when it is either \code{NA} or when it is equal to \code{.}.
 \examples{
 comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
 dv <- rnorm(length(comment))
-df <- data.frame(C = comment , DV = dv)
+df <- data.frame(C = comment , DV = dv, stringsAsFactors = FALSE)
 
 find_comments(df)
 
