@@ -234,7 +234,7 @@ find_comments.data.frame <- function(x,...) {
     }
     return(vector(mode="logical", nrow(x)))
   }
-  find_comments.character(x[["C"]])
+  find_comments(x[["C"]])
 }
 
 #' @rdname find_comments
