@@ -247,7 +247,7 @@ lastdose_df <- function(data,...) {
 #' @examples
 #' comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
 #' dv <- rnorm(length(comment))
-#' df <- data.frame(C = comment , DV = dv)
+#' df <- data.frame(C = comment , DV = dv, stringsAsFactors = FALSE)
 #'
 #' find_comments(df)
 #'
@@ -258,13 +258,16 @@ find_comments <- function(x,...) UseMethod("find_comments")
 #'
 #' @export
 find_comments.data.frame <- function(x,...) {
-  if(!is.character(x[["C"]])) {
+  if(!inherits(x[["C"]], c("logical", "character"))) {
     if(exists("C", x)) {
-      warning("looking for comment records; found column 'C' but is wasn't character.")
+      warning(
+        "looking for comment records; found column `C` but is wasn't ",
+        "character or logical"
+      )
     }
     return(vector(mode="logical", nrow(x)))
   }
-  find_comments.character(x[["C"]])
+  find_comments(x[["C"]])
 }
 
 #' @rdname find_comments
@@ -273,3 +276,8 @@ find_comments.character <- function(x,...) {
   !(is.na(x)|x=='.')
 }
 
+#' @rdname find_comments
+#' @export
+find_comments.logical <- function(x, ...) {
+  x & !is.na(x)
+}

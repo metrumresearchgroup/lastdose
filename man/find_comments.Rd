@@ -4,6 +4,7 @@
 \alias{find_comments}
 \alias{find_comments.data.frame}
 \alias{find_comments.character}
+\alias{find_comments.logical}
 \title{Find commented records}
 \usage{
 find_comments(x, ...)
@@ -11,6 +12,8 @@ find_comments(x, ...)
 \method{find_comments}{data.frame}(x, ...)
 
 \method{find_comments}{character}(x, ...)
+
+\method{find_comments}{logical}(x, ...)
 }
 \arguments{
 \item{x}{a data frame or character vector}
@@ -37,7 +40,7 @@ when it is either \code{NA} or when it is equal to \code{.}.
 \examples{
 comment <- c(NA, "C", "C", NA, ".", NA, "Comment")
 dv <- rnorm(length(comment))
-df <- data.frame(C = comment , DV = dv)
+df <- data.frame(C = comment , DV = dv, stringsAsFactors = FALSE)
 
 find_comments(df)
 

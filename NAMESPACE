@@ -2,6 +2,7 @@
 
 S3method(find_comments,character)
 S3method(find_comments,data.frame)
+S3method(find_comments,logical)
 export(find_comments)
 export(lastdose)
 export(lastdose_df)
