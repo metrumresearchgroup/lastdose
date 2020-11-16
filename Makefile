@@ -65,3 +65,10 @@ site:
 
 spelling:
 	Rscript inst/script/_spelling.R
+
+bump-dev:
+	Rscript -e 'usethis::use_version("dev")'
+
+tag-version:
+	git tag $(VERSION)
+	git push origin $(VERSION)
