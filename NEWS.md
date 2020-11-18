@@ -1,4 +1,4 @@
-# lastdose (development version)
+# lastdose 0.3.0
 
 - Add `time_col` and `id_col` arguments to let user name columns containing 
   time and user id information #14
