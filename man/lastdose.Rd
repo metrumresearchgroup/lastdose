@@ -4,9 +4,9 @@
 \alias{lastdose}
 \alias{lastdose_list}
 \alias{lastdose_df}
-\title{Calculate last dose amount (LDOS) and time after last dose (TAD)}
+\title{Calculate dose times and amount}
 \usage{
-lastdose(data, ..., include_ldos = TRUE)
+lastdose(data, ..., include_ldos = TRUE, include_tafd = TRUE)
 
 lastdose_list(
   data,
@@ -28,6 +28,9 @@ lastdose_df(data, ...)
 
 \item{include_ldos}{\code{logical}; if \code{FALSE} then the \code{LDOS} data is not
 appended to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
+
+\item{include_tafd}{\code{logical}; if \code{FALSE}, then \code{TAFD} data is not appended
+to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
 
 \item{time_col}{character name for the \code{TIME} column; this could be time after
 first dose or time after first record or time relative to any origin; input
@@ -60,25 +63,29 @@ in \code{data} indicating which records are to be ignored when looking for \code
 and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
 }
 \description{
-Use \code{\link[=lastdose]{lastdose()}} to add (or potentially replace) columns to the input
-data frame; \code{\link[=lastdose_list]{lastdose_list()}} and \code{\link[=lastdose_df]{lastdose_df()}} returns calculated information
+This function calculates the last dose amount (\code{LDOS}), the time after
+last dose (\code{TAD}), and time after first dose (\code{TAFD}). Use \code{\link[=lastdose]{lastdose()}}
+to add (or potentially replace) columns to the input data frame;
+\code{\link[=lastdose_list]{lastdose_list()}} and \code{\link[=lastdose_df]{lastdose_df()}} returns calculated information
 as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
-When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, two columns will be
-added (by default): \code{TAD} indicating the time after the most-recent dose
-and \code{LDOS} indicating the amount of the most recent dose.  This default
-behavior can be modified with the \code{include_ldos} argument.
+When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, three columns will be
+added (by default): \code{TAD} indicating the time after the most-recent dose,
+\code{LDOS} indicating the amount of the most recent dose, and \code{TAFD} in dicating
+the time after the first dose..  This default
+behavior can be modified with the \code{include_ldos}  and \code{include_tafd},
+arguments.
 
 When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
-accessible with \code{tad} and \code{ldos} (note the lower case form here to
+accessible with \code{tad}, \code{ldos}, and \code{tafd} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
-actual doses when determining \code{TAD} and \code{LDOS}.  But commented records (doses
-and non-doses) will be assigned \code{TAD} and \code{LDOS} according to the last
-non-commented dosing record.
+actual doses when determining \code{TAD}, \code{LDOS}, and \code{TAFD}.  But commented
+records (doses and non-doses) will be assigned \code{TAD}, \code{LDOS} and \code{TAFD}
+according to the last non-commented dosing record.
 
 \strong{Additional notes}:
 \itemize{

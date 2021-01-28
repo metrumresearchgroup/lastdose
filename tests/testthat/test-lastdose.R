@@ -8,6 +8,7 @@ df$TIME <- df$time
 df$time <- NULL
 set1 <- subset(df, set==1)
 set2 <- subset(df, set==2 & ID==1 & TIME <= 12)
+set4 <- subset(df, set==4 & ID==1 & TIME <=24)
 
 
 test_that("doses at time zero", {
@@ -19,6 +20,14 @@ test_that("doses at time zero", {
   expect_identical(x[["TAD"]],c(a,a))
   a <- c(0,rep(100,7))
   expect_identical(x[["LDOS"]],c(a,a))
+})
+
+test_that("time after first dose", {
+  x <- lastdose(set4)
+  expect_true(exists("TAFD", x))
+  fir <- which(set4$evid==1)
+  tofd <- set4$TIME[fir[1]]
+  expect_equal(x$TIME, x$TAFD + tofd)
 })
 
 test_that("time ties (q12h dosing)", {
@@ -58,7 +67,7 @@ test_that("lastdose_df", {
 test_that("lastdose_list", {
   y <- lastdose_list(set1)
   expect_is(y,"list")
-  expect_identical(names(y), c("tad", "ldos"))
+  expect_identical(names(y), c("tad", "ldos", "tafd"))
 })
 
 test_that("required columns", {

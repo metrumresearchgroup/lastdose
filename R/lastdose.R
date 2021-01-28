@@ -2,10 +2,12 @@ VALID_TIME_UNITS <- c("auto", "secs", "mins", "hours", "days", "weeks")
 #' @useDynLib lastdose, .registration=TRUE
 NULL
 
-#' Calculate last dose amount (LDOS) and time after last dose (TAD)
+#' Calculate dose times and amount
 #'
-#' Use [lastdose()] to add (or potentially replace) columns to the input
-#' data frame; [lastdose_list()] and [lastdose_df()] returns calculated information
+#' This function calculates the last dose amount (`LDOS`), the time after
+#' last dose (`TAD`), and time after first dose (`TAFD`). Use [lastdose()]
+#' to add (or potentially replace) columns to the input data frame;
+#' [lastdose_list()] and [lastdose_df()] returns calculated information
 #' as either `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
@@ -35,23 +37,27 @@ NULL
 #' @param ... arguments passed to [lastdose_list()]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose()] function.
+#' @param include_tafd `logical`; if `FALSE`, then `TAFD` data is not appended
+#' to the data set.  Only used for the [lastdose()] function.
 #'
 #' @details
 #'
-#' When calling [lastdose()] to modify the data frame, two columns will be
-#' added (by default): `TAD` indicating the time after the most-recent dose
-#' and `LDOS` indicating the amount of the most recent dose.  This default
-#' behavior can be modified with the `include_ldos` argument.
+#' When calling [lastdose()] to modify the data frame, three columns will be
+#' added (by default): `TAD` indicating the time after the most-recent dose,
+#' `LDOS` indicating the amount of the most recent dose, and `TAFD` in dicating
+#' the time after the first dose..  This default
+#' behavior can be modified with the `include_ldos`  and `include_tafd`,
+#' arguments.
 #'
 #' When calling [lastdose_list()] or [lastdose_df()], the respective items are
-#' accessible with `tad` and `ldos` (note the lower case form here to
+#' accessible with `tad`, `ldos`, and `tafd` (note the lower case form here to
 #' distinguish from the columns that might be added to the data frame).
 #'
 #' **Handling of commented records**: Dosing records that have been "commented"
 #' (as indicated with the `comments` argument) will never be considered as
-#' actual doses when determining `TAD` and `LDOS`.  But commented records (doses
-#' and non-doses) will be assigned `TAD` and `LDOS` according to the last
-#' non-commented dosing record.
+#' actual doses when determining `TAD`, `LDOS`, and `TAFD`.  But commented
+#' records (doses and non-doses) will be assigned `TAD`, `LDOS` and `TAFD`
+#' according to the last non-commented dosing record.
 #'
 #' **Additional notes**:
 #'
@@ -96,10 +102,11 @@ NULL
 #'
 #'
 #' @export
-lastdose <- function(data,..., include_ldos = TRUE) {
+lastdose <- function(data,..., include_ldos = TRUE, include_tafd = TRUE) {
   ans <- lastdose_list(data,...)
   data[["TAD"]] <- ans[["tad"]]
   if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
+  if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
   data
 }
 
@@ -217,7 +224,9 @@ lastdose_list <- function(data,
 lastdose_df <- function(data,...) {
   ans <- lastdose_list(data,...)
   data.frame(
-    tad = ans[["tad"]], ldos = ans[["ldos"]],
+    tad = ans[["tad"]],
+    ldos = ans[["ldos"]],
+    tafd = ans[["tafd"]],
     stringsAsFactors=FALSE,check.names=FALSE,
     fix.empty.names=FALSE, row.names=NULL
   )
