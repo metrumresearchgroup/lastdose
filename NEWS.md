@@ -1,3 +1,8 @@
+# lastdose (development version)
+
+- Fix bug where `II` column was not properly detected resulting in incorrect 
+  `TAD` calculation when doses were also scheduled via `ADDL` #21
+  
 # lastdose 0.3.0
 
 - Add `time_col` and `id_col` arguments to let user name columns containing 

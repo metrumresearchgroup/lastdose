@@ -140,6 +140,14 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       this_rec.pos = crow;
       this_id.push_back(this_rec);
       if((addl[j] > 0) && this_rec.is_dose()) {
+        if(ii[j] <= 0.0) {
+          throw Rcpp::exception(
+              tfm::format(
+                "ADDL doses requested, but II is not positive at row %i", (j+1)
+              ).c_str(),
+              false
+          );
+        }
         for(int k = 0; k < addl[j]; ++k) {
           record addl_rec(0.0,amt[j],evid[j],false,false);
           addl_rec.time = time[j] + ii[j]*double(k+1);

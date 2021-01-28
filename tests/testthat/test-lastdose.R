@@ -192,3 +192,51 @@ test_that("logical comment column is ok", {
   d$C <- sample(c(1, 2), nrow(d), replace = TRUE)
   expect_warning(lastdose(d), msg = "but it wasn't character or logical")
 })
+
+test_that("ii detection issue-21", {
+  data <- data.frame(
+    TIME = c(0,1,2,3,4,5,6,7,8),
+    AMT  = c(0,1,0,0,0,0,0,0,0),
+    EVID = c(0,1,0,0,0,0,0,0,0),
+    II   = c(0,2,0,0,0,0,0,0,0),
+    ADDL = c(0,2,0,0,0,0,0,0,0),
+    ID = 1
+  )
+  out <- lastdose(data, addl_ties = "dose_first")
+  expect_true(all(out$LDOS[-1]==1))
+  expect_equal(out$TAD[1],-1)
+  doses <- subset(out, TIME %in% c(1,3,5))
+  expect_true(all(doses$TAD==0))
+  ones <- subset(out, TIME %in% c(2,4,6))
+  expect_true(all(ones$TAD==1))
+  term <- subset(out, TIME >=5)
+  expect_equal(term$TAD, c(0,1,2,3))
+  data2 <- data
+  II <- data2$II
+  data2$II <- NULL
+  data2$ii <- II
+  out <- lastdose(data2, addl_ties = "dose_first")
+  expect_true(all(out$LDOS[-1]==1))
+  expect_equal(out$TAD[1],-1)
+  doses <- subset(out, TIME %in% c(1,3,5))
+  expect_true(all(doses$TAD==0))
+  ones <- subset(out, TIME %in% c(2,4,6))
+  expect_true(all(ones$TAD==1))
+  term <- subset(out, TIME >=5)
+  expect_equal(term$TAD, c(0,1,2,3))
+})
+
+test_that("error if ADDL requested by II le 0", {
+  data <- data.frame(
+    TIME = c(0,1,2,3),
+    AMT  = c(0,1,0,0),
+    EVID = c(0,1,0,0),
+    ADDL = c(0,2,0,0),
+    II   = 0,
+    ID = 1
+  )
+  expect_error(
+    lastdose(data),
+    msg = "ADDL doses requested, but II not positive at row 2"
+  )
+})

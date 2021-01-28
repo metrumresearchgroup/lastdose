@@ -1,3 +1,4 @@
+\.drone\.jsonnet
 _pkgdown\.yml
 Makefile
 ^test\.R$
