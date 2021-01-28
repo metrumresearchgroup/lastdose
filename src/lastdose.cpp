@@ -179,7 +179,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   }
   Rcpp::List ans;
   ans["tad"] = tad;
-  ans["ldos"] = ldos;
   ans["tafd"] = tafd;
+  ans["ldos"] = ldos;
   return ans;
 }

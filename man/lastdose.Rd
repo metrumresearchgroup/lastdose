@@ -4,7 +4,7 @@
 \alias{lastdose}
 \alias{lastdose_list}
 \alias{lastdose_df}
-\title{Calculate dose times and amount}
+\title{Calculate last dose amount and times since previous doses}
 \usage{
 lastdose(data, ..., include_ldos = TRUE, include_tafd = TRUE)
 
@@ -43,7 +43,7 @@ value will be calculated based on the value of \code{time_units}}
 \item{id_col}{character name for the subject \code{ID} column; may be numeric
 or character; if character, a numeric value is derived}
 
-\item{fill}{the value for \code{TAD} that is used for records when no
+\item{fill}{the value for \code{TAD} and \code{TAFD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
 
 \item{back_calc}{if \code{TRUE}, then the time before the first dose
@@ -72,19 +72,18 @@ as either \code{list} or \code{data.frame} format without modifying the input da
 \details{
 When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, three columns will be
 added (by default): \code{TAD} indicating the time after the most-recent dose,
-\code{LDOS} indicating the amount of the most recent dose, and \code{TAFD} in dicating
-the time after the first dose..  This default
-behavior can be modified with the \code{include_ldos}  and \code{include_tafd},
-arguments.
+\code{TAFD} indicating the time after the first dose and \code{LDOS} indicating the
+amount of the most recent dose.  This default behavior can be modified with
+the \code{include_ldos} and \code{include_tafd} arguments.
 
 When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
-accessible with \code{tad}, \code{ldos}, and \code{tafd} (note the lower case form here to
+accessible with \code{tad},  \code{tafd}, and \code{ldos} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
-actual doses when determining \code{TAD}, \code{LDOS}, and \code{TAFD}.  But commented
-records (doses and non-doses) will be assigned \code{TAD}, \code{LDOS} and \code{TAFD}
+actual doses when determining \code{TAD},  \code{TAFD}, and \code{LDOS}.  But commented
+records (doses and non-doses) will be assigned \code{TAD},  \code{TAFD}, and \code{LDOS}
 according to the last non-commented dosing record.
 
 \strong{Additional notes}:
