@@ -121,10 +121,8 @@ lastdose_list <- function(data,
   }
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
-  x <- as.data.frame(data)
-  na <- names(data)
-  lcna <- tolower(na)
-  wid <- match(id_col, na)
+  lcna <- tolower(names(data))
+  wid <- match(id_col, names(data))
   if(is.na(wid)) {
     stop("did not find id column `", id_col, "` in `data`", call.=FALSE)
   }
@@ -135,7 +133,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_id)) {
     stop("id column is required to be numeric", call.=FALSE)
   }
-  wtime <- match(time_col, na)
+  wtime <- match(time_col, names(data))
   if(is.na(wtime)) {
     stop("did not find time column `", time_col, "` in `data`", call.=FALSE)
   }
