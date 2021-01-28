@@ -89,10 +89,10 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   }
   idend.push_back(id.size()-1);
   int crow = 0;
-  Rcpp::NumericVector tad(id.size());
-  Rcpp::NumericVector ldos(id.size());
-  Rcpp::NumericVector tafd(id.size());
-  std::vector<double> tofd;
+  Rcpp::NumericVector tad(id.size());  // return vector for TAD
+  Rcpp::NumericVector ldos(id.size()); // return vector for LDOS
+  Rcpp::NumericVector tafd(id.size()); // return vector for TAFD
+  std::vector<double> tofd;            // time of first dose
   tofd.assign(idn.size(),-1.0);
   int nid = idn.size();
   for(int i = 0; i < nid; ++i) {
