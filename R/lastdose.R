@@ -1,5 +1,6 @@
 VALID_TIME_UNITS <- c("auto", "secs", "mins", "hours", "days", "weeks")
 #' @useDynLib lastdose, .registration=TRUE
+#' @importFrom Rcpp evalCpp
 NULL
 
 #' Calculate last dose amount and times since previous doses
