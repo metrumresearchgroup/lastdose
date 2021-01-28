@@ -226,7 +226,7 @@ test_that("ii detection issue-21", {
   expect_equal(term$TAD, c(0,1,2,3))
 })
 
-test_that("error if ADDL requested by II lt 0", {
+test_that("error if ADDL requested by II le 0", {
   data <- data.frame(
     TIME = c(0,1,2,3),
     AMT  = c(0,1,0,0),
