@@ -72,13 +72,13 @@ df <- lastdose(df)
 head(df)
 ```
 
-    .   ID TIME EVID  AMT CMT II ADDL   DV TAD LDOS TAFD
+    .   ID TIME EVID  AMT CMT II ADDL   DV TAD TAFD LDOS
     . 1  1    0    0    0   0  0    0  0.0   0    0    0
-    . 2  1    0    1 1000   1 24   27  0.0   0 1000    0
-    . 3  1    4    0    0   0  0    0 42.1   4 1000    4
-    . 4  1    8    0    0   0  0    0 35.3   8 1000    8
-    . 5  1   12    0    0   0  0    0 28.9  12 1000   12
-    . 6  1   16    0    0   0  0    0 23.6  16 1000   16
+    . 2  1    0    1 1000   1 24   27  0.0   0    0 1000
+    . 3  1    4    0    0   0  0    0 42.1   4    4 1000
+    . 4  1    8    0    0   0  0    0 35.3   8    8 1000
+    . 5  1   12    0    0   0  0    0 28.9  12   12 1000
+    . 6  1   16    0    0   0  0    0 23.6  16   16 1000
 
 Now we have `TAD`, `TAFD`, and `LDOS` in our data set.
 
@@ -161,7 +161,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.023   0.003   0.026
+    .   0.022   0.003   0.025
 
 ## Compare against the single profile
 
@@ -170,7 +170,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .   0.001   0.000   0.000
+    .       0       0       0
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
@@ -195,14 +195,14 @@ lastdose(df) %>% head()
 ```
 
     . # A tibble: 6 x 11
-    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS  TAFD
+    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  TAFD  LDOS
     .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-    . 1     1     0     0     0     0     0     0   0     -12     0   -12
-    . 2     1     4     0     0     0     0     0   0      -8     0    -8
-    . 3     1     8     0     0     0     0     0   0      -4     0    -4
+    . 1     1     0     0     0     0     0     0   0     -12   -12     0
+    . 2     1     4     0     0     0     0     0   0      -8    -8     0
+    . 3     1     8     0     0     0     0     0   0      -4    -4     0
     . 4     1    12     0     0     0     0     0   0       0     0     0
-    . 5     1    12     1  1000     1    24    27   0       0  1000     0
-    . 6     1    16     0     0     0     0     0  23.6     4  1000     4
+    . 5     1    12     1  1000     1    24    27   0       0     0  1000
+    . 6     1    16     0     0     0     0     0  23.6     4     4  1000
 
 The user can alternatively control what happens for these records
 
@@ -211,14 +211,14 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 ```
 
     . # A tibble: 6 x 11
-    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS  TAFD
+    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  TAFD  LDOS
     .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-    . 1     1     0     0     0     0     0     0   0      NA     0    NA
-    . 2     1     4     0     0     0     0     0   0      NA     0    NA
-    . 3     1     8     0     0     0     0     0   0      NA     0    NA
-    . 4     1    12     0     0     0     0     0   0      NA     0    NA
-    . 5     1    12     1  1000     1    24    27   0       0  1000     0
-    . 6     1    16     0     0     0     0     0  23.6     4  1000     4
+    . 1     1     0     0     0     0     0     0   0      NA    NA     0
+    . 2     1     4     0     0     0     0     0   0      NA    NA     0
+    . 3     1     8     0     0     0     0     0   0      NA    NA     0
+    . 4     1    12     0     0     0     0     0   0      NA    NA     0
+    . 5     1    12     1  1000     1    24    27   0       0     0  1000
+    . 6     1    16     0     0     0     0     0  23.6     4     4  1000
 
 <hr>
 

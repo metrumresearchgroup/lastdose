@@ -104,8 +104,8 @@ NULL
 lastdose <- function(data,..., include_ldos = TRUE, include_tafd = TRUE) {
   ans <- lastdose_list(data,...)
   data[["TAD"]] <- ans[["tad"]]
-  if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
   if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
+  if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
   data
 }
 
