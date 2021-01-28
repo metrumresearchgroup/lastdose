@@ -185,7 +185,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_addl)) {
     stop("column ADDL/addl is required to be numeric", call.=FALSE)
   }
-  wii <- match("ii", na)
+  wii <- match("ii", lcna)
   if(is.na(wii)) {
     col_ii <- vector(mode = "numeric", length=nrow(data))
     wii <- NULL
