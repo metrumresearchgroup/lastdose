@@ -8,7 +8,7 @@ df$TIME <- df$time
 df$time <- NULL
 set1 <- subset(df, set==1)
 set2 <- subset(df, set==2 & ID==1 & TIME <= 12)
-set4 <- subset(df, set==4 & ID==1 & TIME <=24)
+set4 <- subset(df, set==4 & ID==1 & TIME <= 24)
 
 
 test_that("doses at time zero", {
