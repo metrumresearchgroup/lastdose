@@ -269,7 +269,7 @@ find_comments.data.frame <- function(x,...) {
   if(!inherits(x[["C"]], c("logical", "character"))) {
     if(exists("C", x)) {
       warning(
-        "looking for comment records; found column `C` but is wasn't ",
+        "looking for comment records; found column `C` but it wasn't ",
         "character or logical"
       )
     }

@@ -194,3 +194,10 @@ test_that("POSIXct datetime is converted to numeric time", {
   )
 })
 
+test_that("logical comment column is ok", {
+  d <- subset(set1, ID ==1)
+  d$C <- sample(c(FALSE, TRUE), nrow(d), replace = TRUE)
+  expect_silent(lastdose(d))
+  d$C <- sample(c(1, 2), nrow(d), replace = TRUE)
+  expect_warning(lastdose(d), msg = "but it wasn't character or logical")
+})
