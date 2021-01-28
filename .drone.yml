@@ -136,7 +136,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: bbr-coverage
+name: coverage
 
 platform:
   os: linux
@@ -182,7 +182,7 @@ depends_on:
 ---
 kind: pipeline
 type: docker
-name: bbr-release
+name: release
 
 platform:
   os: linux
