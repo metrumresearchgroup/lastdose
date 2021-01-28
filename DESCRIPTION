@@ -9,10 +9,11 @@ Maintainer: Kyle T Baron  <kyleb@metrumrg.com>
 Description: Efficient calculation of time after last dose and last dose amount
     for analysis data sets.
 License: GPL (>=2)
+Imports: Rcpp
 LinkingTo: Rcpp
 URL: https://github.com/metrumresearchgroup/lastdose
 BugReports: https://github.com/metrumresearchgroup/lastdose/issues
-Suggests: testthat, Rcpp
+Suggests: testthat
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

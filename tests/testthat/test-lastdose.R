@@ -25,9 +25,9 @@ test_that("doses at time zero", {
 test_that("time after first dose", {
   x <- lastdose(set4)
   expect_true(exists("TAFD", x))
-  fir <- which(set4$evid==1)
-  tofd <- set4$TIME[fir[1]]
-  expect_equal(x$TIME, x$TAFD + tofd)
+  dose_rows <- which(set4$evid==1)
+  time_of_first_dose <- set4$TIME[dose_rows[1]]
+  expect_equal(x$TIME, x$TAFD + time_of_first_dose)
 })
 
 test_that("time ties (q12h dosing)", {
