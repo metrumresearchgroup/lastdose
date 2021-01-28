@@ -225,3 +225,18 @@ test_that("ii detection issue-21", {
   term <- subset(out, TIME >=5)
   expect_equal(term$TAD, c(0,1,2,3))
 })
+
+test_that("error if ADDL requested by II lt 0", {
+  data <- data.frame(
+    TIME = c(0,1,2,3),
+    AMT  = c(0,1,0,0),
+    EVID = c(0,1,0,0),
+    ADDL = c(0,2,0,0),
+    II   = 0,
+    ID = 1
+  )
+  expect_error(
+    lastdose(data),
+    msg = "ADDL doses requested, but II not positive at row 2"
+  )
+})

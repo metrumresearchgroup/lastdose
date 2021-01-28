@@ -121,7 +121,7 @@ lastdose_list <- function(data,
   }
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
-  lcna <- tolower(names(data))
+  lower_names <- tolower(names(data))
   wid <- match(id_col, names(data))
   if(is.na(wid)) {
     stop("did not find id column `", id_col, "` in `data`", call.=FALSE)
@@ -157,7 +157,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_time)) {
     stop("time column is required to be numeric", call.=FALSE)
   }
-  wamt <- match("amt", lcna)
+  wamt <- match("amt", lower_names)
   if(is.na(wamt)) {
     stop("column AMT or amt is required in the data set", call.=FALSE)
   }
@@ -165,7 +165,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_amt)) {
     stop("column AMT/amt is required to be numeric", call.=FALSE)
   }
-  wevid <- match("evid",lcna)
+  wevid <- match("evid", lower_names)
   if(is.na(wevid)) {
     stop("column EVID or evid is required in the data set.", call.=FALSE)
   }
@@ -173,7 +173,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_evid)) {
     stop("column EVID/evid is required to be numeric", call.=FALSE)
   }
-  waddl <- match("addl", lcna)
+  waddl <- match("addl", lower_names)
   if(is.na(waddl)) {
     col_addl <- vector(mode = "numeric", length=nrow(data))
     wii <- NULL
@@ -183,7 +183,7 @@ lastdose_list <- function(data,
   if(!is.numeric(col_addl)) {
     stop("column ADDL/addl is required to be numeric", call.=FALSE)
   }
-  wii <- match("ii", lcna)
+  wii <- match("ii", lower_names)
   if(is.na(wii)) {
     col_ii <- vector(mode = "numeric", length=nrow(data))
     wii <- NULL
