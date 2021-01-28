@@ -55,8 +55,8 @@ NULL
 #'
 #' **Handling of commented records**: Dosing records that have been "commented"
 #' (as indicated with the `comments` argument) will never be considered as
-#' actual doses when determining `TAD`,  `TAFD`, and `LDOS`.  But commented
-#' records (doses and non-doses) will be assigned `TAD`,  `TAFD`, and `LDOS`
+#' actual doses when determining `TAD`, `TAFD`, and `LDOS`.  But commented
+#' records (doses and non-doses) will be assigned `TAD`, `TAFD`, and `LDOS`
 #' according to the last non-commented dosing record.
 #'
 #' **Additional notes**:
@@ -76,7 +76,7 @@ NULL
 #' - An error is generated if required columns are not found; no error
 #'   or warning if optional columns are not found
 #' - All required and optional columns are required to be numeric
-#' - Missing values are not allowed in: `ID`,`EVID`,`ADDL`,`II`
+#' - Missing values are not allowed in: `ID`, `EVID`, `ADDL`, `II`
 #' - When missing values are found in `TIME`, both `TAD` and `LDOS` are set to
 #'   missing
 #' - An error is generated for missing `AMT` in dosing records (evid 1 or 4)
@@ -84,7 +84,7 @@ NULL
 #'
 #' An example illustrating the `addl_ties` argument: when there is `Q24h`
 #' dosing and both an an additional dose and an observation happen at 24 hours,
-#' `obs_first` will set the observation`TAD` to 24 and `dose_first` will set
+#' `obs_first` will set the observation `TAD` to 24 and `dose_first` will set
 #' the observation `TAD` to 0.
 #'
 #' @examples
