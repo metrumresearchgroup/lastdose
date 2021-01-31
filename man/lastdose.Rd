@@ -82,8 +82,8 @@ distinguish from the columns that might be added to the data frame).
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
-actual doses when determining \code{TAD},  \code{TAFD}, and \code{LDOS}.  But commented
-records (doses and non-doses) will be assigned \code{TAD},  \code{TAFD}, and \code{LDOS}
+actual doses when determining \code{TAD}, \code{TAFD}, and \code{LDOS}.  But commented
+records (doses and non-doses) will be assigned \code{TAD}, \code{TAFD}, and \code{LDOS}
 according to the last non-commented dosing record.
 
 \strong{Additional notes}:
@@ -107,7 +107,7 @@ are considered dosing records
 \item An error is generated if required columns are not found; no error
 or warning if optional columns are not found
 \item All required and optional columns are required to be numeric
-\item Missing values are not allowed in: \code{ID},\code{EVID},\code{ADDL},\code{II}
+\item Missing values are not allowed in: \code{ID}, \code{EVID}, \code{ADDL}, \code{II}
 \item When missing values are found in \code{TIME}, both \code{TAD} and \code{LDOS} are set to
 missing
 \item An error is generated for missing \code{AMT} in dosing records (evid 1 or 4)
@@ -116,7 +116,7 @@ missing
 
 An example illustrating the \code{addl_ties} argument: when there is \code{Q24h}
 dosing and both an an additional dose and an observation happen at 24 hours,
-\code{obs_first} will set the observation\code{TAD} to 24 and \code{dose_first} will set
+\code{obs_first} will set the observation \code{TAD} to 24 and \code{dose_first} will set
 the observation \code{TAD} to 0.
 }
 \examples{
