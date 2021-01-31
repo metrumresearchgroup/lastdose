@@ -161,7 +161,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.022   0.003   0.025
+    .   0.039   0.003   0.042
 
 ## Compare against the single profile
 

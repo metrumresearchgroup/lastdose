@@ -53,7 +53,7 @@ ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
 
-## Calculate TAD,  TAFD, and LDOS
+## Calculate TAD, TAFD, and LDOS
 
 Use the `lastdose()` function
 ```{r}
