@@ -1,11 +1,14 @@
 VALID_TIME_UNITS <- c("auto", "secs", "mins", "hours", "days", "weeks")
 #' @useDynLib lastdose, .registration=TRUE
+#' @importFrom Rcpp evalCpp
 NULL
 
-#' Calculate last dose amount (LDOS) and time after last dose (TAD)
+#' Calculate last dose amount and times since previous doses
 #'
-#' Use [lastdose()] to add (or potentially replace) columns to the input
-#' data frame; [lastdose_list()] and [lastdose_df()] returns calculated information
+#' This function calculates the last dose amount (`LDOS`), the time after
+#' last dose (`TAD`), and time after first dose (`TAFD`). Use [lastdose()]
+#' to add (or potentially replace) columns to the input data frame;
+#' [lastdose_list()] and [lastdose_df()] returns calculated information
 #' as either `list` or `data.frame` format without modifying the input data.
 #'
 #' @param data data set as data frame; see `details`
@@ -21,7 +24,7 @@ NULL
 #' is calculated for records prior to the first dosing record when
 #' at least one dosing record is found in the data set.  Records before
 #' the first dosing record will have negative values.
-#' @param fill the value for `TAD` that is used for records when no
+#' @param fill the value for `TAD` and `TAFD` that is used for records when no
 #' doses are found for an individual or when `back_calc` is `FALSE`.
 #' @param addl_ties what to do when doses scheduled through `ADDL` happen at
 #' the same time as observation records; if `obs_first` then the observation
@@ -35,23 +38,26 @@ NULL
 #' @param ... arguments passed to [lastdose_list()]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose()] function.
+#' @param include_tafd `logical`; if `FALSE`, then `TAFD` data is not appended
+#' to the data set.  Only used for the [lastdose()] function.
 #'
 #' @details
 #'
-#' When calling [lastdose()] to modify the data frame, two columns will be
-#' added (by default): `TAD` indicating the time after the most-recent dose
-#' and `LDOS` indicating the amount of the most recent dose.  This default
-#' behavior can be modified with the `include_ldos` argument.
+#' When calling [lastdose()] to modify the data frame, three columns will be
+#' added (by default): `TAD` indicating the time after the most-recent dose,
+#' `TAFD` indicating the time after the first dose and `LDOS` indicating the
+#' amount of the most recent dose.  This default behavior can be modified with
+#' the `include_ldos` and `include_tafd` arguments.
 #'
 #' When calling [lastdose_list()] or [lastdose_df()], the respective items are
-#' accessible with `tad` and `ldos` (note the lower case form here to
+#' accessible with `tad`,  `tafd`, and `ldos` (note the lower case form here to
 #' distinguish from the columns that might be added to the data frame).
 #'
 #' **Handling of commented records**: Dosing records that have been "commented"
 #' (as indicated with the `comments` argument) will never be considered as
-#' actual doses when determining `TAD` and `LDOS`.  But commented records (doses
-#' and non-doses) will be assigned `TAD` and `LDOS` according to the last
-#' non-commented dosing record.
+#' actual doses when determining `TAD`, `TAFD`, and `LDOS`.  But commented
+#' records (doses and non-doses) will be assigned `TAD`, `TAFD`, and `LDOS`
+#' according to the last non-commented dosing record.
 #'
 #' **Additional notes**:
 #'
@@ -70,7 +76,7 @@ NULL
 #' - An error is generated if required columns are not found; no error
 #'   or warning if optional columns are not found
 #' - All required and optional columns are required to be numeric
-#' - Missing values are not allowed in: `ID`,`EVID`,`ADDL`,`II`
+#' - Missing values are not allowed in: `ID`, `EVID`, `ADDL`, `II`
 #' - When missing values are found in `TIME`, both `TAD` and `LDOS` are set to
 #'   missing
 #' - An error is generated for missing `AMT` in dosing records (evid 1 or 4)
@@ -78,7 +84,7 @@ NULL
 #'
 #' An example illustrating the `addl_ties` argument: when there is `Q24h`
 #' dosing and both an an additional dose and an observation happen at 24 hours,
-#' `obs_first` will set the observation`TAD` to 24 and `dose_first` will set
+#' `obs_first` will set the observation `TAD` to 24 and `dose_first` will set
 #' the observation `TAD` to 0.
 #'
 #' @examples
@@ -96,9 +102,10 @@ NULL
 #'
 #'
 #' @export
-lastdose <- function(data,..., include_ldos = TRUE) {
+lastdose <- function(data,..., include_ldos = TRUE, include_tafd = TRUE) {
   ans <- lastdose_list(data,...)
   data[["TAD"]] <- ans[["tad"]]
+  if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
   if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
   data
 }
@@ -215,7 +222,9 @@ lastdose_list <- function(data,
 lastdose_df <- function(data,...) {
   ans <- lastdose_list(data,...)
   data.frame(
-    tad = ans[["tad"]], ldos = ans[["ldos"]],
+    tad = ans[["tad"]],
+    tafd = ans[["tafd"]],
+    ldos = ans[["ldos"]],
     stringsAsFactors=FALSE,check.names=FALSE,
     fix.empty.names=FALSE, row.names=NULL
   )

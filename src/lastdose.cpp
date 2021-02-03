@@ -89,9 +89,10 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   }
   idend.push_back(id.size()-1);
   int crow = 0;
-  Rcpp::NumericVector tad(id.size());
-  Rcpp::NumericVector ldos(id.size());
-  std::vector<double> tofd;
+  Rcpp::NumericVector tad(id.size());  // return vector for TAD
+  Rcpp::NumericVector ldos(id.size()); // return vector for LDOS
+  Rcpp::NumericVector tafd(id.size()); // return vector for TAFD
+  std::vector<double> tofd;            // time of first dose
   tofd.assign(idn.size(),-1.0);
   int nid = idn.size();
   for(int i = 0; i < nid; ++i) {
@@ -175,8 +176,10 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       if(it->from_data) {
         if(had_dose) {
           tad[it->pos] = it->time - last_time;
+          tafd[it->pos] = it->time - tofd[i];
         } else {
           tad[it->pos] = (use_fill || no_dose) ? fill[0] : (it->time - tofd[i]);
+          tafd[it->pos] = tad[it->pos];
         }
         ldos[it->pos] = last_dose;
       }
@@ -184,6 +187,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   }
   Rcpp::List ans;
   ans["tad"] = tad;
+  ans["tafd"] = tafd;
   ans["ldos"] = ldos;
   return ans;
 }
