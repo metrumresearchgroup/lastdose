@@ -1,4 +1,4 @@
-# lastdose (development version)
+# lastdose 0.3.2
 
 - Fix bug where `II` column was not properly detected resulting in incorrect 
   `TAD` calculation when doses were also scheduled via `ADDL` #21
