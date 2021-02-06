@@ -51,12 +51,10 @@ doses, most of which are scheduled into the future via `ADDL`.
 df %>% filter(EVID==1) %>% count(TIME,AMT,ADDL)
 ```
 
-    . # A tibble: 3 x 4
-    .    TIME   AMT  ADDL     n
-    .   <int> <int> <int> <int>
-    . 1     0  1000    27     1
-    . 2   672   500    27     1
-    . 3  1344   300    27     1
+    .   TIME  AMT ADDL n
+    . 1    0 1000   27 1
+    . 2  672  500   27 1
+    . 3 1344  300   27 1
 
 ``` r
 ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
@@ -64,7 +62,7 @@ ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 
 ![](man/figures/readme-unnamed-chunk-5-1.png)<!-- -->
 
-## Calculate TAD and LDOS
+## Calculate TAD, TAFD, and LDOS
 
 Use the `lastdose()` function
 
@@ -74,15 +72,15 @@ df <- lastdose(df)
 head(df)
 ```
 
-    .   ID TIME EVID  AMT CMT II ADDL   DV TAD LDOS
-    . 1  1    0    0    0   0  0    0  0.0   0    0
-    . 2  1    0    1 1000   1 24   27  0.0   0 1000
-    . 3  1    4    0    0   0  0    0 42.1   4 1000
-    . 4  1    8    0    0   0  0    0 35.3   8 1000
-    . 5  1   12    0    0   0  0    0 28.9  12 1000
-    . 6  1   16    0    0   0  0    0 23.6  16 1000
+    .   ID TIME EVID  AMT CMT II ADDL   DV TAD TAFD LDOS
+    . 1  1    0    0    0   0  0    0  0.0   0    0    0
+    . 2  1    0    1 1000   1 24   27  0.0   0    0 1000
+    . 3  1    4    0    0   0  0    0 42.1   4    4 1000
+    . 4  1    8    0    0   0  0    0 35.3   8    8 1000
+    . 5  1   12    0    0   0  0    0 28.9  12   12 1000
+    . 6  1   16    0    0   0  0    0 23.6  16   16 1000
 
-Now we have `TAD` and `LDOS` in our data set.
+Now we have `TAD`, `TAFD`, and `LDOS` in our data set.
 
 ## Plot last dose versus time
 
@@ -163,7 +161,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.045   0.002   0.047
+    .   0.040   0.002   0.041
 
 ## Compare against the single profile
 
@@ -196,15 +194,15 @@ df <- read_csv(file)
 lastdose(df) %>% head()
 ```
 
-    . # A tibble: 6 x 10
-    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
-    .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-    . 1     1     0     0     0     0     0     0   0     -12     0
-    . 2     1     4     0     0     0     0     0   0      -8     0
-    . 3     1     8     0     0     0     0     0   0      -4     0
-    . 4     1    12     0     0     0     0     0   0       0     0
-    . 5     1    12     1  1000     1    24    27   0       0  1000
-    . 6     1    16     0     0     0     0     0  23.6     4  1000
+    . # A tibble: 6 x 11
+    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  TAFD  LDOS
+    .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+    . 1     1     0     0     0     0     0     0   0     -12   -12     0
+    . 2     1     4     0     0     0     0     0   0      -8    -8     0
+    . 3     1     8     0     0     0     0     0   0      -4    -4     0
+    . 4     1    12     0     0     0     0     0   0       0     0     0
+    . 5     1    12     1  1000     1    24    27   0       0     0  1000
+    . 6     1    16     0     0     0     0     0  23.6     4     4  1000
 
 The user can alternatively control what happens for these records
 
@@ -212,15 +210,15 @@ The user can alternatively control what happens for these records
 lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 ```
 
-    . # A tibble: 6 x 10
-    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  LDOS
-    .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-    . 1     1     0     0     0     0     0     0   0      NA     0
-    . 2     1     4     0     0     0     0     0   0      NA     0
-    . 3     1     8     0     0     0     0     0   0      NA     0
-    . 4     1    12     0     0     0     0     0   0      NA     0
-    . 5     1    12     1  1000     1    24    27   0       0  1000
-    . 6     1    16     0     0     0     0     0  23.6     4  1000
+    . # A tibble: 6 x 11
+    .      ID  TIME  EVID   AMT   CMT    II  ADDL    DV   TAD  TAFD  LDOS
+    .   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+    . 1     1     0     0     0     0     0     0   0      NA    NA     0
+    . 2     1     4     0     0     0     0     0   0      NA    NA     0
+    . 3     1     8     0     0     0     0     0   0      NA    NA     0
+    . 4     1    12     0     0     0     0     0   0      NA    NA     0
+    . 5     1    12     1  1000     1    24    27   0       0     0  1000
+    . 6     1    16     0     0     0     0     0  23.6     4     4  1000
 
 <hr>
 

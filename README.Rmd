@@ -53,7 +53,7 @@ ggplot(df, aes(TIME,DV)) + geom_line() + theme_bw()
 ```
 
 
-## Calculate TAD and LDOS
+## Calculate TAD, TAFD, and LDOS
 
 Use the `lastdose()` function
 ```{r}
@@ -62,7 +62,7 @@ df <- lastdose(df)
 head(df)
 ```
 
-Now we have `TAD` and `LDOS` in our data set.
+Now we have `TAD`, `TAFD`, and `LDOS` in our data set.
 
 ## Plot last dose versus time
 ```{r}

@@ -8,6 +8,7 @@ df$TIME <- df$time
 df$time <- NULL
 set1 <- subset(df, set==1)
 set2 <- subset(df, set==2 & ID==1 & TIME <= 12)
+set4 <- subset(df, set==4 & ID==1 & TIME <= 24)
 
 
 test_that("doses at time zero", {
@@ -19,6 +20,14 @@ test_that("doses at time zero", {
   expect_identical(x[["TAD"]],c(a,a))
   a <- c(0,rep(100,7))
   expect_identical(x[["LDOS"]],c(a,a))
+})
+
+test_that("time after first dose", {
+  x <- lastdose(set4)
+  expect_true(exists("TAFD", x))
+  dose_rows <- which(set4$evid==1)
+  time_of_first_dose <- set4$TIME[dose_rows[1]]
+  expect_equal(x$TIME, x$TAFD + time_of_first_dose)
 })
 
 test_that("time ties (q12h dosing)", {
@@ -58,7 +67,7 @@ test_that("lastdose_df", {
 test_that("lastdose_list", {
   y <- lastdose_list(set1)
   expect_is(y,"list")
-  expect_identical(names(y), c("tad", "ldos"))
+  expect_identical(names(y), c("tad", "tafd","ldos"))
 })
 
 test_that("required columns", {
@@ -191,4 +200,52 @@ test_that("logical comment column is ok", {
   expect_silent(lastdose(d))
   d$C <- sample(c(1, 2), nrow(d), replace = TRUE)
   expect_warning(lastdose(d), msg = "but it wasn't character or logical")
+})
+
+test_that("ii detection issue-21", {
+  data <- data.frame(
+    TIME = c(0,1,2,3,4,5,6,7,8),
+    AMT  = c(0,1,0,0,0,0,0,0,0),
+    EVID = c(0,1,0,0,0,0,0,0,0),
+    II   = c(0,2,0,0,0,0,0,0,0),
+    ADDL = c(0,2,0,0,0,0,0,0,0),
+    ID = 1
+  )
+  out <- lastdose(data, addl_ties = "dose_first")
+  expect_true(all(out$LDOS[-1]==1))
+  expect_equal(out$TAD[1],-1)
+  doses <- subset(out, TIME %in% c(1,3,5))
+  expect_true(all(doses$TAD==0))
+  ones <- subset(out, TIME %in% c(2,4,6))
+  expect_true(all(ones$TAD==1))
+  term <- subset(out, TIME >=5)
+  expect_equal(term$TAD, c(0,1,2,3))
+  data2 <- data
+  II <- data2$II
+  data2$II <- NULL
+  data2$ii <- II
+  out <- lastdose(data2, addl_ties = "dose_first")
+  expect_true(all(out$LDOS[-1]==1))
+  expect_equal(out$TAD[1],-1)
+  doses <- subset(out, TIME %in% c(1,3,5))
+  expect_true(all(doses$TAD==0))
+  ones <- subset(out, TIME %in% c(2,4,6))
+  expect_true(all(ones$TAD==1))
+  term <- subset(out, TIME >=5)
+  expect_equal(term$TAD, c(0,1,2,3))
+})
+
+test_that("error if ADDL requested by II le 0", {
+  data <- data.frame(
+    TIME = c(0,1,2,3),
+    AMT  = c(0,1,0,0),
+    EVID = c(0,1,0,0),
+    ADDL = c(0,2,0,0),
+    II   = 0,
+    ID = 1
+  )
+  expect_error(
+    lastdose(data),
+    msg = "ADDL doses requested, but II not positive at row 2"
+  )
 })

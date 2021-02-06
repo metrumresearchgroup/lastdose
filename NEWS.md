@@ -1,3 +1,10 @@
+# lastdose 0.3.2
+
+- Fix bug where `II` column was not properly detected resulting in incorrect 
+  `TAD` calculation when doses were also scheduled via `ADDL` #21
+- Append `TAFD` (time after first dose) to data data frame on `lastdose()`
+  and `lastdose_df()` call and add `tafd` to return from `lastdose_list()` #19
+  
 # lastdose 0.3.0
 
 - Add `time_col` and `id_col` arguments to let user name columns containing 
