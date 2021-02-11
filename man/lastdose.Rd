@@ -11,8 +11,8 @@ lastdose(data, ..., include_ldos = TRUE, include_tafd = TRUE)
 lastdose_list(
   data,
   time_col = "TIME",
-  time_units = NULL,
-  id_col = "ID",
+  time_units = getOption("lastdose.time_units", NULL),
+  id_col = getOption("lastdose.id_col", "ID"),
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
@@ -119,6 +119,21 @@ dosing and both an an additional dose and an observation happen at 24 hours,
 \code{obs_first} will set the observation \code{TAD} to 24 and \code{dose_first} will set
 the observation \code{TAD} to 0.
 }
+\section{Options}{
+
+
+These are options that can be set to customize \code{lastdose} behavior
+for the current context.  See \code{?options} for how to set an option.
+\itemize{
+\item \code{lastdose.time_units}: sets the default time unit that is used to calculate
+relative times when the time column is represented as date-time data
+(\code{POSIXct})
+\item \code{lastdose.id_col}: sets the default value for the \code{id_col} argument
+to last dose; this identifies the column that is to be used to distinguish
+individuals; the data in this column may be numeric or character
+}
+}
+
 \examples{
 file <- system.file("csv/data1.csv", package="lastdose")
 

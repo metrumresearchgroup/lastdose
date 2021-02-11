@@ -176,6 +176,15 @@ test_that("user-named time and id columns", {
     lastdose_df(d1),
     lastdose_df(d2, id_col = "USUBJID")
   )
+  if(requireNamespace("withr")) {
+    expect_identical(
+      lastdose_df(d2, id_col = "USUBJID"),
+      withr::with_options(
+        list(lastdose.id_col = "USUBJID"),
+        lastdose_df(d2)
+      )
+    )
+  }
   expect_error(lastdose(d2))
 })
 
@@ -192,6 +201,14 @@ test_that("POSIXct datetime is converted to numeric time", {
   expect_error(
     lastdose(d1, time_units = "seconds")
   )
+  if(requireNamespace("withr")) {
+    ans1 <- withr::with_options(
+      list(lastdose.time_units = "hours"),
+      lastdose(d1)
+    )
+    ans2 <- lastdose(d1, time_units = "hours")
+    expect_identical(ans1, ans2)
+  }
 })
 
 test_that("logical comment column is ok", {

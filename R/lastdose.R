@@ -41,6 +41,19 @@ NULL
 #' @param include_tafd `logical`; if `FALSE`, then `TAFD` data is not appended
 #' to the data set.  Only used for the [lastdose()] function.
 #'
+#' @section Options:
+#'
+#' These are options that can be set to customize `lastdose` behavior
+#' for the current context.  See `?options` for how to set an option.
+#'
+#' - `lastdose.time_units`: sets the default time unit that is used to calculate
+#'   relative times when the time column is represented as date-time data
+#'   (`POSIXct`)
+#' - `lastdose.id_col`: sets the default value for the `id_col` argument
+#'   to last dose; this identifies the column that is to be used to distinguish
+#'   individuals; the data in this column may be numeric or character
+#'
+#'
 #' @details
 #'
 #' When calling [lastdose()] to modify the data frame, three columns will be
@@ -114,12 +127,13 @@ lastdose <- function(data,..., include_ldos = TRUE, include_tafd = TRUE) {
 #' @export
 lastdose_list <- function(data,
                           time_col = "TIME",
-                          time_units = NULL,
-                          id_col = "ID",
+                          time_units = getOption("lastdose.time_units", NULL),
+                          id_col = getOption("lastdose.id_col", "ID"),
                           fill = -99,
                           back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
                           comments = find_comments(data)) {
+
   if(length(comments)==1) {
     comments <- rep(comments,nrow(data))
   }
@@ -146,7 +160,7 @@ lastdose_list <- function(data,
   }
   col_time <- data[[wtime]]
   if(inherits(col_time, "POSIXct")) {
-    if(missing(time_units)) {
+    if(is.null(time_units)) {
       stop(
         "`time_units` is required when time column inherits `POSIXct`",
         call.=FALSE
