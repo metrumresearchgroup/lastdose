@@ -24,6 +24,8 @@ test_that("doses at time zero", {
 
 test_that("time after first dose", {
   x <- lastdose(set4)
+  expect_false(exists("TAFD", x))
+  x <- lastdose(set4, include_tafd = TRUE)
   expect_true(exists("TAFD", x))
   dose_rows <- which(set4$evid==1)
   time_of_first_dose <- set4$TIME[dose_rows[1]]
