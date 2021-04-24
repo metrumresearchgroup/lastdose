@@ -52,6 +52,11 @@ NULL
 #' - `lastdose.id_col`: sets the default value for the `id_col` argument
 #'   to last dose; this identifies the column that is to be used to distinguish
 #'   individuals; the data in this column may be numeric or character
+#' - `lastdose.include_tafd`: sets default value for `include_tafd`; if `TRUE`
+#'   then the time since the first dose record (EVID 1 or EVID 4) in the data
+#'   set will be automatically appended to the output data frame when
+#'   calling `lastdose()`; `tafd` is always included when calling
+#'   `lastdose_df()` and `lastdose_list()`
 #'
 #' @details
 #'

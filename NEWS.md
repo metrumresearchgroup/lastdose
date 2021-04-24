@@ -1,5 +1,11 @@
 # lastdose (development version)
 
+- Change default value for `include_tafd` to FALSE (#29)
+- Add option `lastdose.include_tafd` (#29)
+- Add option `lastdose.id_col`  (#27)
+- Add option `lastdose.time_units` (#27)
+- Handle missing values (`NA`) in the time column (#30)
+
 # lastdose 0.3.2
 
 - Fix bug where `II` column was not properly detected resulting in incorrect 

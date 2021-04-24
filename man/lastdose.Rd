@@ -137,6 +137,11 @@ relative times when the time column is represented as date-time data
 \item \code{lastdose.id_col}: sets the default value for the \code{id_col} argument
 to last dose; this identifies the column that is to be used to distinguish
 individuals; the data in this column may be numeric or character
+\item \code{lastdose.include_tafd}: sets default value for \code{include_tafd}; if \code{TRUE}
+then the time since the first dose record (EVID 1 or EVID 4) in the data
+set will be automatically appended to the output data frame when
+calling \code{lastdose()}; \code{tafd} is always included when calling
+\code{lastdose_df()} and \code{lastdose_list()}
 }
 }
 
