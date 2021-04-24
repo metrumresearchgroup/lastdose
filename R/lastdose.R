@@ -53,7 +53,6 @@ NULL
 #'   to last dose; this identifies the column that is to be used to distinguish
 #'   individuals; the data in this column may be numeric or character
 #'
-#'
 #' @details
 #'
 #' When calling [lastdose()] to modify the data frame, three columns will be
@@ -143,20 +142,14 @@ lastdose_list <- function(data,
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
   lower_names <- tolower(names(data))
-  wid <- match(id_col, names(data))
-  if(is.na(wid)) {
-    stop("did not find id column `", id_col, "` in `data`", call.=FALSE)
-  }
-  col_id <- data[[wid]]
-  if(is.character(col_id)) {
-    col_id <- match(col_id, unique(col_id))
-  }
-  if(!is.numeric(col_id)) {
-    stop("id column is required to be numeric", call.=FALSE)
-  }
   wtime <- match(time_col, names(data))
   if(is.na(wtime)) {
     stop("did not find time column `", time_col, "` in `data`", call.=FALSE)
+  }
+  has_na_time <- anyNA(data[[wtime]])
+  if(has_na_time) {
+    na_time <- is.na(data[[wtime]])
+    data <- data[!na_time,,drop=FALSE]
   }
   col_time <- data[[wtime]]
   if(inherits(col_time, "POSIXct")) {
@@ -178,6 +171,18 @@ lastdose_list <- function(data,
   if(!is.numeric(col_time)) {
     stop("time column is required to be numeric", call.=FALSE)
   }
+  wid <- match(id_col, names(data))
+  if(is.na(wid)) {
+    stop("did not find id column `", id_col, "` in `data`", call.=FALSE)
+  }
+  col_id <- data[[wid]]
+  if(is.character(col_id)) {
+    col_id <- match(col_id, unique(col_id))
+  }
+  if(!is.numeric(col_id)) {
+    stop("id column is required to be numeric", call.=FALSE)
+  }
+
   wamt <- match("amt", lower_names)
   if(is.na(wamt)) {
     stop("column AMT or amt is required in the data set", call.=FALSE)
@@ -228,6 +233,12 @@ lastdose_list <- function(data,
     sort1,
     comments
   )
+  if(has_na_time) {
+    re_order <- order(c(which(!na_time), which(na_time)))
+    for(j in seq_along(ans)) {
+      ans[[j]] <- ans[[j]][re_order]
+    }
+  }
   ans
 }
 
