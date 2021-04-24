@@ -137,6 +137,10 @@ test_that("handle missing values in time colunn", {
   expect_true(all(is.na(ans3$TAD)))
   expect_true(all(is.na(ans3$LDOS)))
   expect_true(all(is.na(ans3$TAFD)))
+  ans4 <- ans1[w,]
+  expect_false(any(is.na(ans4$TAD)))
+  expect_false(any(is.na(ans4$LDOS)))
+  expect_false(any(is.na(ans4$TAFD)))
 })
 
 test_that("NA amt is error for dosing record, ok otherwise", {
