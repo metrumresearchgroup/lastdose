@@ -119,6 +119,26 @@ test_that("error for missing values in ID,evid,ii,addl", {
   }
 })
 
+test_that("handle missing values in time colunn", {
+  dd <- df[df$set==4,]
+  dd$TIME <- as.numeric(dd$TIME)
+  dd0 <- dd
+  set.seed(1010)
+  i <- sample(seq(nrow(dd)), size = 18)
+  i <- i[!dd$evid[i]==1]
+  dd$TIME[i] <- NA_real_
+  ans1 <- lastdose(dd)
+  ans2 <- lastdose(dd0)
+  w <- setdiff(seq(nrow(dd)),i)
+  for(col in names(ans1)) {
+    expect_identical(ans1[w,col], ans2[w,col])
+  }
+  ans3 <- ans1[i,]
+  expect_true(all(is.na(ans3$TAD)))
+  expect_true(all(is.na(ans3$LDOS)))
+  expect_true(all(is.na(ans3$TAFD)))
+})
+
 test_that("NA amt is error for dosing record, ok otherwise", {
   dd <- set1
   dd$amt[5] <- NA_real_
