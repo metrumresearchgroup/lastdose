@@ -15,11 +15,15 @@ NULL
 #' @param time_col character name for the `TIME` column; this could be time after
 #' first dose or time after first record or time relative to any origin; input
 #' may be `numeric` or `POSIXct` (e.g. `DATETIME`); if `POSIXct`, a numeric
-#' value will be calculated based on the value of `time_units`
+#' value will be calculated based on the value of `time_units`. The data frame
+#' will be searched for the first matching candidate time column using
+#' [find_time_col()].
 #' @param time_units for calculating time when the time column inherits
 #' `POSIXct`; you may use any value that is valid for [difftime()]
 #' @param id_col character name for the subject `ID` column; may be numeric
-#' or character; if character, a numeric value is derived
+#' or character; if character, a numeric value is derived. The data frame
+#' will be searched for the first matching candidate `ID` column using
+#' [find_id_col()].
 #' @param back_calc if `TRUE`, then the time before the first dose
 #' is calculated for records prior to the first dosing record when
 #' at least one dosing record is found in the data set.  Records before
@@ -132,9 +136,9 @@ lastdose <- function(data, ..., include_ldos = TRUE,
 #' @rdname lastdose
 #' @export
 lastdose_list <- function(data,
-                          time_col = "TIME",
+                          time_col = find_time_col(data), #"TIME",
                           time_units = getOption("lastdose.time_units", NULL),
-                          id_col = getOption("lastdose.id_col", "ID"),
+                          id_col = find_id_col(data),# getOption("lastdose.id_col", "ID"),
                           fill = -99,
                           back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
@@ -294,11 +298,11 @@ lastdose_df <- function(data, ...) {
 #'
 #'
 #' @export
-find_comments <- function(x,...) UseMethod("find_comments")
+find_comments <- function(x, ...) UseMethod("find_comments")
 #' @rdname find_comments
 #'
 #' @export
-find_comments.data.frame <- function(x,...) {
+find_comments.data.frame <- function(x, ...) {
   if(!inherits(x[["C"]], c("logical", "character"))) {
     if(exists("C", x)) {
       warning(
@@ -313,7 +317,7 @@ find_comments.data.frame <- function(x,...) {
 
 #' @rdname find_comments
 #' @export
-find_comments.character <- function(x,...) {
+find_comments.character <- function(x, ...) {
   !(is.na(x)|x=='.')
 }
 
@@ -322,3 +326,68 @@ find_comments.character <- function(x,...) {
 find_comments.logical <- function(x, ...) {
   x & !is.na(x)
 }
+
+#' Find TIME column
+#'
+#' Search data frame names for the first matching candidate TIME column name.
+#' See `details`.
+#'
+#' @param data a data.frame to search
+#' @details
+#' Column names will be searched against the following candidates
+#'
+#' - `TIME`
+#' - `DATETIME`
+#'
+#' The first the first candidate to be matched will be returned. If there
+#' are no matches, an error is generated.
+#'
+#' @examples
+#' data <- data.frame(A = 1, DATETIME = 2, TIME = 3, Z = 99)
+#' lastdose:::find_time_col(data)
+#'
+find_time_col <- function(data) {
+  stopifnot(is.data.frame(data))
+  ans <- intersect(c("TIME", "DATETIME"), names(data))
+  if(length(ans)==0) {
+    stop("could not find a TIME column in `data`", call. = FALSE)
+  }
+  ans[1]
+}
+
+#' Find ID column
+#'
+#' Search data frame names for the first matching candidate ID column name.
+#' See `details`.
+#'
+#' @param data a data.frame to search
+#' @details
+#' Column names will be searched against the following candidates
+#'
+#' - `getOption("lastdose.id_col")`
+#' - `ID`
+#' - `USUBJID`
+#' - `SUBJID`
+#' - `PTNO`
+#' - `SUBJ`
+#' - `SUBID`
+#' - `SUBJNO`
+#'
+#' The first the first candidate to be matched will be returned. If there
+#' are no matches, an error is generated.
+#'
+#' @examples
+#' data <- data.frame(A = 1, B = 2, PTNO = 3, ID = 4, Z = 99)
+#' lastdose:::find_id_col(data)
+#'
+find_id_col <- function(data) {
+  stopifnot(is.data.frame(data))
+  op <- getOption("lastdose.id_col", NULL)
+  can <- c(op, "ID", "USUBJID", "SUBJID", "PTNO", "SUBJ", "SUBID", "SUBJNO")
+  ans <- intersect(can, names(data))
+  if(length(ans)==0) {
+    stop("could not find a ID column in `data`", call. = FALSE)
+  }
+  ans[1]
+}
+

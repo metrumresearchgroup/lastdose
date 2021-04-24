@@ -15,9 +15,9 @@ lastdose(
 
 lastdose_list(
   data,
-  time_col = "TIME",
+  time_col = find_time_col(data),
   time_units = getOption("lastdose.time_units", NULL),
-  id_col = getOption("lastdose.id_col", "ID"),
+  id_col = find_id_col(data),
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
@@ -40,13 +40,17 @@ to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function
 \item{time_col}{character name for the \code{TIME} column; this could be time after
 first dose or time after first record or time relative to any origin; input
 may be \code{numeric} or \code{POSIXct} (e.g. \code{DATETIME}); if \code{POSIXct}, a numeric
-value will be calculated based on the value of \code{time_units}}
+value will be calculated based on the value of \code{time_units}. The data frame
+will be searched for the first matching candidate time column using
+\code{\link[=find_time_col]{find_time_col()}}.}
 
 \item{time_units}{for calculating time when the time column inherits
 \code{POSIXct}; you may use any value that is valid for \code{\link[=difftime]{difftime()}}}
 
 \item{id_col}{character name for the subject \code{ID} column; may be numeric
-or character; if character, a numeric value is derived}
+or character; if character, a numeric value is derived. The data frame
+will be searched for the first matching candidate \code{ID} column using
+\code{\link[=find_id_col]{find_id_col()}}.}
 
 \item{fill}{the value for \code{TAD} and \code{TAFD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}

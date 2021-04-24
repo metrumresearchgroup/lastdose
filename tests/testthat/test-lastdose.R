@@ -188,30 +188,62 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
 test_that("user-named time and id columns", {
   d1 <- subset(set1, ID==1)
   d2 <- d1
-  d2$TAFD <- d2$TIME
+  d2$xTAFD <- d2$TIME
   d2$TIME <- NULL
   expect_identical(
     lastdose_df(d1),
-    lastdose_df(d2, time_col = "TAFD")
+    lastdose_df(d2, time_col = "xTAFD")
   )
   expect_error(lastdose(d2), msg = "did not find time column")
   d2 <- d1
-  d2$USUBJID <- "A"
+  d2$xUSUBJID <- "A"
   d2$ID <- NULL
   expect_identical(
     lastdose_df(d1),
-    lastdose_df(d2, id_col = "USUBJID")
+    lastdose_df(d2, id_col = "xUSUBJID")
   )
   if(requireNamespace("withr")) {
     expect_identical(
-      lastdose_df(d2, id_col = "USUBJID"),
+      lastdose_df(d2, id_col = "xUSUBJID"),
       withr::with_options(
-        list(lastdose.id_col = "USUBJID"),
+        list(lastdose.id_col = "xUSUBJID"),
         lastdose_df(d2)
       )
     )
   }
   expect_error(lastdose(d2))
+})
+
+test_that("find time column from candidate list", {
+  dd <- subset(set1, ID==1)
+  time <- dd$TIME
+  dd$TIME <- NULL
+  tr <- c("TIME", "DATETIME")
+  for(col in tr) {
+    dd[[col]] <- time
+    expect_is(lastdose(dd), "data.frame")
+    dd[[col]] <- NULL
+  }
+})
+
+test_that("find ID column from candidate list", {
+  dd <- subset(set1, ID==1)[1:3,]
+  ID <- dd$ID
+  dd$ID <- NULL
+  tr <- c("ID", "USUBJID", "SUBJID", "PTNO", "SUBJ", "SUBID", "SUBJNO")
+  for(col in tr) {
+    dd[[col]] <- ID
+    expect_is(lastdose(dd), "data.frame")
+    dd[[col]] <- NULL
+  }
+  if(requireNamespace("withr")) {
+    dd[["i_d"]] <- ID
+    ans1 <- withr::with_options(
+      list(lastdose.id_col = "i_d"),
+      lastdose(dd)
+    )
+    expect_is(ans1, "data.frame")
+  }
 })
 
 test_that("POSIXct datetime is converted to numeric time", {
