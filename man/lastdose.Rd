@@ -6,7 +6,12 @@
 \alias{lastdose_df}
 \title{Calculate last dose amount and times since previous doses}
 \usage{
-lastdose(data, ..., include_ldos = TRUE, include_tafd = TRUE)
+lastdose(
+  data,
+  ...,
+  include_ldos = TRUE,
+  include_tafd = getOption("lastdose.include_tafd", FALSE)
+)
 
 lastdose_list(
   data,
@@ -70,11 +75,12 @@ to add (or potentially replace) columns to the input data frame;
 as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
-When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, three columns will be
+When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, two columns will be
 added (by default): \code{TAD} indicating the time after the most-recent dose,
-\code{TAFD} indicating the time after the first dose and \code{LDOS} indicating the
-amount of the most recent dose.  This default behavior can be modified with
-the \code{include_ldos} and \code{include_tafd} arguments.
+and \code{LDOS} indicating the amount of the most recent dose. \code{TAFD} indicating
+the time after the first dose record (EVID 1 or 4) can be added via the
+\code{include_tafd} argument and users can opt out from adding \code{LDOS} with the
+\code{include_ldos} argument.
 
 When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
 accessible with \code{tad},  \code{tafd}, and \code{ldos} (note the lower case form here to

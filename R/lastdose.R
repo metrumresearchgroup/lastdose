@@ -55,11 +55,12 @@ NULL
 #'
 #' @details
 #'
-#' When calling [lastdose()] to modify the data frame, three columns will be
+#' When calling [lastdose()] to modify the data frame, two columns will be
 #' added (by default): `TAD` indicating the time after the most-recent dose,
-#' `TAFD` indicating the time after the first dose and `LDOS` indicating the
-#' amount of the most recent dose.  This default behavior can be modified with
-#' the `include_ldos` and `include_tafd` arguments.
+#' and `LDOS` indicating the amount of the most recent dose. `TAFD` indicating
+#' the time after the first dose record (EVID 1 or 4) can be added via the
+#' `include_tafd` argument and users can opt out from adding `LDOS` with the
+#' `include_ldos` argument.
 #'
 #' When calling [lastdose_list()] or [lastdose_df()], the respective items are
 #' accessible with `tad`,  `tafd`, and `ldos` (note the lower case form here to
@@ -114,8 +115,9 @@ NULL
 #'
 #'
 #' @export
-lastdose <- function(data,..., include_ldos = TRUE, include_tafd = TRUE) {
-  ans <- lastdose_list(data,...)
+lastdose <- function(data, ..., include_ldos = TRUE,
+                     include_tafd = getOption("lastdose.include_tafd", FALSE)) {
+  ans <- lastdose_list(data, ...)
   data[["TAD"]] <- ans[["tad"]]
   if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
   if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
@@ -133,23 +135,26 @@ lastdose_list <- function(data,
                           addl_ties = c("obs_first", "dose_first"),
                           comments = find_comments(data)) {
 
-  if(length(comments)==1) {
+  if(length(comments) == 1) {
     comments <- rep(comments,nrow(data))
   }
-  if(!length(comments)==nrow(data)) {
-    stop("'comments' must be have length equal to the number of rows in 'data'",call.=FALSE)
+  if(!length(comments) == nrow(data)) {
+    stop(
+      "'comments' must be have length equal to the number of rows in 'data'",
+      call. = FALSE
+    )
   }
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
   lower_names <- tolower(names(data))
   wtime <- match(time_col, names(data))
   if(is.na(wtime)) {
-    stop("did not find time column `", time_col, "` in `data`", call.=FALSE)
+    stop("did not find time column `", time_col, "` in `data`", call. = FALSE)
   }
   has_na_time <- anyNA(data[[wtime]])
   if(has_na_time) {
     na_time <- is.na(data[[wtime]])
-    data <- data[!na_time,,drop=FALSE]
+    data <- data[!na_time,, drop = FALSE]
   }
   col_time <- data[[wtime]]
   if(inherits(col_time, "POSIXct")) {
@@ -182,7 +187,6 @@ lastdose_list <- function(data,
   if(!is.numeric(col_id)) {
     stop("id column is required to be numeric", call.=FALSE)
   }
-
   wamt <- match("amt", lower_names)
   if(is.na(wamt)) {
     stop("column AMT or amt is required in the data set", call.=FALSE)
@@ -244,14 +248,14 @@ lastdose_list <- function(data,
 
 #' @rdname lastdose
 #' @export
-lastdose_df <- function(data,...) {
-  ans <- lastdose_list(data,...)
+lastdose_df <- function(data, ...) {
+  ans <- lastdose_list(data, ...)
   data.frame(
     tad = ans[["tad"]],
     tafd = ans[["tafd"]],
     ldos = ans[["ldos"]],
-    stringsAsFactors=FALSE,check.names=FALSE,
-    fix.empty.names=FALSE, row.names=NULL
+    stringsAsFactors = FALSE, check.names = FALSE,
+    fix.empty.names = FALSE, row.names = NULL
   )
 }
 
