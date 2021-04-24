@@ -136,9 +136,9 @@ lastdose <- function(data, ..., include_ldos = TRUE,
 #' @rdname lastdose
 #' @export
 lastdose_list <- function(data,
-                          time_col = find_time_col(data), #"TIME",
+                          time_col = find_time_col(data),
                           time_units = getOption("lastdose.time_units", NULL),
-                          id_col = find_id_col(data),# getOption("lastdose.id_col", "ID"),
+                          id_col = find_id_col(data),
                           fill = -99,
                           back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
@@ -370,8 +370,6 @@ find_time_col <- function(data) {
 #' - `SUBJID`
 #' - `PTNO`
 #' - `SUBJ`
-#' - `SUBID`
-#' - `SUBJNO`
 #'
 #' The first the first candidate to be matched will be returned. If there
 #' are no matches, an error is generated.
@@ -383,7 +381,7 @@ find_time_col <- function(data) {
 find_id_col <- function(data) {
   stopifnot(is.data.frame(data))
   op <- getOption("lastdose.id_col", NULL)
-  can <- c(op, "ID", "USUBJID", "SUBJID", "PTNO", "SUBJ", "SUBID", "SUBJNO")
+  can <- c(op, "ID", "USUBJID", "SUBJID", "PTNO", "SUBJ")
   ans <- intersect(can, names(data))
   if(length(ans)==0) {
     stop("could not find a ID column in `data`", call. = FALSE)

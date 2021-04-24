@@ -230,7 +230,7 @@ test_that("find ID column from candidate list", {
   dd <- subset(set1, ID==1)[1:3,]
   ID <- dd$ID
   dd$ID <- NULL
-  tr <- c("ID", "USUBJID", "SUBJID", "PTNO", "SUBJ", "SUBID", "SUBJNO")
+  tr <- c("ID", "USUBJID", "SUBJID", "PTNO", "SUBJ")
   for(col in tr) {
     dd[[col]] <- ID
     expect_is(lastdose(dd), "data.frame")
