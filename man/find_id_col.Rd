@@ -22,8 +22,6 @@ Column names will be searched against the following candidates
 \item \code{SUBJID}
 \item \code{PTNO}
 \item \code{SUBJ}
-\item \code{SUBID}
-\item \code{SUBJNO}
 }
 
 The first the first candidate to be matched will be returned. If there

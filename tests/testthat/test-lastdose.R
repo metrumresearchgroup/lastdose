@@ -143,6 +143,29 @@ test_that("handle missing values in time colunn", {
   expect_false(any(is.na(ans4$TAD)))
   expect_false(any(is.na(ans4$LDOS)))
   expect_false(any(is.na(ans4$TAFD)))
+
+  file <- system.file("csv", "data_big.RDS", package = "lastdose")
+  data <- readRDS(file)
+  set.seed(21032)
+  x <- sample(seq(nrow(data)), 1000)
+  x <- x[data$EVID[x] ==0]
+  data2 <- data
+  data2$TIME[x] <- NA_real_
+  out1 <- lastdose(data,  include_tafd = TRUE)
+  out2 <- lastdose(data2, include_tafd = TRUE)
+  ans <- as.numeric(c(0,  length(x)))
+  smr <- function(x,y) {
+    x <- x-y
+    c(sum(x, na.rm = TRUE), sum(is.na(x)))
+  }
+  a <- smr(out1$TAD,  out2$TAD)
+  b <- smr(out1$TIME, out2$TIME)
+  c <- smr(out1$LDOS, out2$LDOS)
+  d <- smr(out1$TAFD, out2$TAFD)
+  expect_identical(a, ans)
+  expect_identical(b, ans)
+  expect_identical(c, ans)
+  expect_identical(d, ans)
 })
 
 test_that("NA amt is error for dosing record, ok otherwise", {
