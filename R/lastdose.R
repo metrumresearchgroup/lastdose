@@ -384,7 +384,7 @@ find_id_col <- function(data) {
   can <- c(op, "ID", "USUBJID", "SUBJID", "PTNO", "SUBJ")
   ans <- intersect(can, names(data))
   if(length(ans)==0) {
-    stop("could not find a ID column in `data`", call. = FALSE)
+    stop("could not find a subject identifier column in `data`", call. = FALSE)
   }
   ans[1]
 }
