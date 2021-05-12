@@ -147,7 +147,7 @@ lastdose_list <- function(data,
   if(length(comments) == 1) {
     comments <- rep(comments,nrow(data))
   }
-  if(!length(comments) == nrow(data)) {
+  if(length(comments) != nrow(data)) {
     stop(
       "'comments' must be have length equal to the number of rows in 'data'",
       call. = FALSE
