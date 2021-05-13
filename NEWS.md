@@ -8,7 +8,8 @@
   this function is unexported (#25)
 - Search column names for candidate time columns using `find_time_col()`;
   this function is unexported (#25)
-- Handle missing values (`NA`) in the time column (#30)
+- Handle missing values (`NA`) in the time column; these records will 
+  stay in place and `NA` will be inserted for all outputs (#30)
 
 # lastdose 0.3.2
 
