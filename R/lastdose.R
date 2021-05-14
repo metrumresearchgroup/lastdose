@@ -67,13 +67,19 @@ NULL
 #' When calling [lastdose()] to modify the data frame, two columns will be
 #' added (by default): `TAD` indicating the time after the most-recent dose,
 #' and `LDOS` indicating the amount of the most recent dose. `TAFD` indicating
-#' the time after the first dose record (EVID 1 or 4) can be added via the
+#' the time after the first dose record (`EVID` 1 or 4) can be added via the
 #' `include_tafd` argument and users can opt out from adding `LDOS` with the
 #' `include_ldos` argument.
+#'
 #'
 #' When calling [lastdose_list()] or [lastdose_df()], the respective items are
 #' accessible with `tad`,  `tafd`, and `ldos` (note the lower case form here to
 #' distinguish from the columns that might be added to the data frame).
+#'
+#' **Time after first dose**: note that time after first dose (`TAFD`) is the
+#' time after the first dosing record (`EVID` 1 or 4) in the data frame that
+#' you pass in. If you don't have a dosing record for the first dose to
+#' anchor this calculation, you should opt out.
 #'
 #' **Handling of commented records**: Dosing records that have been "commented"
 #' (as indicated with the `comments` argument) will never be considered as

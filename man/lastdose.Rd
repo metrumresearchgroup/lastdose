@@ -82,13 +82,18 @@ as either \code{list} or \code{data.frame} format without modifying the input da
 When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, two columns will be
 added (by default): \code{TAD} indicating the time after the most-recent dose,
 and \code{LDOS} indicating the amount of the most recent dose. \code{TAFD} indicating
-the time after the first dose record (EVID 1 or 4) can be added via the
+the time after the first dose record (\code{EVID} 1 or 4) can be added via the
 \code{include_tafd} argument and users can opt out from adding \code{LDOS} with the
 \code{include_ldos} argument.
 
 When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
 accessible with \code{tad},  \code{tafd}, and \code{ldos} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
+
+\strong{Time after first dose}: note that time after first dose (\code{TAFD}) is the
+time after the first dosing record (\code{EVID} 1 or 4) in the data frame that
+you pass in. If you don't have a dosing record for the first dose to
+anchor this calculation, you should opt out.
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
