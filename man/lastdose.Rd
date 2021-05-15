@@ -42,7 +42,8 @@ first dose or time after first record or time relative to any origin; input
 may be \code{numeric} or \code{POSIXct} (e.g. \code{DATETIME}); if \code{POSIXct}, a numeric
 value will be calculated based on the value of \code{time_units}. The data frame
 will be searched for the first matching candidate time column using
-\code{\link[=find_time_col]{find_time_col()}}.}
+\code{\link[=find_time_col]{find_time_col()}}; if you don't want \code{lastdose} to search, you should pass
+in the name of the column to use for \code{TIME}.}
 
 \item{time_units}{for calculating time when the time column inherits
 \code{POSIXct}; you may use any value that is valid for \code{\link[=difftime]{difftime()}}}
@@ -50,7 +51,8 @@ will be searched for the first matching candidate time column using
 \item{id_col}{character name for the subject \code{ID} column; may be numeric
 or character; if character, a numeric value is derived. The data frame
 will be searched for the first matching candidate \code{ID} column using
-\code{\link[=find_id_col]{find_id_col()}}.}
+\code{\link[=find_id_col]{find_id_col()}}; if you don't want \code{lastdose} to search, you should pass
+in the name of the column to use for \code{ID}.}
 
 \item{fill}{the value for \code{TAD} and \code{TAFD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}

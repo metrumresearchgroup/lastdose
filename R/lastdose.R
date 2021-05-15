@@ -17,13 +17,15 @@ NULL
 #' may be `numeric` or `POSIXct` (e.g. `DATETIME`); if `POSIXct`, a numeric
 #' value will be calculated based on the value of `time_units`. The data frame
 #' will be searched for the first matching candidate time column using
-#' [find_time_col()].
+#' [find_time_col()]; if you don't want `lastdose` to search, you should pass
+#' in the name of the column to use for `TIME`.
 #' @param time_units for calculating time when the time column inherits
 #' `POSIXct`; you may use any value that is valid for [difftime()]
 #' @param id_col character name for the subject `ID` column; may be numeric
 #' or character; if character, a numeric value is derived. The data frame
 #' will be searched for the first matching candidate `ID` column using
-#' [find_id_col()].
+#' [find_id_col()]; if you don't want `lastdose` to search, you should pass
+#' in the name of the column to use for `ID`.
 #' @param back_calc if `TRUE`, then the time before the first dose
 #' is calculated for records prior to the first dosing record when
 #' at least one dosing record is found in the data set.  Records before
