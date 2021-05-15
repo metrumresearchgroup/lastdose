@@ -1,7 +1,7 @@
 Package: lastdose
 Type: Package
 Title: Calculate Time and Amount of Last Dose
-Version: 0.4.0
+Version: 0.4.0.9000
 Authors@R: c(
     person("Kyle T", "Baron", email = "kyleb@metrumrg.com", role=c("aut", "cre"), comment=c(ORCID="0000-0001-7252-5656"))
     )
