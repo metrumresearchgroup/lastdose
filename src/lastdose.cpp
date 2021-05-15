@@ -103,7 +103,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     double last_time = -1E9;
     for(int j = idstart[i]; j <= idend[i]; ++j) {
       // If time is missing
-      if(Rcpp::NumericVector::is_na(time[j])) {
+      if(isna(time[j])) {
         tad[crow] = NA_REAL;
         ldos[crow] = NA_REAL;
         ++crow;
@@ -121,7 +121,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
       // Deal with missing dose
       bool missing_amt = Rcpp::NumericVector::is_na(amt[j]);
-      if(is_dose(evid[j],comment[j])) {
+      if(is_dose(evid[j], comment[j])) {
         if(!found_dose) {
           found_dose = true;
           tofd[i] = time[j];

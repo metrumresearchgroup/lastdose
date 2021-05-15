@@ -1,3 +1,16 @@
+# lastdose 0.4.0
+
+- Change default value for `include_tafd` to FALSE (#29)
+- Add option `lastdose.include_tafd` (#29)
+- Add option `lastdose.id_col`  (#27)
+- Add option `lastdose.time_units` (#27)
+- Search column names for candidate ID columns using `find_id_col()`; 
+  this function is unexported (#25)
+- Search column names for candidate time columns using `find_time_col()`;
+  this function is unexported (#25)
+- Handle missing values (`NA`) in the time column; these records will 
+  stay in place and `NA` will be inserted for all outputs (#30)
+
 # lastdose 0.3.2
 
 - Fix bug where `II` column was not properly detected resulting in incorrect 

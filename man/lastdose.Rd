@@ -6,13 +6,18 @@
 \alias{lastdose_df}
 \title{Calculate last dose amount and times since previous doses}
 \usage{
-lastdose(data, ..., include_ldos = TRUE, include_tafd = TRUE)
+lastdose(
+  data,
+  ...,
+  include_ldos = TRUE,
+  include_tafd = getOption("lastdose.include_tafd", FALSE)
+)
 
 lastdose_list(
   data,
-  time_col = "TIME",
-  time_units = NULL,
-  id_col = "ID",
+  time_col = find_time_col(data),
+  time_units = getOption("lastdose.time_units", NULL),
+  id_col = find_id_col(data),
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
@@ -35,13 +40,19 @@ to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function
 \item{time_col}{character name for the \code{TIME} column; this could be time after
 first dose or time after first record or time relative to any origin; input
 may be \code{numeric} or \code{POSIXct} (e.g. \code{DATETIME}); if \code{POSIXct}, a numeric
-value will be calculated based on the value of \code{time_units}}
+value will be calculated based on the value of \code{time_units}. The data frame
+will be searched for the first matching candidate time column using
+\code{\link[=find_time_col]{find_time_col()}}; if you don't want \code{lastdose} to search, you should pass
+in the name of the column to use for \code{TIME}.}
 
 \item{time_units}{for calculating time when the time column inherits
 \code{POSIXct}; you may use any value that is valid for \code{\link[=difftime]{difftime()}}}
 
 \item{id_col}{character name for the subject \code{ID} column; may be numeric
-or character; if character, a numeric value is derived}
+or character; if character, a numeric value is derived. The data frame
+will be searched for the first matching candidate \code{ID} column using
+\code{\link[=find_id_col]{find_id_col()}}; if you don't want \code{lastdose} to search, you should pass
+in the name of the column to use for \code{ID}.}
 
 \item{fill}{the value for \code{TAD} and \code{TAFD} that is used for records when no
 doses are found for an individual or when \code{back_calc} is \code{FALSE}.}
@@ -70,15 +81,21 @@ to add (or potentially replace) columns to the input data frame;
 as either \code{list} or \code{data.frame} format without modifying the input data.
 }
 \details{
-When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, three columns will be
+When calling \code{\link[=lastdose]{lastdose()}} to modify the data frame, two columns will be
 added (by default): \code{TAD} indicating the time after the most-recent dose,
-\code{TAFD} indicating the time after the first dose and \code{LDOS} indicating the
-amount of the most recent dose.  This default behavior can be modified with
-the \code{include_ldos} and \code{include_tafd} arguments.
+and \code{LDOS} indicating the amount of the most recent dose. \code{TAFD} indicating
+the time after the first dose record (\code{EVID} 1 or 4) can be added via the
+\code{include_tafd} argument and users can opt out from adding \code{LDOS} with the
+\code{include_ldos} argument.
 
 When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastdose_df]{lastdose_df()}}, the respective items are
 accessible with \code{tad},  \code{tafd}, and \code{ldos} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
+
+\strong{Time after first dose}: note that time after first dose (\code{TAFD}) is the
+time after the first dosing record (\code{EVID} 1 or 4) in the data frame that
+you pass in. If you don't have a dosing record for the first dose to
+anchor this calculation, you should opt out.
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
@@ -119,6 +136,26 @@ dosing and both an an additional dose and an observation happen at 24 hours,
 \code{obs_first} will set the observation \code{TAD} to 24 and \code{dose_first} will set
 the observation \code{TAD} to 0.
 }
+\section{Options}{
+
+
+These are options that can be set to customize \code{lastdose} behavior
+for the current context.  See \code{?options} for how to set an option.
+\itemize{
+\item \code{lastdose.time_units}: sets the default time unit that is used to calculate
+relative times when the time column is represented as date-time data
+(\code{POSIXct})
+\item \code{lastdose.id_col}: sets the default value for the \code{id_col} argument
+to last dose; this identifies the column that is to be used to distinguish
+individuals; the data in this column may be numeric or character
+\item \code{lastdose.include_tafd}: sets default value for \code{include_tafd}; if \code{TRUE}
+then the time since the first dose record (EVID 1 or EVID 4) in the data
+set will be automatically appended to the output data frame when
+calling \code{lastdose()}; \code{tafd} is always included when calling
+\code{lastdose_df()} and \code{lastdose_list()}
+}
+}
+
 \examples{
 file <- system.file("csv/data1.csv", package="lastdose")
 

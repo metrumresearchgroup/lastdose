@@ -24,6 +24,8 @@ test_that("doses at time zero", {
 
 test_that("time after first dose", {
   x <- lastdose(set4)
+  expect_false(exists("TAFD", x))
+  x <- lastdose(set4, include_tafd = TRUE)
   expect_true(exists("TAFD", x))
   dose_rows <- which(set4$evid==1)
   time_of_first_dose <- set4$TIME[dose_rows[1]]
@@ -119,6 +121,53 @@ test_that("error for missing values in ID,evid,ii,addl", {
   }
 })
 
+test_that("handle missing values in time colunn", {
+  dd <- df[df$set==4,]
+  dd$TIME <- as.numeric(dd$TIME)
+  dd0 <- dd
+  set.seed(1010)
+  i <- sample(seq(nrow(dd)), size = 18)
+  i <- i[!dd$evid[i]==1]
+  dd$TIME[i] <- NA_real_
+  ans1 <- lastdose(dd)
+  ans2 <- lastdose(dd0)
+  w <- setdiff(seq(nrow(dd)),i)
+  for(col in names(ans1)) {
+    expect_identical(ans1[w,col], ans2[w,col])
+  }
+  ans3 <- ans1[i,]
+  expect_true(all(is.na(ans3$TAD)))
+  expect_true(all(is.na(ans3$LDOS)))
+  expect_true(all(is.na(ans3$TAFD)))
+  ans4 <- ans1[w,]
+  expect_false(any(is.na(ans4$TAD)))
+  expect_false(any(is.na(ans4$LDOS)))
+  expect_false(any(is.na(ans4$TAFD)))
+
+  file <- system.file("csv", "data_big.RDS", package = "lastdose")
+  data <- readRDS(file)
+  set.seed(21032)
+  x <- sample(seq(nrow(data)), 1000)
+  x <- x[data$EVID[x] ==0]
+  data2 <- data
+  data2$TIME[x] <- NA_real_
+  out1 <- lastdose(data,  include_tafd = TRUE)
+  out2 <- lastdose(data2, include_tafd = TRUE)
+  ans <- as.numeric(c(0,  length(x)))
+  smr <- function(x,y) {
+    x <- x-y
+    c(sum(x, na.rm = TRUE), sum(is.na(x)))
+  }
+  a <- smr(out1$TAD,  out2$TAD)
+  b <- smr(out1$TIME, out2$TIME)
+  c <- smr(out1$LDOS, out2$LDOS)
+  d <- smr(out1$TAFD, out2$TAFD)
+  expect_identical(a, ans)
+  expect_identical(b, ans)
+  expect_identical(c, ans)
+  expect_identical(d, ans)
+})
+
 test_that("NA amt is error for dosing record, ok otherwise", {
   dd <- set1
   dd$amt[5] <- NA_real_
@@ -162,21 +211,62 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
 test_that("user-named time and id columns", {
   d1 <- subset(set1, ID==1)
   d2 <- d1
-  d2$TAFD <- d2$TIME
+  d2$xTAFD <- d2$TIME
   d2$TIME <- NULL
   expect_identical(
     lastdose_df(d1),
-    lastdose_df(d2, time_col = "TAFD")
+    lastdose_df(d2, time_col = "xTAFD")
   )
   expect_error(lastdose(d2), msg = "did not find time column")
   d2 <- d1
-  d2$USUBJID <- "A"
+  d2$xUSUBJID <- "A"
   d2$ID <- NULL
   expect_identical(
     lastdose_df(d1),
-    lastdose_df(d2, id_col = "USUBJID")
+    lastdose_df(d2, id_col = "xUSUBJID")
   )
+  if(requireNamespace("withr")) {
+    expect_identical(
+      lastdose_df(d2, id_col = "xUSUBJID"),
+      withr::with_options(
+        list(lastdose.id_col = "xUSUBJID"),
+        lastdose_df(d2)
+      )
+    )
+  }
   expect_error(lastdose(d2))
+})
+
+test_that("find time column from candidate list", {
+  dd <- subset(set1, ID==1)
+  time <- dd$TIME
+  dd$TIME <- NULL
+  tr <- c("TIME", "DATETIME")
+  for(col in tr) {
+    dd[[col]] <- time
+    expect_is(lastdose(dd), "data.frame")
+    dd[[col]] <- NULL
+  }
+})
+
+test_that("find ID column from candidate list", {
+  dd <- subset(set1, ID==1)[1:3,]
+  ID <- dd$ID
+  dd$ID <- NULL
+  tr <- c("ID", "USUBJID", "SUBJID", "PTNO", "SUBJ")
+  for(col in tr) {
+    dd[[col]] <- ID
+    expect_is(lastdose(dd), "data.frame")
+    dd[[col]] <- NULL
+  }
+  if(requireNamespace("withr")) {
+    dd[["i_d"]] <- ID
+    ans1 <- withr::with_options(
+      list(lastdose.id_col = "i_d"),
+      lastdose(dd)
+    )
+    expect_is(ans1, "data.frame")
+  }
 })
 
 test_that("POSIXct datetime is converted to numeric time", {
@@ -192,6 +282,14 @@ test_that("POSIXct datetime is converted to numeric time", {
   expect_error(
     lastdose(d1, time_units = "seconds")
   )
+  if(requireNamespace("withr")) {
+    ans1 <- withr::with_options(
+      list(lastdose.time_units = "hours"),
+      lastdose(d1)
+    )
+    ans2 <- lastdose(d1, time_units = "hours")
+    expect_identical(ans1, ans2)
+  }
 })
 
 test_that("logical comment column is ok", {
