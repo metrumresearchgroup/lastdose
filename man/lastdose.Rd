@@ -71,7 +71,7 @@ details.}
 
 \item{comments}{a logical vector with length equal to the number of rows
 in \code{data} indicating which records are to be ignored when looking for \code{TAD}
-and \code{LDOS}.  See all the \code{fill_comments_na} argument.}
+and \code{LDOS}.}
 }
 \description{
 This function calculates the last dose amount (\code{LDOS}), the time after
