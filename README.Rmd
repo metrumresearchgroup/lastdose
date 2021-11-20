@@ -6,7 +6,6 @@ output: github_document
 # lastdose
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/metrumresearchgroup/lastdose.svg?branch=master)](https://travis-ci.org/metrumresearchgroup/lastdose)
 <!-- badges: end -->
 
 ## Overview

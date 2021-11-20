@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // lastdose_impl
 Rcpp::List lastdose_impl(Rcpp::NumericVector id, Rcpp::NumericVector time, Rcpp::NumericVector amt, Rcpp::NumericVector evid, Rcpp::NumericVector addl, Rcpp::NumericVector ii, Rcpp::NumericVector fill, Rcpp::LogicalVector back_calc, Rcpp::LogicalVector sort1, Rcpp::LogicalVector comment);
 RcppExport SEXP _lastdose_lastdose_impl(SEXP idSEXP, SEXP timeSEXP, SEXP amtSEXP, SEXP evidSEXP, SEXP addlSEXP, SEXP iiSEXP, SEXP fillSEXP, SEXP back_calcSEXP, SEXP sort1SEXP, SEXP commentSEXP) {
