@@ -1,0 +1,28 @@
+LSD-S001:
+  name: Guess names for TIME and ID
+  description: As a user, I want lastdose to search my input data set for column names
+    for ID and TIME
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-019
+  - LSD-TEST-020
+LSD-S002:
+  name: Set options for default TIME and ID
+  description: As a user, I want to be able to set defaults for `id_col` and `time_col`
+    through an option
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-018
+  - LSD-TEST-021
+LSD-S003:
+  name: Change default for include_tafd to FALSE
+  description: As a user, I don't want lastdose to automatically write TAFD, but rather
+    write time of first dose
+  ProductRisk: low-risk
+  tests: LSD-TEST-002
+LSD-S004:
+  name: Better Handling of NA in Time
+  description: As a user, I want to be able to use `lastdose()` and friends with missing
+    values in the TIME column
+  ProductRisk: low-risk
+  tests: LSD-TEST-014
