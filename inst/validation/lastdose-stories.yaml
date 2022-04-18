@@ -19,7 +19,7 @@ LSD-S001:
 LSD-S002:
   name: Return TAD and LDOS in different formats
   description: As a user, I want lastdose to return TAD and LDOS in different formats,
-    including data.frame and list
+    including data.frame and list.
   ProductRisk: low-risk
   tests:
   - LSD-TEST-007
