@@ -1,9 +1,7 @@
 LSD-S001:
   name: Add TAD and LDOS to data set
-  description: The user will pass in NMTRAN-formatted analysis data as a data frame,
-    with required numeric columns 'ID', 'TIME', 'AMT', 'EVID', and optional columns
-    'ADDL', and 'II' (lower case is accepted too). The input data set must be sorted
-    by time within individual; an error is generated otherwise.
+  description: As a user, I want lastdose to add time after dose and last dose amount
+    columns to my data set.
   ProductRisk: low-risk
   tests:
   - LSD-TEST-001
@@ -20,20 +18,16 @@ LSD-S001:
   - LSD-TEST-015
 LSD-S002:
   name: Return TAD and LDOS in different formats
-  description: The `lastdose()` function will append columns called `TAD` and `LDOS`
-    to the input data indicating the time after dose and last dose, respectively.
-    `lastdose_list()`and `lastdose_df()` functions will return a named list or dataframe
-    with columns `tad` and `ldos` respectively.
+  description: As a user, I want lastdose to return TAD and LDOS in different formats,
+    including data.frame and list
   ProductRisk: low-risk
   tests:
   - LSD-TEST-007
   - LSD-TEST-008
 LSD-S003:
   name: Choose how TAD and LDOS are filled
-  description: By default, doses prior to the first dosing record will be calculated
-    as time before the first dose and be expressed as negative numbers. The user may
-    optionally choose to fill in `TAD` for records prior to the first dose with a
-    single user-specified fill value.
+  description: As a user, I want to be able to choose how TAD and LDOS are filled/entered
+    in the dataset.
   ProductRisk: low-risk
   tests:
   - LSD-TEST-004
@@ -41,10 +35,8 @@ LSD-S003:
   - LSD-TEST-006
 LSD-S004:
   name: Commented dose records are ignored when finding doses
-  description: By default, comments are found when the data frame has a column called
-    `C`and it is character; rows are commented if `C` is not NA and not equal to `.`.
-    Other use cases are available as well, such as passing a logical vector of rows
-    to be considered as comments.
+  description: As a user, I want lastdose to ignore commented records when finding
+    doses.
   ProductRisk: low-risk
   tests: LSD-TEST-016
 LSD-S005:
@@ -79,7 +71,7 @@ LSD-S009:
   ProductRisk: low-risk
   tests: LSD-TEST-002
 LSD-S010:
-  name: [BUG] II column is not detected in the input data set
+  name: '[BUG] II column is not detected in the input data set'
   description: As a user, I want lastdose to properly detect `II` or `ii` and use
     it to calculate `TAD`.
   ProductRisk: low-risk
