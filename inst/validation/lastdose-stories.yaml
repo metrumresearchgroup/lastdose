@@ -1,0 +1,108 @@
+LSD-S001:
+  name: Add TAD and LDOS to data set
+  description: As a user, I want lastdose to add time after dose and last dose amount
+    columns to my data set.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-001
+  - LSD-TEST-003
+  - LSD-TEST-004
+  - LSD-TEST-005
+  - LSD-TEST-006
+  - LSD-TEST-007
+  - LSD-TEST-009
+  - LSD-TEST-010
+  - LSD-TEST-011
+  - LSD-TEST-012
+  - LSD-TEST-013
+  - LSD-TEST-015
+LSD-S002:
+  name: Return TAD and LDOS in different formats
+  description: As a user, I want lastdose to return TAD and LDOS in different formats,
+    including data.frame and list.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-007
+  - LSD-TEST-008
+LSD-S003:
+  name: Choose how TAD and LDOS are filled
+  description: As a user, I want to be able to choose how TAD and LDOS are filled/entered
+    in the dataset.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-004
+  - LSD-TEST-005
+  - LSD-TEST-006
+LSD-S004:
+  name: Commented dose records are ignored when finding doses
+  description: As a user, I want lastdose to ignore commented records when finding
+    doses.
+  ProductRisk: low-risk
+  tests: LSD-TEST-016
+LSD-S005:
+  name: Take POSIXct object as the time indicator
+  description: As a user, I want to specify data set TIME as a POSSIXct data
+  ProductRisk: low-risk
+  tests: LSD-TEST-021
+LSD-S006:
+  name: Undefined behavior when checking ADDL and II
+  description: When either ADDL or II are not found in the data set, lastdose continues
+    to check for missing values, resulting in undefined behavior. The solution is
+    to drop `has_addl` checks and/or pass in vectors of all zeros for ADDL and II
+    when they are missing.
+  ProductRisk: low-risk
+  tests: LSD-TEST-017
+LSD-S007:
+  name: More flexible input for time and id
+  description: As a user, I want to be able to use any column for TIME or ID.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-018
+  - LSD-TEST-021
+LSD-S008:
+  name: Refactor how comments are found
+  description: As a user, I want lastdose to find logical columns when scanning for
+    comment data
+  ProductRisk: low-risk
+  tests: LSD-TEST-022
+LSD-S009:
+  name: Time after first dose
+  description: As a user, I want lastdose to calculate time since first dose for me
+  ProductRisk: low-risk
+  tests: LSD-TEST-002
+LSD-S010:
+  name: '[BUG] II column is not detected in the input data set'
+  description: As a user, I want lastdose to properly detect `II` or `ii` and use
+    it to calculate `TAD`.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-023
+  - LSD-TEST-024
+LSD-S011:
+  name: Guess names for TIME and ID
+  description: As a user, I want lastdose to search my input data set for column names
+    for ID and TIME
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-019
+  - LSD-TEST-020
+LSD-S012:
+  name: Set options for default TIME and ID
+  description: As a user, I want to be able to set defaults for `id_col` and `time_col`
+    through an option
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-018
+  - LSD-TEST-021
+LSD-S013:
+  name: Change default for include_tafd to FALSE
+  description: As a user, I don't want lastdose to automatically write TAFD, but rather
+    write time of first dose
+  ProductRisk: low-risk
+  tests: LSD-TEST-002
+LSD-S014:
+  name: Better Handling of NA in Time
+  description: As a user, I want to be able to use `lastdose()` and friends with missing
+    values in the TIME column
+  ProductRisk: low-risk
+  tests: LSD-TEST-014
