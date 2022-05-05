@@ -1,3 +1,15 @@
+# Please add stories at the top ------------------------------------------
+
+LSD-S015:
+  name: Comments vector not adjusted for missing TIME
+  description: >
+    As a user, I want lastdose to properly accommodate comments and missing
+    values in the TIME column.
+  ProductRisk: low-risk
+  tests:
+  - LSD-TEST-025
+
+# Initial set of tests --------------------------------------------------
 LSD-S001:
   name: Add TAD and LDOS to data set
   description: As a user, I want lastdose to add time after dose and last dose amount

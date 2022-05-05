@@ -347,3 +347,15 @@ test_that("error if ADDL requested by II le 0 [LSD-TEST-024]", {
     msg = "ADDL doses requested, but II not positive at row 2"
   )
 })
+
+test_that("comments vector is subset for NA time #38 [LSD-TEST-025]", {
+  data <- data.frame(
+    ID = c(1,1,1,2,2,2),
+    C = c("C", NA, NA, "C", NA, NA),
+    TIME = c(-1, 0, NA, -1, 0, 0.25),
+    AMT = c(0, 100, 0, 0, 200, 0),
+    EVID = c(0, 1, 0, 0, 1, 0)
+  )
+  data <- lastdose(data)
+  expect_equal(data$TAD, c(-1, 0, NA, -1, 0, 0.25))
+})
