@@ -172,6 +172,7 @@ lastdose_list <- function(data,
   if(has_na_time) {
     na_time <- is.na(data[[wtime]])
     data <- data[!na_time,, drop = FALSE]
+    comments <- comments[!na_time]
   }
   col_time <- data[[wtime]]
   if(inherits(col_time, "POSIXct")) {
