@@ -1,7 +1,10 @@
 # lastdose (development version)
 
 - Fix bug where comments vector wasn't getting adjusted when `TIME` contained
-  missing values (#38, #39).
+  missing values (#37, #38).
+  
+- Put stories in yaml format; add script to build validation docs from the 
+  yaml file (#35, #36). 
 
 # lastdose 0.4.0
 
