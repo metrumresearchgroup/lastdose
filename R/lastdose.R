@@ -40,7 +40,7 @@ NULL
 #' details.
 #' @param comments a logical vector with length equal to the number of rows
 #' in `data` indicating which records are to be ignored when looking for `TAD`
-#' and `LDOS`.  See all the `fill_comments_na` argument.
+#' and `LDOS`.
 #' @param ... arguments passed to [lastdose_list()]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose()] function.
@@ -172,6 +172,7 @@ lastdose_list <- function(data,
   if(has_na_time) {
     na_time <- is.na(data[[wtime]])
     data <- data[!na_time,, drop = FALSE]
+    comments <- comments[!na_time]
   }
   col_time <- data[[wtime]]
   if(inherits(col_time, "POSIXct")) {

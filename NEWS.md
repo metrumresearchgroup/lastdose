@@ -1,3 +1,11 @@
+# lastdose 0.4.1
+
+- Fix bug where comments vector wasn't getting adjusted when `TIME` contained
+  missing values (#37, #38).
+  
+- Put stories in yaml format; add script to build validation docs from the 
+  yaml file (#35, #36). 
+
 # lastdose 0.4.0
 
 - Change default value for `include_tafd` to FALSE (#29)

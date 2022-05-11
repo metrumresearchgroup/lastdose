@@ -11,7 +11,7 @@ set2 <- subset(df, set==2 & ID==1 & TIME <= 12)
 set4 <- subset(df, set==4 & ID==1 & TIME <= 24)
 
 
-test_that("doses at time zero", {
+test_that("doses at time zero [LSD-TEST-001]", {
   x <- lastdose(set1)
   expect_true(exists("TAD", x))
   expect_true(exists("LDOS", x))
@@ -22,7 +22,7 @@ test_that("doses at time zero", {
   expect_identical(x[["LDOS"]],c(a,a))
 })
 
-test_that("time after first dose", {
+test_that("time after first dose [LSD-TEST-002]", {
   x <- lastdose(set4)
   expect_false(exists("TAFD", x))
   x <- lastdose(set4, include_tafd = TRUE)
@@ -32,7 +32,7 @@ test_that("time after first dose", {
   expect_equal(x$TIME, x$TAFD + time_of_first_dose)
 })
 
-test_that("time ties (q12h dosing)", {
+test_that("time ties (q12h dosing) [LSD-TEST-003]", {
   x <- lastdose(set1)
   z <- lastdose(set1, addl_ties = "dose_first")
   expect_false(identical(x,z))
@@ -42,37 +42,37 @@ test_that("time ties (q12h dosing)", {
   expect_true(all(az[["TAD"]] == 0))
 })
 
-test_that("don't fill back", {
+test_that("don't fill back [LSD-TEST-004]", {
   x <- lastdose(set1, back_calc = FALSE)
   a <- c(-99,0,4,8,12,4,8,12)
   expect_identical(x[["TAD"]],c(a,a))
 })
 
-test_that("customize fill", {
+test_that("customize fill [LSD-TEST-005]", {
   x <- lastdose(set1, back_calc = FALSE, fill = NA_real_)
   a <- c(NA_real_,0,4,8,12,4,8,12)
   expect_identical(x[["TAD"]],c(a,a))
 })
 
-test_that("doses don't start at time zero", {
+test_that("doses don't start at time zero [LSD-TEST-006]", {
   x <- lastdose(set2)
   a <- c(seq(-6,0),seq(0,6))
   expect_identical(x[["TAD"]],as.double(a))
 })
 
-test_that("lastdose_df", {
+test_that("lastdose_df [LSD-TEST-007]", {
   x <- lastdose_df(set1)
   y <- lastdose_list(set1)
   expect_identical(x[["tad"]], y[["tad"]])
 })
 
-test_that("lastdose_list", {
+test_that("lastdose_list [LSD-TEST-008]", {
   y <- lastdose_list(set1)
   expect_is(y,"list")
   expect_identical(names(y), c("tad", "tafd","ldos"))
 })
 
-test_that("required columns", {
+test_that("required columns [LSD-TEST-009]", {
   x <- set1
   x[["amt"]] <- NULL
   expect_error(lastdose(x))
@@ -89,7 +89,7 @@ test_that("required columns", {
   expect_error(lastdose(x))
 })
 
-test_that("non-numeric data throws error", {
+test_that("non-numeric data throws error [LSD-TEST-010]", {
   for(col in c("ID","time", "addl", "ii", "evid", "amt")) {
     dd <- set1[seq(10), ]
     dd$ID <- NULL
@@ -100,12 +100,12 @@ test_that("non-numeric data throws error", {
   }
 })
 
-test_that("records out of order throws error", {
+test_that("records out of order throws error [LSD-TEST-011]", {
   set1$TIME[12] <- 1E6
   expect_error(lastdose(set1))
 })
 
-test_that("tad and ldos are NA when time is NA", {
+test_that("tad and ldos are NA when time is NA [LSD-TEST-012]", {
   set1$TIME[12] <- NA_real_
   ans <- lastdose(set1)[12,]
   expect_true(is.na(ans[["TAD"]]))
@@ -113,7 +113,7 @@ test_that("tad and ldos are NA when time is NA", {
   expect_true(is.na(ans[["TIME"]]))
 })
 
-test_that("error for missing values in ID,evid,ii,addl", {
+test_that("error for missing values in ID,evid,ii,addl [LSD-TEST-013]", {
   for(col in c("ID", "evid", "ii", "addl")) {
     dd <- set1[seq(10),]
     dd[[col]] <- NA_real_
@@ -121,7 +121,7 @@ test_that("error for missing values in ID,evid,ii,addl", {
   }
 })
 
-test_that("handle missing values in time colunn", {
+test_that("handle missing values in time colunn [LSD-TEST-014]", {
   dd <- df[df$set==4,]
   dd$TIME <- as.numeric(dd$TIME)
   dd0 <- dd
@@ -168,7 +168,7 @@ test_that("handle missing values in time colunn", {
   expect_identical(d, ans)
 })
 
-test_that("NA amt is error for dosing record, ok otherwise", {
+test_that("NA amt is error for dosing record, ok otherwise [LSD-TEST-015]", {
   dd <- set1
   dd$amt[5] <- NA_real_
   expect_is(lastdose(dd), "data.frame")
@@ -177,7 +177,7 @@ test_that("NA amt is error for dosing record, ok otherwise", {
   expect_error(lastdose(dd))
 })
 
-test_that("commented records", {
+test_that("commented records [LSD-TEST-016]", {
   com <- c(".", NA ,"C", "A","Comment")
   ans <- find_comments(com)
   expect_identical(ans, c(FALSE,FALSE,TRUE,TRUE,TRUE))
@@ -199,7 +199,7 @@ test_that("commented records", {
   expect_error(lastdose(set1, comments = c(FALSE, TRUE,FALSE)))
 })
 
-test_that("undefined behavior when checking ADDL and II issue-11", {
+test_that("undefined behavior when checking ADDL and II issue-11 [LSD-TEST-017]", {
   no_addl <- subset(set1, ID==1)
   no_addl[["addl"]] <- NULL
   no_addl[["ii"]] <- NULL
@@ -208,7 +208,7 @@ test_that("undefined behavior when checking ADDL and II issue-11", {
   expect_true(all(ans))
 })
 
-test_that("user-named time and id columns", {
+test_that("user-named time and id columns [LSD-TEST-018]", {
   d1 <- subset(set1, ID==1)
   d2 <- d1
   d2$xTAFD <- d2$TIME
@@ -237,7 +237,7 @@ test_that("user-named time and id columns", {
   expect_error(lastdose(d2))
 })
 
-test_that("find time column from candidate list", {
+test_that("find time column from candidate list [LSD-TEST-019]", {
   dd <- subset(set1, ID==1)
   time <- dd$TIME
   dd$TIME <- NULL
@@ -249,7 +249,7 @@ test_that("find time column from candidate list", {
   }
 })
 
-test_that("find ID column from candidate list", {
+test_that("find ID column from candidate list [LSD-TEST-020]", {
   dd <- subset(set1, ID==1)[1:3,]
   ID <- dd$ID
   dd$ID <- NULL
@@ -269,7 +269,7 @@ test_that("find ID column from candidate list", {
   }
 })
 
-test_that("POSIXct datetime is converted to numeric time", {
+test_that("POSIXct datetime is converted to numeric time [LSD-TEST-021]", {
   d1 <- subset(set1, ID <= 2)
   d2 <- d1
   base <- as.POSIXct(0, origin = "2020-01-01", tz = "UTC")
@@ -292,7 +292,7 @@ test_that("POSIXct datetime is converted to numeric time", {
   }
 })
 
-test_that("logical comment column is ok", {
+test_that("logical comment column is ok [LSD-TEST-022]", {
   d <- subset(set1, ID ==1)
   d$C <- sample(c(FALSE, TRUE), nrow(d), replace = TRUE)
   expect_silent(lastdose(d))
@@ -300,7 +300,7 @@ test_that("logical comment column is ok", {
   expect_warning(lastdose(d), msg = "but it wasn't character or logical")
 })
 
-test_that("ii detection issue-21", {
+test_that("ii detection issue-21 [LSD-TEST-023]", {
   data <- data.frame(
     TIME = c(0,1,2,3,4,5,6,7,8),
     AMT  = c(0,1,0,0,0,0,0,0,0),
@@ -333,7 +333,7 @@ test_that("ii detection issue-21", {
   expect_equal(term$TAD, c(0,1,2,3))
 })
 
-test_that("error if ADDL requested by II le 0", {
+test_that("error if ADDL requested by II le 0 [LSD-TEST-024]", {
   data <- data.frame(
     TIME = c(0,1,2,3),
     AMT  = c(0,1,0,0),
@@ -346,4 +346,16 @@ test_that("error if ADDL requested by II le 0", {
     lastdose(data),
     msg = "ADDL doses requested, but II not positive at row 2"
   )
+})
+
+test_that("comments vector is subset for NA time #38 [LSD-TEST-025]", {
+  data <- data.frame(
+    ID = c(1,1,1,2,2,2),
+    C = c("C", NA, NA, "C", NA, NA),
+    TIME = c(-1, 0, NA, -1, 0, 0.25),
+    AMT = c(0, 100, 0, 0, 200, 0),
+    EVID = c(0, 1, 0, 0, 1, 0)
+  )
+  data <- lastdose(data)
+  expect_equal(data$TAD, c(-1, 0, NA, -1, 0, 0.25))
 })
