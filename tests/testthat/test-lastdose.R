@@ -359,3 +359,21 @@ test_that("comments vector is subset for NA time #38 [LSD-TEST-025]", {
   data <- lastdose(data)
   expect_equal(data$TAD, c(-1, 0, NA, -1, 0, 0.25))
 })
+
+test_that("data frame is not modified", {
+  data <- data.frame(
+    ID = 1,
+    AMT = c(0, 1, NA, 0, 0),
+    TIME = c(1, 2, 3, 4, 5),
+    EVID = c(0, 1, 0, 0, 0)
+  )
+  data2 <- data.frame(
+    ID = 1,
+    AMT = c(0, 1, NA, 0, 0),
+    TIME = c(1, 2, 3, 4, 5),
+    EVID = c(0, 1, 0, 0, 0)
+  )
+  expect_identical(data, data2)
+  ld <- lastdose(data)
+  expect_identical(data, data2)
+})

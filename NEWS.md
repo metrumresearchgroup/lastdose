@@ -1,3 +1,10 @@
+# lastdose (development version)
+
+## Bugs Fixed
+
+- Fixed bug where `amt` was getting modified in source data frame 
+  when it contained missing values (#40, #41).
+
 # lastdose 0.4.1
 
 - Fix bug where comments vector wasn't getting adjusted when `TIME` contained

@@ -59,6 +59,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::LogicalVector sort1,
                          Rcpp::LogicalVector comment) {
 
+  amt = Rcpp::clone(amt);
   bool use_comp1 = sort1[0];
   bool use_fill = !back_calc[0];
   std::vector<double> idn;
