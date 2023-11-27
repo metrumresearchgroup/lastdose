@@ -1,4 +1,4 @@
-# lastdose (development version)
+# lastdose 0.4.2
 
 ## Bugs Fixed
 
