@@ -1,7 +1,10 @@
 
-# lastdose
+# lastdose <a href='https:/metrumresearchgroup.github.io/lastdose'><img src='man/figures/logo.png' align="right" /></a>
 
 <!-- badges: start -->
+
+[![R build
+status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/lastdose/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/lastdose)
 <!-- badges: end -->
 
 ## Overview
@@ -158,7 +161,7 @@ system.time(x2 <- lastdose(big))
 ```
 
     .    user  system elapsed 
-    .   0.045   0.002   0.048
+    .   0.039   0.008   0.047
 
 ## Compare against the single profile
 
@@ -167,7 +170,7 @@ system.time(x1 <- lastdose(df))
 ```
 
     .    user  system elapsed 
-    .       0       0       0
+    .   0.000   0.000   0.001
 
 ``` r
 x3 <- filter(x2, big[["ID"]]==1) %>% as.data.frame()
