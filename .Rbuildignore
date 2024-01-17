@@ -30,6 +30,7 @@ _config.yml
 Makefile
 docs
 ^DOCS$
+^pkgdown$
 man/figures
 ^lastdose$
 ^\.travis\.yml$

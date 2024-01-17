@@ -3,9 +3,10 @@ title: ""
 output: github_document
 ---
 
-# lastdose
+# lastdose <a href='https:/metrumresearchgroup.github.io/lastdose'><img src='man/figures/logo.png' align="right" /></a>
 
 <!-- badges: start -->
+[![R build status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/lastdose/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/lastdose)
 <!-- badges: end -->
 
 ## Overview
