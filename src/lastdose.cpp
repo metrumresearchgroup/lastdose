@@ -93,6 +93,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   Rcpp::NumericVector tad(id.size());  // return vector for TAD
   Rcpp::NumericVector ldos(id.size()); // return vector for LDOS
   Rcpp::NumericVector tafd(id.size()); // return vector for TAFD
+  Rcpp::NumericVector occ(id.size());  // return vector for OCC
   std::vector<double> tofd;            // time of first dose
   tofd.assign(idn.size(),-1.0);
   int nid = idn.size();
@@ -102,6 +103,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     this_id.reserve((idend[i] - idstart[i]));
     bool found_dose = false;
     double last_time = -1E9;
+    int occn = 0;
     for(int j = idstart[i]; j <= idend[i]; ++j) {
       // If time is missing
       if(isna(time[j])) {
@@ -167,6 +169,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     double last_dose = 0;
     bool had_dose = false;
     bool no_dose = tofd[i] == -1;
+
     last_time = 0;
     for(recs::iterator it = this_id.begin(); it !=this_id.end(); ++it) {
       if(it->is_dose()) {
