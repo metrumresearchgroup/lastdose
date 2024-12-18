@@ -64,7 +64,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   std::vector<int> idend;
   double lastid = -1E9;
   int nrows = id.size();
-  const int max_addl_pos = nrows + 1;
+  const int max_addl_pos = nrows*10;
   for(int i = 0; i < nrows; ++i) {
     if(isna(id[i]) || isna(evid[i]) || isna(addl[i]) || isna(ii[i])) {
       std::string col;
