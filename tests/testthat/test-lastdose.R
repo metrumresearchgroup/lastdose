@@ -380,7 +380,7 @@ test_that("data frame is not modified", {
 
 test_that("TAD is the same for records with the same time", {
   file <- system.file("csv", "temp-tad.csv", package = "lastdose")
-  data <- read.csv(file, na.strings = ".")
+  data <- read.csv(file, na.strings = ".", stringsAsFactors = FALSE)
 
   ans1 <- lastdose(data, addl_ties = "obs_first")
   expect_true(all(ans1[21:24,]$TAD==0))
