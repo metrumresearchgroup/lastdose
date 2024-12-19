@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/lastdose/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/lastdose)
+status](https://github.com/metrumresearchgroup/lastdose/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/lastdose/actions/workflows/main.yaml)
 <!-- badges: end -->
 
 ## Overview
