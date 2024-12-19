@@ -11,7 +11,7 @@ Description: Efficient calculation of time after last dose and last dose amount
 License: GPL (>=2)
 Imports: Rcpp
 LinkingTo: Rcpp
-URL: https://github.com/metrumresearchgroup/lastdose
+URL: https://metrumresearchgroup.github.io/lastdose, https://github.com/metrumresearchgroup/lastdose
 BugReports: https://github.com/metrumresearchgroup/lastdose/issues
 Suggests: testthat, withr
 Encoding: UTF-8
