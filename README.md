@@ -225,5 +225,5 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 ## More info
 
 See
-[inst/doc/about.md](https://github.com/metrumresearchgroup/lastdose/blob/master/inst/doc/about.md)
+[inst/doc/about.md](https://github.com/metrumresearchgroup/lastdose/blob/main/inst/doc/about.md)
 for more details.
