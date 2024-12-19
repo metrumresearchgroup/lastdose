@@ -369,11 +369,33 @@ test_that("data frame is not modified", {
   )
   data2 <- data.frame(
     ID = 1,
-    AMT = c(0, 1, NA, 0, 0),
+    AMT =  c(0, 1, NA, 0, 0),
     TIME = c(1, 2, 3, 4, 5),
     EVID = c(0, 1, 0, 0, 0)
   )
   expect_identical(data, data2)
   ld <- lastdose(data)
   expect_identical(data, data2)
+})
+
+test_that("TAD is the same for records with the same time", {
+  file <- system.file("csv", "temp-tad.csv", package = "lastdose")
+  data <- read.csv(file, na.strings = ".", stringsAsFactors = FALSE)
+
+  ans1 <- lastdose(data, addl_ties = "obs_first")
+  expect_true(all(ans1[21:24,]$TAD==0))
+
+  ans2 <- lastdose(data, addl_ties = "dose_first")
+  expect_true(all(ans2[21:24,]$TAD==0))
+
+  data <- data.frame(
+    ID = 1,
+    TIME = c(1, 2, 3, 4, 4,  4, 4),
+    AMT =  c(0, 0, 1, 0, 0, 10, 0),
+    EVID = c(0, 0, 1, 0, 0,  1, 0)
+  )
+
+  ans3 <- lastdose(data)
+  expect_equal(ans3$TAD,  c(-2, -1,  0, 1, 1,  0,  0))
+  expect_equal(ans3$LDOS, c( 0,  0,  1, 1, 1, 10, 10))
 })
