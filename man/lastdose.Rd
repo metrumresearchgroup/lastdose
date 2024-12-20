@@ -10,7 +10,8 @@ lastdose(
   data,
   ...,
   include_ldos = TRUE,
-  include_tafd = getOption("lastdose.include_tafd", FALSE)
+  include_tafd = getOption("lastdose.include_tafd", FALSE),
+  include_occ = getOption("lastdose.include_occ", TRUE)
 )
 
 lastdose_list(

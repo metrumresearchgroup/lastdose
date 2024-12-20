@@ -44,6 +44,24 @@ bool Comp1(const record& a, const record& b) {
   return a.time < b.time;
 }
 
+bool obs_before_dose(recs::iterator it, recs::iterator it_end) {
+  auto it_next = std::next(it,1);
+  while(it_next != it_end) {
+    if(!it_next->from_data) {
+      ++it_next;
+      continue;
+    }
+    if(it_next->evid==0) {
+      return true;
+    }
+    if(it_next->is_dose()) {
+      return false;
+    }
+    ++it_next;
+  }
+  return false;
+}
+
 // [[Rcpp::export]]
 Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector time,
@@ -101,7 +119,6 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     this_id.reserve((idend[i] - idstart[i]));
     bool found_dose = false;
     double last_time = -1E9;
-    int occn = 0;
     for(int j = idstart[i]; j <= idend[i]; ++j) {
       // If time is missing
       if(isna(time[j])) {
@@ -182,11 +199,28 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         }
         ldos[it->pos] = last_dose;
       }
+      // To resort for OCC calculation
+      if(!it->from_data) {
+        it->pos = -1;
+      }
     }
+    // Start occ calculation --------------------------------------------------
+    int occ_n = 0;
+    std::sort(this_id.begin(), this_id.end(), Comp1);
+    for(auto it = this_id.begin(); it !=this_id.end(); ++it) {
+      if(it->is_dose() && it->from_data && obs_before_dose(it, this_id.end())) {
+        ++occ_n;
+      }
+      if(it->from_data) {
+        occ[it->pos] = occ_n;
+      }
+    }
+    // End occ calculation -----------------------------------------------------
   }
   Rcpp::List ans;
   ans["tad"] = tad;
   ans["tafd"] = tafd;
   ans["ldos"] = ldos;
+  ans["occ"] = occ;
   return ans;
 }

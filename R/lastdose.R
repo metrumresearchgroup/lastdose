@@ -133,11 +133,13 @@ NULL
 #'
 #' @export
 lastdose <- function(data, ..., include_ldos = TRUE,
-                     include_tafd = getOption("lastdose.include_tafd", FALSE)) {
+                     include_tafd = getOption("lastdose.include_tafd", FALSE),
+                     include_occ = getOption("lastdose.include_occ", TRUE)) {
   ans <- lastdose_list(data, ...)
   data[["TAD"]] <- ans[["tad"]]
   if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
   if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
+  if(include_occ)  data[["OCC"]] <- ans[["occ"]]
   data
 }
 
@@ -272,6 +274,7 @@ lastdose_df <- function(data, ...) {
     tad = ans[["tad"]],
     tafd = ans[["tafd"]],
     ldos = ans[["ldos"]],
+    occ = ans[["occ"]],
     stringsAsFactors = FALSE, check.names = FALSE,
     fix.empty.names = FALSE, row.names = NULL
   )
