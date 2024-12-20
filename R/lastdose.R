@@ -46,6 +46,8 @@ NULL
 #' appended to the data set.  Only used for the [lastdose()] function.
 #' @param include_tafd `logical`; if `FALSE`, then `TAFD` data is not appended
 #' to the data set.  Only used for the [lastdose()] function.
+#' @param include_occ `logical`; if `FALSE` then `OCC` is not appended to the
+#' data set. Only used for the [lastdose()] function.
 #'
 #' @section Options:
 #'
@@ -152,7 +154,8 @@ lastdose_list <- function(data,
                           fill = -99,
                           back_calc = TRUE,
                           addl_ties = c("obs_first", "dose_first"),
-                          comments = find_comments(data)) {
+                          comments = find_comments(data),
+                          include_occ = getOption("lastdose.include_occ", TRUE)) {
 
   if(length(comments) == 1) {
     comments <- rep(comments,nrow(data))
@@ -163,6 +166,8 @@ lastdose_list <- function(data,
       call. = FALSE
     )
   }
+  back_calc <- isTRUE(back_calc)
+  include_occ <- isTRUE(include_occ)
   addl_ties <- match.arg(addl_ties)
   sort1 <- addl_ties == "obs_first"
   lower_names <- tolower(names(data))
@@ -255,7 +260,8 @@ lastdose_list <- function(data,
     fill,
     back_calc,
     sort1,
-    comments
+    comments,
+    include_occ
   )
   if(has_na_time) {
     re_order <- order(c(which(!na_time), which(na_time)))
@@ -270,14 +276,17 @@ lastdose_list <- function(data,
 #' @export
 lastdose_df <- function(data, ...) {
   ans <- lastdose_list(data, ...)
-  data.frame(
+  out <- data.frame(
     tad = ans[["tad"]],
     tafd = ans[["tafd"]],
     ldos = ans[["ldos"]],
-    occ = ans[["occ"]],
     stringsAsFactors = FALSE, check.names = FALSE,
     fix.empty.names = FALSE, row.names = NULL
   )
+  if(!is.null(ans[["occ"]])) {
+    out$occ <- ans[["occ"]]
+  }
+  out
 }
 
 #' Find commented records

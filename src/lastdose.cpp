@@ -72,11 +72,13 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector fill,
                          Rcpp::LogicalVector back_calc,
                          Rcpp::LogicalVector sort1,
-                         Rcpp::LogicalVector comment) {
+                         Rcpp::LogicalVector comment,
+                         Rcpp::LogicalVector include_occ) {
 
   amt = Rcpp::clone(amt);
   bool obs_first = sort1[0];
   bool use_fill = !back_calc[0];
+  bool get_occ = include_occ[0];
   std::vector<double> idn;
   std::vector<int> idstart;
   std::vector<int> idend;
@@ -205,14 +207,16 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
     }
     // Start occ calculation --------------------------------------------------
-    int occ_n = 0;
-    std::sort(this_id.begin(), this_id.end(), Comp1);
-    for(auto it = this_id.begin(); it !=this_id.end(); ++it) {
-      if(it->is_dose() && it->from_data && obs_before_dose(it, this_id.end())) {
-        ++occ_n;
-      }
-      if(it->from_data) {
-        occ[it->pos] = occ_n;
+    if(get_occ) {
+      int occ_n = 0;
+      std::sort(this_id.begin(), this_id.end(), Comp1);
+      for(auto it = this_id.begin(); it !=this_id.end(); ++it) {
+        if(it->is_dose() && it->from_data && obs_before_dose(it, this_id.end())) {
+          ++occ_n;
+        }
+        if(it->from_data) {
+          occ[it->pos] = occ_n;
+        }
       }
     }
     // End occ calculation -----------------------------------------------------
@@ -221,6 +225,8 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   ans["tad"] = tad;
   ans["tafd"] = tafd;
   ans["ldos"] = ldos;
-  ans["occ"] = occ;
+  if(get_occ) {
+    ans["occ"] = occ;
+  }
   return ans;
 }
