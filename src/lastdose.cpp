@@ -38,13 +38,10 @@ bool is_dose(const int evid, const bool comment) {
 typedef std::vector<record> recs;
 
 bool Comp1(const record& a, const record& b) {
-  bool res = a.time == b.time ? a.amt < b.amt : a.time < b.time;
-  return res;
-}
-
-bool Comp2(const record& a, const record& b) {
-  bool res = a.time == b.time ? b.amt < a.amt : a.time < b.time;
-  return res;
+  if(a.time == b.time) {
+    return a.pos < b.pos;
+  }
+  return a.time < b.time;
 }
 
 // [[Rcpp::export]]
@@ -60,13 +57,14 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::LogicalVector comment) {
 
   amt = Rcpp::clone(amt);
-  bool use_comp1 = sort1[0];
+  bool obs_first = sort1[0];
   bool use_fill = !back_calc[0];
   std::vector<double> idn;
   std::vector<int> idstart;
   std::vector<int> idend;
   double lastid = -1E9;
   int nrows = id.size();
+  const int max_addl_pos = nrows*10;
   for(int i = 0; i < nrows; ++i) {
     if(isna(id[i]) || isna(evid[i]) || isna(addl[i]) || isna(ii[i])) {
       std::string col;
@@ -154,6 +152,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         }
         for(int k = 0; k < addl[j]; ++k) {
           record addl_rec(0.0,amt[j],evid[j],false,false);
+          addl_rec.pos = obs_first ? max_addl_pos : -1;
           addl_rec.time = time[j] + ii[j]*double(k+1);
           if(addl_rec.time >= (max_time)) break;
           this_id.push_back(addl_rec);
@@ -161,11 +160,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       }
       ++crow;
     }
-    if(use_comp1) {
-      std::sort(this_id.begin(), this_id.end(), Comp1);
-    } else {
-      std::sort(this_id.begin(), this_id.end(), Comp2);
-    }
+    std::sort(this_id.begin(), this_id.end(), Comp1);
     double last_dose = 0;
     bool had_dose = false;
     bool no_dose = tofd[i] == -1;

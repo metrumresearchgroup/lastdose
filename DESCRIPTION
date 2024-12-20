@@ -1,7 +1,7 @@
 Package: lastdose
 Type: Package
 Title: Calculate Time and Amount of Last Dose
-Version: 0.4.2.9000
+Version: 0.4.3
 Authors@R: c(
     person("Kyle T", "Baron", email = "kyleb@metrumrg.com", role=c("aut", "cre"), comment=c(ORCID="0000-0001-7252-5656"))
     )
@@ -16,6 +16,6 @@ BugReports: https://github.com/metrumresearchgroup/lastdose/issues
 Suggests: testthat, withr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Language: en-US

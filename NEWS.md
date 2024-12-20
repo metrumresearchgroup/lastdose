@@ -1,8 +1,14 @@
 # lastdose (development version)
 
+# lastdose 0.4.3
+
+## New features and changes
+
+- Updated `.Rbuildignore` to include NEWS in the build. (#44) 
+
 # lastdose 0.4.2
 
-## Bugs Fixed
+## Bug fixes
 
 - Fixed bug where `amt` was getting modified in source data frame 
   when it contained missing values (#40, #41).
