@@ -47,10 +47,6 @@ bool Comp1(const record& a, const record& b) {
 bool obs_before_dose(recs::iterator it, recs::iterator it_end) {
   auto it_next = std::next(it,1);
   while(it_next != it_end) {
-    if(!it_next->from_data) {
-      ++it_next;
-      continue;
-    }
     if(it_next->evid==0) {
       return true;
     }
@@ -211,7 +207,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
       int occ_n = 0;
       std::sort(this_id.begin(), this_id.end(), Comp1);
       for(auto it = this_id.begin(); it !=this_id.end(); ++it) {
-        if(it->is_dose() && it->from_data && obs_before_dose(it, this_id.end())) {
+        if(it->is_dose() && obs_before_dose(it, this_id.end())) {
           ++occ_n;
         }
         if(it->from_data) {
