@@ -44,6 +44,20 @@ bool Comp1(const record& a, const record& b) {
   return a.time < b.time;
 }
 
+bool obs_before_dose(recs::iterator it, recs::iterator it_end) {
+  auto it_next = std::next(it,1);
+  while(it_next != it_end) {
+    if(it_next->evid==0) {
+      return true;
+    }
+    if(it_next->is_dose()) {
+      return false;
+    }
+    ++it_next;
+  }
+  return false;
+}
+
 // [[Rcpp::export]]
 Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector time,
@@ -54,11 +68,13 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
                          Rcpp::NumericVector fill,
                          Rcpp::LogicalVector back_calc,
                          Rcpp::LogicalVector sort1,
-                         Rcpp::LogicalVector comment) {
+                         Rcpp::LogicalVector comment,
+                         Rcpp::LogicalVector include_occ) {
 
   amt = Rcpp::clone(amt);
   bool obs_first = sort1[0];
   bool use_fill = !back_calc[0];
+  bool get_occ = include_occ[0];
   std::vector<double> idn;
   std::vector<int> idstart;
   std::vector<int> idend;
@@ -91,6 +107,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
   Rcpp::NumericVector tad(id.size());  // return vector for TAD
   Rcpp::NumericVector ldos(id.size()); // return vector for LDOS
   Rcpp::NumericVector tafd(id.size()); // return vector for TAFD
+  Rcpp::NumericVector occ(id.size());  // return vector for OCC
   std::vector<double> tofd;            // time of first dose
   tofd.assign(idn.size(),-1.0);
   int nid = idn.size();
@@ -162,6 +179,7 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
     double last_dose = 0;
     bool had_dose = false;
     bool no_dose = tofd[i] == -1;
+
     last_time = 0;
     for(recs::iterator it = this_id.begin(); it !=this_id.end(); ++it) {
       if(it->is_dose()) {
@@ -179,11 +197,32 @@ Rcpp::List lastdose_impl(Rcpp::NumericVector id,
         }
         ldos[it->pos] = last_dose;
       }
+      // To resort for OCC calculation
+      if(!it->from_data) {
+        it->pos = -1;
+      }
     }
+    // Start occ calculation --------------------------------------------------
+    if(get_occ) {
+      int occ_n = 0;
+      std::sort(this_id.begin(), this_id.end(), Comp1);
+      for(auto it = this_id.begin(); it !=this_id.end(); ++it) {
+        if(it->is_dose() && obs_before_dose(it, this_id.end())) {
+          ++occ_n;
+        }
+        if(it->from_data) {
+          occ[it->pos] = occ_n;
+        }
+      }
+    }
+    // End occ calculation -----------------------------------------------------
   }
   Rcpp::List ans;
   ans["tad"] = tad;
   ans["tafd"] = tafd;
   ans["ldos"] = ldos;
+  if(get_occ) {
+    ans["occ"] = occ;
+  }
   return ans;
 }
