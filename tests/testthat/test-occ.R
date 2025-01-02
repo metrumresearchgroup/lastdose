@@ -146,3 +146,34 @@ test_that("OCC handle EVID 2 and 3", {
   expect_equal(sp[[4]]$EVID[2], 0)
 })
 
+test_that("OCC resets for multiple subjects", {
+  data1 <- occdata("evid-2-3-a.csv")
+  data1$ID <- 1
+  data2 <- occdata("evid-2-3-b.csv")
+  data2$ID <- 2
+  data3 <- occdata("evid-2-3-c.csv")
+  data3$ID <- 3
+
+  data <- rbind(data1,data2)
+  data <- rbind(data, data3)
+  data$CMT <- 1
+
+  data <- lastdose(data)
+
+  expect_equal(unique(data$OCC), c(0,1,2,3))
+
+  start <- subset(data, TIME==0)
+  expect_true(all(start$OCC==0))
+
+  a <- subset(data, TIME==6)
+  expect_equal(a$ID, c(1,2,3))
+  expect_equal(a$OCC, c(2,2,3))
+
+  b <- subset(data, TIME==1)
+  expect_equal(b$ID, c(1,2,3))
+  expect_equal(unique(b$OCC), 1)
+
+  d <- subset(data, TIME==3)
+  expect_equal(d$ID, c(1,2,3))
+  expect_equal(d$OCC, c(1,1,2))
+})
