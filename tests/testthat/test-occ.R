@@ -3,7 +3,7 @@ library(lastdose)
 
 
 occdata <- function(file) {
-  file <- system.file("data", "occ", file, package = "lastdose")
+  file <- system.file("test-data", "occ", file, package = "lastdose")
   read.csv(file, stringsAsFactors = FALSE)
 }
 
