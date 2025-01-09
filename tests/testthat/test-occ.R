@@ -177,3 +177,56 @@ test_that("OCC resets for multiple subjects", {
   expect_equal(d$ID, c(1,2,3))
   expect_equal(d$OCC, c(1,1,2))
 })
+
+test_that("OCC handles commented dose records", {
+  data <- data.frame(
+    ID = 1,
+    C =    c(NA, NA, "C", NA, NA, NA, NA),
+    TIME = c( 1,  2,  3,   4,  5,  6,  7),
+    AMT = 1,
+    EVID = c(0, 0, 1, 0, 0, 1, 0)
+  )
+  #
+  # ID    C TIME AMT EVID
+  # 1 <NA>    1   1    0
+  # 1 <NA>    2   1    0
+  # 1    C    3   1    1
+  # 1 <NA>    4   1    0
+  # 1 <NA>    5   1    0
+  # 1 <NA>    6   1    1
+  # 1 <NA>    7   1    0
+  data <- lastdose(data)
+  sp <- split(data, data$OCC)
+  expect_equal(length(sp), 2)
+  expect_equal(nrow(sp[[1]]), 5)
+  expect_true(all(sp[[1]]$OCC==0))
+  expect_equal(nrow(sp[[2]]), 2)
+  expect_true(all(sp[[2]]$OCC==1))
+})
+
+test_that("OCC handles commented observation records", {
+
+  data <- data.frame(
+    ID = 1,
+    C    = c(NA, NA, "C", NA, NA, NA, "C", NA),
+    TIME = c( 1,  2,  3,   4,  5,  6,  7,   8),
+    AMT  = 1,
+    EVID = c( 1,  0,  1,  0,  0,  1,  0, 2)
+  )
+  # Start with a dose
+  # Skip past a commented dose
+  # Another dose at TIME==6
+  # The following observation record is commented (TIME==7)
+  # EVID==2 won't increment OCC
+  # ID    C TIME AMT EVID
+  # 1 <NA>    1   1    1
+  # 1 <NA>    2   1    0
+  # 1    C    3   1    1
+  # 1 <NA>    4   1    0
+  # 1 <NA>    5   1    0
+  # 1 <NA>    6   1    1
+  # 1    C    7   1    0
+  # 1 <NA>    8   1    2
+  data <- lastdose(data)
+  expect_true(all(data$OCC==1))
+})

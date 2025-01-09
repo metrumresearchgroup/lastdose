@@ -4,8 +4,9 @@
 
 class  record {
 public:
-  record(double time_, double amt_, int evid_,bool from_data_,bool comment_);
+  record(double time_, double amt_, int evid_, bool from_data_, bool comment_);
   bool is_dose();
+  bool real_observation();
   double time;
   double amt;
   int evid;
@@ -14,7 +15,8 @@ public:
   bool comment;
 };
 
-record::record(double time_, double amt_, int evid_,bool from_data_,bool comment_) {
+record::record(double time_, double amt_, int evid_, bool from_data_,
+               bool comment_) {
   time = time_;
   amt = amt_;
   evid = evid_;
@@ -35,6 +37,10 @@ bool is_dose(const int evid, const bool comment) {
   return (evid==1 || evid==4) && (!comment);
 }
 
+bool record::real_observation() {
+  return evid==0 && !comment;
+}
+
 typedef std::vector<record> recs;
 
 bool Comp1(const record& a, const record& b) {
@@ -47,7 +53,7 @@ bool Comp1(const record& a, const record& b) {
 bool obs_before_dose(recs::iterator it, recs::iterator it_end) {
   auto it_next = std::next(it,1);
   while(it_next != it_end) {
-    if(it_next->evid==0) {
+    if(it_next->real_observation()) {
       return true;
     }
     if(it_next->is_dose()) {
