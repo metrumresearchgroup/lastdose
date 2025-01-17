@@ -3,7 +3,7 @@ library(lastdose)
 
 context("basic functionality")
 set_file <- system.file("csv", "setn.csv", package = "lastdose")
-df <- read.csv(set_file)
+df <- read.csv(set_file, na.strings = ".", stringsAsFactors = FALSE)
 df$TIME <- df$time
 df$time <- NULL
 set1 <- subset(df, set==1)
