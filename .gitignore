@@ -11,3 +11,4 @@ test*.cpp
 .Rhistory
 .RData
 .Ruserdata
+/docs/

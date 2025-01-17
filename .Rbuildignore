@@ -1,5 +1,4 @@
-\.drone\.jsonnet
-\.drone\.yml
+^\.github$
 _pkgdown\.yml
 Makefile
 ^test\.R$
@@ -33,6 +32,3 @@ docs
 ^pkgdown$
 man/figures
 ^lastdose$
-^\.travis\.yml$
-\.drone\.jsonnet
-

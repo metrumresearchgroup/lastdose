@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/lastdose/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/lastdose)
+status](https://github.com/metrumresearchgroup/lastdose/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/lastdose/actions/workflows/main.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -225,5 +225,5 @@ lastdose(df, fill = NA_real_, back_calc=FALSE) %>% head()
 ## More info
 
 See
-[inst/doc/about.md](https://github.com/metrumresearchgroup/lastdose/blob/master/inst/doc/about.md)
+[inst/doc/about.md](https://github.com/metrumresearchgroup/lastdose/blob/main/inst/doc/about.md)
 for more details.
