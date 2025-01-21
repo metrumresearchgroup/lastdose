@@ -184,7 +184,8 @@ test_that("OCC handles commented dose records", {
     C =    c(NA, NA, "C", NA, NA, NA, NA),
     TIME = c( 1,  2,  3,   4,  5,  6,  7),
     AMT = 1,
-    EVID = c(0, 0, 1, 0, 0, 1, 0)
+    EVID = c(0, 0, 1, 0, 0, 1, 0),
+    stringsAsFactors = FALSE
   )
   #
   # ID    C TIME AMT EVID
@@ -211,7 +212,8 @@ test_that("OCC handles commented observation records", {
     C    = c(NA, NA, "C", NA, NA, NA, "C", NA),
     TIME = c( 1,  2,  3,   4,  5,  6,  7,   8),
     AMT  = 1,
-    EVID = c( 1,  0,  1,  0,  0,  1,  0, 2)
+    EVID = c( 1,  0,  1,  0,  0,  1,  0, 2),
+    stringsAsFactors = FALSE
   )
   # Start with a dose
   # Skip past a commented dose
