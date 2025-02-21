@@ -6,7 +6,8 @@ NULL
 #' Calculate last dose amount and times since previous doses
 #'
 #' This function calculates the last dose amount (`LDOS`), the time after
-#' last dose (`TAD`), and time after first dose (`TAFD`). Use [lastdose()]
+#' last dose (`TAD`), time after first dose (`TAFD`), and observation
+#' occasion (`OCC`). Use [lastdose()]
 #' to add (or potentially replace) columns to the input data frame;
 #' [lastdose_list()] and [lastdose_df()] returns calculated information
 #' as either `list` or `data.frame` format without modifying the input data.
@@ -44,10 +45,12 @@ NULL
 #' @param ... arguments passed to [lastdose_list()]
 #' @param include_ldos `logical`; if `FALSE` then the `LDOS` data is not
 #' appended to the data set.  Only used for the [lastdose()] function.
-#' @param include_tafd `logical`; if `FALSE`, then `TAFD` data is not appended
-#' to the data set.  Only used for the [lastdose()] function.
-#' @param include_occ `logical`; if `FALSE` then `OCC` is not appended to the
-#' data set. Only used for the [lastdose()] function.
+#' @param include_tafd `logical`; if `FALSE`, then time after first dose
+#' (`TAFD`) data is not appended to the data set; this is only used for the
+#' [lastdose()] function.
+#' @param include_occ `logical`; if `FALSE` then observation occasion counter
+#' (`OCC`; see **Details**) is not appended to the data set; this is only
+#' used for the [lastdose()] function.
 #'
 #' @section Options:
 #'
@@ -80,10 +83,16 @@ NULL
 #' accessible with `tad`,  `tafd`, and `ldos` (note the lower case form here to
 #' distinguish from the columns that might be added to the data frame).
 #'
-#' **Time after first dose**: note that time after first dose (`TAFD`) is the
-#' time after the first dosing record (`EVID` 1 or 4) in the data frame that
-#' you pass in. If you don't have a dosing record for the first dose to
+#' **Time after first dose (TAFD)**: note that time after first dose (`TAFD`)
+#' is the time after the first dosing record (`EVID` 1 or 4) in the data frame
+#' that you pass in. If you don't have a dosing record for the first dose to
 #' anchor this calculation, you should opt out.
+#'
+#' **Occasion (OCC)**: observation occasions (`OCC`) occur when there is an
+#' observation record (with `EVID=0`) following a dose record (`EVID 1 or 4`);
+#' `OCC` starts at `0` and increments with each dose that is followed by at
+#' least one observation record. The `OCC` calculation ignores all commented
+#' records (doses or observations).
 #'
 #' **Handling of commented records**: Dosing records that have been "commented"
 #' (as indicated with the `comments` argument) will never be considered as
