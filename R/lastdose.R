@@ -49,8 +49,7 @@ NULL
 #' (`TAFD`) data is not appended to the data set; this is only used for the
 #' [lastdose()] function.
 #' @param include_occ `logical`; if `FALSE` then observation occasion counter
-#' (`OCC`; see **Details**) is not appended to the data set; this is only
-#' used for the [lastdose()] function.
+#' (`OCC`; see **Details**) is not appended to the data set.
 #'
 #' @section Options:
 #'

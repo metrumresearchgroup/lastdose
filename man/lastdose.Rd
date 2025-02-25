@@ -41,8 +41,7 @@ appended to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}}
 \code{\link[=lastdose]{lastdose()}} function.}
 
 \item{include_occ}{\code{logical}; if \code{FALSE} then observation occasion counter
-(\code{OCC}; see \strong{Details}) is not appended to the data set; this is only
-used for the \code{\link[=lastdose]{lastdose()}} function.}
+(\code{OCC}; see \strong{Details}) is not appended to the data set.}
 
 \item{time_col}{character name for the \code{TIME} column; this could be time after
 first dose or time after first record or time relative to any origin; input
