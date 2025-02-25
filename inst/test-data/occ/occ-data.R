@@ -8,7 +8,7 @@ library(lastdose)
 library(here)
 
 csv <- function(x, file) {
-  file <- here("inst/data/occ/", file)
+  file <- here("inst/test-data/occ/", file)
   x$CP <- NULL
   x$cp <- NULL
   write.csv(x, file, quote = FALSE, na = ".", row.names=FALSE)
