@@ -63,7 +63,7 @@ test_that("OCC multi-dose, addl dose_first", {
   expect_false(all(data1$TAD==data2$TAD))
 })
 
-test_that("OCC multi-dose, addl", {
+test_that("OCC multi-dose, addl; no observations", {
   data <- occdata("multi-dose-addl-no-obs.csv")
   data <- lastdose(data)
   expect_equal(unique(data$OCC), c(0,1))
@@ -76,7 +76,7 @@ test_that("OCC multi-dose, addl", {
   expect_equal(sp[[2]]$EVID[1], 0)
 })
 
-test_that("OCC multi-dose, explicit", {
+test_that("OCC multi-dose, explicit; no observations", {
   data <- occdata("multi-dose-explicit-no-obs.csv")
   data <- lastdose(data)
   expect_equal(unique(data$OCC), c(0,1))
