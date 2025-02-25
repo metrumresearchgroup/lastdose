@@ -145,7 +145,7 @@ NULL
 lastdose <- function(data, ..., include_ldos = TRUE,
                      include_tafd = getOption("lastdose.include_tafd", FALSE),
                      include_occ = getOption("lastdose.include_occ", TRUE)) {
-  ans <- lastdose_list(data, ...)
+  ans <- lastdose_list(data, include_occ = include_occ, ...)
   data[["TAD"]] <- ans[["tad"]]
   if(include_tafd) data[["TAFD"]] <- ans[["tafd"]]
   if(include_ldos) data[["LDOS"]] <- ans[["ldos"]]
