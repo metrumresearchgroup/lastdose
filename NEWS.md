@@ -1,4 +1,12 @@
-# lastdose (development version)
+# lastdose 0.5.0
+
+- `lastdose()`, `lastdose_list()`, and `lastdose_df()` output now include 
+  observation occasion (`OCC`) (#49).
+
+## Bugs fixed
+
+- Refactored how records are sorted to ensure original order is maintained when
+  several records have the same time within an individual (#47).
 
 # lastdose 0.4.3
 
