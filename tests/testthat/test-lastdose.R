@@ -3,7 +3,7 @@ library(lastdose)
 
 context("basic functionality")
 set_file <- system.file("csv", "setn.csv", package = "lastdose")
-df <- read.csv(set_file)
+df <- read.csv(set_file, na.strings = ".", stringsAsFactors = FALSE)
 df$TIME <- df$time
 df$time <- NULL
 set1 <- subset(df, set==1)
@@ -69,7 +69,7 @@ test_that("lastdose_df [LSD-TEST-007]", {
 test_that("lastdose_list [LSD-TEST-008]", {
   y <- lastdose_list(set1)
   expect_is(y,"list")
-  expect_identical(names(y), c("tad", "tafd","ldos"))
+  expect_identical(names(y), c("tad", "tafd","ldos", "occ"))
 })
 
 test_that("required columns [LSD-TEST-009]", {
@@ -181,7 +181,8 @@ test_that("commented records [LSD-TEST-016]", {
   com <- c(".", NA ,"C", "A","Comment")
   ans <- find_comments(com)
   expect_identical(ans, c(FALSE,FALSE,TRUE,TRUE,TRUE))
-  df <- data.frame(C = com, DV=stats::rnorm(length(com)))
+  df <- data.frame(C = com, DV=stats::rnorm(length(com)),
+                   stringsAsFactors=FALSE)
   ans2 <- find_comments(com)
   expect_identical(ans,ans2)
   df2 <- df
@@ -307,7 +308,8 @@ test_that("ii detection issue-21 [LSD-TEST-023]", {
     EVID = c(0,1,0,0,0,0,0,0,0),
     II   = c(0,2,0,0,0,0,0,0,0),
     ADDL = c(0,2,0,0,0,0,0,0,0),
-    ID = 1
+    ID = 1,
+    stringsAsFactors=FALSE
   )
   out <- lastdose(data, addl_ties = "dose_first")
   expect_true(all(out$LDOS[-1]==1))
@@ -340,7 +342,8 @@ test_that("error if ADDL requested by II le 0 [LSD-TEST-024]", {
     EVID = c(0,1,0,0),
     ADDL = c(0,2,0,0),
     II   = 0,
-    ID = 1
+    ID = 1,
+    stringsAsFactors=FALSE
   )
   expect_error(
     lastdose(data),
@@ -354,7 +357,8 @@ test_that("comments vector is subset for NA time #38 [LSD-TEST-025]", {
     C = c("C", NA, NA, "C", NA, NA),
     TIME = c(-1, 0, NA, -1, 0, 0.25),
     AMT = c(0, 100, 0, 0, 200, 0),
-    EVID = c(0, 1, 0, 0, 1, 0)
+    EVID = c(0, 1, 0, 0, 1, 0),
+    stringsAsFactors = FALSE
   )
   data <- lastdose(data)
   expect_equal(data$TAD, c(-1, 0, NA, -1, 0, 0.25))
@@ -365,13 +369,15 @@ test_that("data frame is not modified", {
     ID = 1,
     AMT = c(0, 1, NA, 0, 0),
     TIME = c(1, 2, 3, 4, 5),
-    EVID = c(0, 1, 0, 0, 0)
+    EVID = c(0, 1, 0, 0, 0),
+    stringsAsFactors=FALSE
   )
   data2 <- data.frame(
     ID = 1,
     AMT =  c(0, 1, NA, 0, 0),
     TIME = c(1, 2, 3, 4, 5),
-    EVID = c(0, 1, 0, 0, 0)
+    EVID = c(0, 1, 0, 0, 0),
+    stringsAsFactors=FALSE
   )
   expect_identical(data, data2)
   ld <- lastdose(data)
@@ -392,7 +398,8 @@ test_that("TAD is the same for records with the same time", {
     ID = 1,
     TIME = c(1, 2, 3, 4, 4,  4, 4),
     AMT =  c(0, 0, 1, 0, 0, 10, 0),
-    EVID = c(0, 0, 1, 0, 0,  1, 0)
+    EVID = c(0, 0, 1, 0, 0,  1, 0),
+    stringsAsFactors=FALSE
   )
 
   ans3 <- lastdose(data)

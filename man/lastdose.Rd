@@ -10,7 +10,8 @@ lastdose(
   data,
   ...,
   include_ldos = TRUE,
-  include_tafd = getOption("lastdose.include_tafd", FALSE)
+  include_tafd = getOption("lastdose.include_tafd", FALSE),
+  include_occ = getOption("lastdose.include_occ", TRUE)
 )
 
 lastdose_list(
@@ -21,7 +22,8 @@ lastdose_list(
   fill = -99,
   back_calc = TRUE,
   addl_ties = c("obs_first", "dose_first"),
-  comments = find_comments(data)
+  comments = find_comments(data),
+  include_occ = getOption("lastdose.include_occ", TRUE)
 )
 
 lastdose_df(data, ...)
@@ -34,8 +36,12 @@ lastdose_df(data, ...)
 \item{include_ldos}{\code{logical}; if \code{FALSE} then the \code{LDOS} data is not
 appended to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
 
-\item{include_tafd}{\code{logical}; if \code{FALSE}, then \code{TAFD} data is not appended
-to the data set.  Only used for the \code{\link[=lastdose]{lastdose()}} function.}
+\item{include_tafd}{\code{logical}; if \code{FALSE}, then time after first dose
+(\code{TAFD}) data is not appended to the data set; this is only used for the
+\code{\link[=lastdose]{lastdose()}} function.}
+
+\item{include_occ}{\code{logical}; if \code{FALSE} then observation occasion counter
+(\code{OCC}; see \strong{Details}) is not appended to the data set.}
 
 \item{time_col}{character name for the \code{TIME} column; this could be time after
 first dose or time after first record or time relative to any origin; input
@@ -75,7 +81,8 @@ and \code{LDOS}.}
 }
 \description{
 This function calculates the last dose amount (\code{LDOS}), the time after
-last dose (\code{TAD}), and time after first dose (\code{TAFD}). Use \code{\link[=lastdose]{lastdose()}}
+last dose (\code{TAD}), time after first dose (\code{TAFD}), and observation
+occasion (\code{OCC}). Use \code{\link[=lastdose]{lastdose()}}
 to add (or potentially replace) columns to the input data frame;
 \code{\link[=lastdose_list]{lastdose_list()}} and \code{\link[=lastdose_df]{lastdose_df()}} returns calculated information
 as either \code{list} or \code{data.frame} format without modifying the input data.
@@ -92,10 +99,16 @@ When calling \code{\link[=lastdose_list]{lastdose_list()}} or \code{\link[=lastd
 accessible with \code{tad},  \code{tafd}, and \code{ldos} (note the lower case form here to
 distinguish from the columns that might be added to the data frame).
 
-\strong{Time after first dose}: note that time after first dose (\code{TAFD}) is the
-time after the first dosing record (\code{EVID} 1 or 4) in the data frame that
-you pass in. If you don't have a dosing record for the first dose to
+\strong{Time after first dose (TAFD)}: note that time after first dose (\code{TAFD})
+is the time after the first dosing record (\code{EVID} 1 or 4) in the data frame
+that you pass in. If you don't have a dosing record for the first dose to
 anchor this calculation, you should opt out.
+
+\strong{Occasion (OCC)}: observation occasions (\code{OCC}) occur when there is an
+observation record (with \code{EVID=0}) following a dose record (\verb{EVID 1 or 4});
+\code{OCC} starts at \code{0} and increments with each dose that is followed by at
+least one observation record. The \code{OCC} calculation ignores all commented
+records (doses or observations).
 
 \strong{Handling of commented records}: Dosing records that have been "commented"
 (as indicated with the \code{comments} argument) will never be considered as
